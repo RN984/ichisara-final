@@ -1,0 +1,34 @@
+.heroSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 50px;
+    max-width: 300px;
+  }
+
+
+  .heroItem {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  
+
+  .heroItem img, 
+  .heroItem iframe {
+    width:100%;
+    object-fit: cover;
+    border: 0;
+    display: block;
+  }
+  
+  .heroItem.span,
+  .heroItem.a {
+  padding: 24px 16px;
+  }
+
+  a.mapLink {
+  color: black!important
+  }
+

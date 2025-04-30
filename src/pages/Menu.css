@@ -1,0 +1,31 @@
+.menuGrid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap; /* スマホ時は自動で縦積みになる */
+    padding: 30px 10px;
+  }
+  
+
+
+  .menuWrapper{
+    width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 影*/
+    transition: transform 0.3s ease;
+  }
+  
+  .menuImg:hover {
+    transform: scale(1.03); /* 軽量な演出つき：拡大 */
+  }
+  
+  .menuImg {
+    display: block;
+    width: 100%;
+    height:auto;
+    max-width: 600px;
+    border-radius: 0;
+  }
+  

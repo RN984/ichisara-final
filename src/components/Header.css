@@ -1,0 +1,23 @@
+.heroHeader {
+    
+    min-height: 70px;
+    max-height: 100%; /* 👈← 高さはここで調整 */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .heroHeader img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 👈← 中央固定＋両端を自然にカット */
+    display: block;
+  }
+
+
+  
+@media (max-width: 768px) {
+    .heroHeader{
+        min-height: 0px;
+        height:60px;
+    }
+}

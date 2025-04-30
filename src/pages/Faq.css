@@ -1,0 +1,37 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+  .faqNav {
+    margin-bottom: 24px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  
+  .faqNav a {
+    text-decoration: underline;
+    margin: 8px;
+    color: #333;
+  }
+  
+  .faqNav a:hover {
+    text-decoration: underline;
+  }
+
+  
+  .faqSection h2 {
+   
+    border-bottom: 1px dashed #ccc; /* カテゴリタイトルの下に点線 */
+    
+  }
+  
+  .faqItem {
+    border-bottom: 2px dotted #ccc; /* ✅ 質問ごとの点線仕切り */
+    padding: 16px 10px;
+ 
+  }
+  
+  .faqItem a{
+    color: #333;
+  }

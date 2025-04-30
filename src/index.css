@@ -1,0 +1,120 @@
+/* 本体用 */
+body {
+  background-color: #ffffff; /* 失敗時に白ベース */
+  background-image: url('/src/assets/body.webp');
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
+  font-family: 'M PLUS Rounded 1c',sans-serif;
+  scroll-behavior: smooth;
+}
+.mainGrid {
+  display: grid;
+  grid-template-columns: 15% 1fr; /* ←ここでNav幅と右側幅を決める！！ */
+  max-width: 1600px;
+  margin: 0 auto;
+  min-height: 100vh; /* ページ全体を画面いっぱいにする */
+}
+
+.navColumn {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('/src/assets/navbg.webp');
+  background-repeat: repeat-y; /* ✅ 縦方向に繰り返す */
+  background-size:100%;
+  background-position: top center;
+  position: sticky;
+  top: 24px;
+}
+
+
+.navColumn ul {
+  list-style: none;  
+  padding-left: 8px;
+  margin: 0;
+}
+
+.navColumn li {
+  margin-bottom: 20px; 
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.navColumn a{
+  color: rgb(84, 84, 84);
+  text-decoration:none;
+}
+
+.mainContent{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+.pageTitleWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.pageTitleWrapper img {
+  max-width: 1000px;
+  width: 60%;
+  height: auto;
+}
+
+
+.galleryWrapper{
+  max-width:600px;
+  width:100%;
+  margin: 0 auto;
+}
+
+.contentGrid{
+  display: grid;
+  grid-template-columns: minmax(250px,30%) 1fr;
+  width: 100%;
+}
+
+
+.heroColumn{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 3px;
+  padding-right: 0px;
+}
+
+.heroItem, .updatesItem{
+  width:100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+html, body,#root{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+.mainGrid{
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 10px;
+  }
+
+  .contentGrid{
+    grid-template-columns: 110px 1fr;
+    gap:5px;
+    padding-left:3px;
+  }
+  .mainContent{
+    gap: 5px;
+  }
+}

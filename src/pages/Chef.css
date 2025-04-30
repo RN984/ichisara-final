@@ -1,0 +1,62 @@
+.chefBlock {
+    margin-bottom: 60px;
+  }
+  
+  .chefGrid {
+    display: grid;
+    grid-template-columns: minmax(200px, 30%) 1fr;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  
+  .chefImages {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mainImage {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .thumbRow {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .thumb:hover,
+  .thumb.active {
+    opacity: 1;
+    outline: 2px solid #333;
+  }
+  
+  .chefIntro {
+    line-height: 1.6;
+    padding-right: 10px;
+  }
+  
+  /* 横並びを絶対キープ（スマホでも縦積みにしない） */
+  @media (max-width: 768px) {
+    .chefGrid {
+      grid-template-columns:  100px 1fr;
+    }
+  
+    .thumb {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  

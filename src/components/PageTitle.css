@@ -1,0 +1,14 @@
+.pageTitle {
+    max-width: 100%;
+    text-align: center;
+  }
+  
+  .pageTitle img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
