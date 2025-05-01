@@ -1,21 +1,19 @@
 import './InstaFeed.css';
 import titleI from '../assets/titleI.webp';
-import insta1 from '../asetts/insta/inasta1.webp';
-import insta2 from '../asetts/insta/inasta2.webp';
-import insta3 from '../asetts/insta/inasta3.webp';
+
 
 const posts = [
   {
     url: 'https://www.instagram.com/ichisara240/p/DITR3bBp6L-/',
-    thumb: insta1,
+    thumb: '/insta/insta1.webp',
   },
   {
     url: 'https://www.instagram.com/ichisara240/p/C4FPs0CvB-B/',
-    thumb: insta2,
+    thumb: '/insta/insta2.webp',
   },
   {
     url: 'https://www.instagram.com/ichisara240/reel/DIwLSphPBEr/',
-    thumb: insta3,
+    thumb: '/insta/insta3.webp',
   },
 ];
 
