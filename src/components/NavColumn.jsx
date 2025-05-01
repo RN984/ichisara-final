@@ -9,7 +9,7 @@ export default function NavColumn() {          // ← ★ ここを “export de
         <li><Link to="/">トップ</Link></li>
         <li><Link to="/menu">メニュー</Link></li>
         <li><Link to="/chef">シェフ</Link></li>
-        <li><Link to="/faq">FAQ</Link></li>
+        <li><Link to="/faq">質問</Link></li>
       </ul>
     </nav>
   );
