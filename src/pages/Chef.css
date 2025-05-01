@@ -7,6 +7,7 @@
     grid-template-columns: minmax(200px, 30%) 1fr;
     gap: 24px;
     align-items: flex-start;
+    padding-left: 5px;
   }
   
   .chefImages {
@@ -52,6 +53,7 @@
   @media (max-width: 768px) {
     .chefGrid {
       grid-template-columns:  100px 1fr;
+      padding-left: 5px;
     }
   
     .thumb {

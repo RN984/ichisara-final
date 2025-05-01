@@ -7,7 +7,7 @@ export default function HeroSection() {
        
       <div className="heroItem">
         <img src={hero} alt="ICHISARA 看板" width='100%'/>
-        <p>カフェICHISARAは、ひとさらひとさらに想いを込めて、皆様に感動をお届けします。</p>
+        <p>ICHISARAは、ひとさらひとさらに想いを込めて、皆様に感動をお届けします。</p>
       </div>
 
       <div className="heroItem contact">
