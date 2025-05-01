@@ -62,7 +62,7 @@ if (data) {
       </div>
 
       {/* シェフの気まぐれランチ */}
-      {todaysLunch .some(it => it.title || it.link) && (
+      {todaysLunch?.title && (
         <section >
           <h2 className="updatesCategoryTitle">
           
