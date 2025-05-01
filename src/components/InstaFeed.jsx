@@ -4,15 +4,15 @@ import titleI from '../assets/titleI.webp';
 const posts = [
   {
     url: 'https://www.instagram.com/ichisara240/p/DITR3bBp6L-/',
-    thumb: '/src/assets/insta/insta1.webp',
+    thumb: '../assets/insta/insta1.webp',
   },
   {
     url: 'https://www.instagram.com/ichisara240/p/C4FPs0CvB-B/',
-    thumb: '/src/assets/insta/insta2.webp',
+    thumb: '../assets/insta/insta2.webp',
   },
   {
     url: 'https://www.instagram.com/ichisara240/reel/DIwLSphPBEr/',
-    thumb: '/src/assets/insta/insta3.webp',
+    thumb: '../assets/insta/insta3.webp',
   },
 ];
 
