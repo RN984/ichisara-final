@@ -33,7 +33,7 @@ export default function Menu() {
         </div>
 {/* カテゴリ一覧（アンカーリンク） */}
 <div className="faqNav">
-          <a href="#lunch">ランチメニュー</a> 
+          <a href="#lunch">ランチ</a> 
           <a href="#cafe">カフェ</a> 
           <a href="#dinner">ディナー</a>
           <a href="#other">その他</a>
