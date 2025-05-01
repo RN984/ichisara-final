@@ -6,6 +6,10 @@ body {
   background-size: auto;
   background-position: top left;
   scroll-behavior: smooth;
+  font-family:
+  'Hiragino Maru Gothic ProN',
+  'Meiryo',
+  'sans-serif';
 }
 .mainGrid {
   display: grid;
