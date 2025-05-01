@@ -42,7 +42,7 @@ export default function InstaFeed() {
               alt={`Instagram thumbnail ${i + 1}`}
               loading="lazy"
               decoding="async"
-              fetchpriority="low"
+              fetchPriority="low"
             />
           </a>
         ))}

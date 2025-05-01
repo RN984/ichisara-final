@@ -30,19 +30,20 @@ body {
   top: 24px;
 }
 
+.navColumn li {
+  margin-bottom: 20px; 
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  
+}
 
 .navColumn ul {
   list-style: none;  
   padding-left: 8px;
-  margin: 0;
-}
+margin: 0;
+}  
 
-.navColumn li {
-  margin-bottom: 20px; 
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
 .navColumn a{
   color: rgb(84, 84, 84);
@@ -96,6 +97,11 @@ body {
   overflow: hidden;
 }
 
+.heroItem-map a{
+  color: black;
+}
+
+
 html, body,#root{
   width: 100%;
   margin: 0;
@@ -106,6 +112,8 @@ html, body,#root{
 .mainGrid{
   min-height: 100vh;
 }
+
+
 
 @media (max-width: 768px) {
   html {

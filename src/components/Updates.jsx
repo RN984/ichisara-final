@@ -8,52 +8,112 @@ const fetcher = url => fetch(url).then(r => r.json());
 export default function Updates() {
   const { data, error } = useSWR(SHEET_API, fetcher);
 
-  if (error) return <p>読み込み失敗</p>;
+  const renderMultiline = (text) => {
+    if (!text) return null;
+    return text.split(/\r?\n/).map((line, idx) => (
+      <span key={idx}>
+        {line}
+        <br />
+      </span>
+    ));
+  };
+  
 
-  // ここから↓↓
-  const grouped = {};
+// 初期化
+const grouped = {
+  'シェフの気まぐれランチ': [],
+  '臨時休業': [],
+  '営業日の変更': [],
+  'その他': [],
+};
 
-  if (data) {
-    data.forEach(item => {
-      const type = item.type || 'その他'; // 種類がなければ「その他」
-      if (!grouped[type]) grouped[type] = [];
-      grouped[type].push(item);
-    });
-  }
+// 今日の日付処理
+const today = new Date().toISOString().slice(0, 10);
+const isTuesday = new Date().getDay() === 2;
+
+let isClosedToday = false;
+let todaysLunch = null;
+
+if (data) {
+  // グルーピング
+  data.forEach(item => {
+    const type = item.type || 'その他';
+    if (grouped[type]) grouped[type].push(item);
+  });
+
+  // 今日のランチを1件だけ抽出
+  todaysLunch = grouped['シェフの気まぐれランチ'][0];
+
+  // 今日が臨時休業か判定（※ dataがあるときだけ）
+  isClosedToday = grouped['臨時休業'].some(item => item.date === today);
+}
 
   return (
     <div className="updatesSection">
+     
+      {(isTuesday || isClosedToday) && (
+        <p className="todayNotice">
+          本日は{isClosedToday ? '臨時休業' : '定休日'}です
+        </p>
+      )}
+
       <div className="updatesHeadingWrapper">
         <img src={titleN} alt="最新投稿" loading="lazy" className="updatesHeadingImg" />
       </div>
 
-      {data ? (
-        Object.entries(grouped).map(([type, items]) => (
-          <section key={type}>
-            <h2 className="updatesCategoryTitle">{type}</h2> {/* ← カテゴリ名 */}
-            <ul className="updatesList">
-              {items.map(it => (
-                <li key={it.date + it.title}>
-                  {it.img && (
-                    <img src={it.img} alt={it.title} width="72" height="72" />
-                  )}
-                  <span>
-                    {new Date(it.date).toLocaleDateString('ja-JP', {
-                      month: 'numeric',
-                      day: 'numeric',
-                    })}
-                    &nbsp;–&nbsp;
-                  </span>
-                  {it.link ? <a href={it.link}>{it.title}</a> : it.title}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      ) : (
-        <p>ただいま準備中です</p>
+      {/* シェフの気まぐれランチ */}
+      {todaysLunch && (
+        <section >
+          <h2 className="updatesCategoryTitle">
+          
+            {new Date().toLocaleDateString('ja-JP', {
+              month: 'long',
+              day: 'numeric',
+            })} の気まぐれランチ
+          </h2>
+          <ul className='updatesList'>
+          <p className='lunchText'>
+          {todaysLunch.link
+              ? <a href={todaysLunch.link}>{todaysLunch.title}</a>
+              : todaysLunch.title}
+          </p>
+          </ul>
+        </section>
+      )}
+
+  {/* 営業日の変更 */}
+{grouped['営業日の変更'].some(it => it.title || it.link) && (
+  <section >
+    <h2 className="updatesCategoryTitle">営業日の変更</h2>
+    <ul className="updatesList">
+    {grouped['営業日の変更'].map((it, idx) => (
+  <li key={`change-${idx}`} className="dayoffText">
+    <strong> {new Date(it.date).toLocaleDateString('ja-JP', {
+    month: 'long',
+    day: 'numeric',
+    weekday: 'short', // ← ここで「（水）」が出る
+  })}</strong>：{renderMultiline(it.title)}
+  </li>
+))}
+    </ul>
+  </section>
+)}
+
+      {/* その他 */}
+      {grouped['その他'].some(it => it.title || it.link) && (
+        <section >
+          <h2 className="updatesCategoryTitle">その他</h2>
+          <ul className="updatesList">
+          {grouped['その他'].map((it, idx) => (
+  <li key={`other-${idx}`} className="othersText">
+    {it.link
+      ? <a href={it.link}>{renderMultiline(it.title)}</a>
+      : renderMultiline(it.title)}
+  </li>
+))}
+          </ul>
+        </section>
       )}
     </div>
   );
 }
-

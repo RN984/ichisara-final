@@ -23,12 +23,3 @@
     display: block;
   }
   
-  .heroItem.span,
-  .heroItem.a {
-  padding: 24px 16px;
-  }
-
-  a.mapLink {
-  color: black!important
-  }
-
