@@ -1,4 +1,4 @@
-import '../public/components/PageTitle.css';
+import '../components/PageTitle.css';
 
 export default function PageTitle({ src, alt }) {
     return (

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import './NavColumn.css';     // 使わなければ import 行を削除して OK
+import './NavColumn.css';
 
-export default function NavColumn() {          // ← ★ ここを “export default” に
+export default function NavColumn() {
   return (
     <nav className="navCol" aria-label="サイトメニュー">
       <ul>
-        <br/><br/>
+        <br /><br />
         <li><Link to="/">トップ</Link></li>
-        <a href='/pages/Menu.html'>メニュー</a><br/><br/>
-        <a href='/pages/Chef.html'>シェフ</a><br/><br/>
-        <a href='/pages/Faq.html'>質問</a>
+        <li><Link to="/chef">シェフ</Link></li>
+        <li><Link to="/menu">メニュー</Link></li>
+        <li><Link to="/faq">質問</Link></li>
       </ul>
     </nav>
   );

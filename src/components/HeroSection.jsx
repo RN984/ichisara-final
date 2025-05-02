@@ -11,7 +11,8 @@ export default function HeroSection() {
         <img src={hero} alt="ICHISARA 看板" width='100%'/>
         <p>
   <span>酒々井町　ICHISARA DINING HILLS CAFE</span><br /><br/>
-  伝説のファーストクラスシェフによる奇跡のひとさら
+  伝説のファーストクラスシェフによる美食の饗宴<br/><br/>
+  ひとさらひとさらに想いを込めて、皆様に笑顔と感動をお届けします。
 </p>
 
       </div>

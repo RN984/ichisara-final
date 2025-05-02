@@ -4,11 +4,11 @@
   }
   
   .pageTitle img {
-    max-width: 100%;
+    max-width: 80%;
     height: auto;
     display: block;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+    margin: 20px auto;
   }
   

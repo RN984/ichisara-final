@@ -66,4 +66,6 @@ color: black;
   line-height: 2;
   list-style:circle;
   padding-left: 6px;
+  padding-right: 6px;
+  font-size: 80%;
 }

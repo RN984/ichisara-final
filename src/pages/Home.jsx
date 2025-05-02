@@ -2,13 +2,15 @@ import HeroSection from '../components/HeroSection';
 import Updates from '../components/Updates';
 import InstaFeed from '../components/InstaFeed';
 import './Home.css'
+import PageTitle from '../components/PageTitle';
+import titleHp from '../assets/titles/titleHp.webp';
 
   export default function Home () {
 
   return (
     <>
       <div className='pageTitleWrapper'>
-        <h1 className="pageTitleText">トップページ</h1>
+        <PageTitle src={titleHp} alt='ホームページタイトル'/>
       </div>
 
       <div className='contentGrid'>

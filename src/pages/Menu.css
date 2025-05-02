@@ -3,12 +3,12 @@
     display: flex;
     justify-content: center;
     gap:40px;
-    flex-wrap: wrap; /*自動で縦積み */
+    flex-wrap: wrap; 
     padding: 60px 20px;
   }
   
   .menuImg:hover {
-    transform: scale(1.01); /* 拡大 */
+    transform: scale(1.01);
   }
   
   .menuImg {
