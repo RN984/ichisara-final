@@ -10,9 +10,7 @@ thumb    |
 ------------------------------
 */
   
- .mainContent{
-  height: 100vh;
- }
+ 
 
   .chefGrid {
     display: grid;
