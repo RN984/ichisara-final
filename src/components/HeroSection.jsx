@@ -1,21 +1,28 @@
 
 import hero from '../assets/hero.webp';
+import './HeroSection.css'
 
 export default function HeroSection() {
   return (
     <section className="heroSection">
-       
+      
+       {/*イチサラ紹介*/}
       <div className="heroItem">
         <img src={hero} alt="ICHISARA 看板" width='100%'/>
-        <p>ICHISARAは、ひとさらひとさらに想いを込めて、皆様に感動をお届けします。</p>
+        <p>
+  <span>酒々井町　ICHISARA DINING HILLS CAFE</span><br /><br/>
+  伝説のファーストクラスシェフによる奇跡のひとさら
+</p>
+
       </div>
 
+      {/*予約方法*/}
       <div className="heroItem contact">
         <h1><br/>ご予約方法</h1>
         <a href="tel:04734973630" className="phoneResevation">📞電話で予約する<br/></a>
         <a href="https://www.instagram.com/ichisara240" className="instagramResevation">💬DMで予約する</a>
       </div>
-
+      {/*アクセス　住所、電話番号など*/}
       <div className="heroItem-map">
         <h1><br/>アクセス</h1>
         <span>住所：

@@ -1,7 +1,4 @@
-html {
-    scroll-behavior: smooth;
-  }
-  
+
   .faqNav {
     margin-bottom: 24px;
     font-weight: bold;
@@ -19,15 +16,14 @@ html {
     text-decoration: underline;
   }
 
-  
+  /* カテゴリタイトルの下に点線仕切り */
   .faqSection h2 {
-   
-    border-bottom: 1px dashed #ccc; /* カテゴリタイトルの下に点線 */
-    
+    border-bottom: 1px dashed #ccc; 
   }
-  
+
+  /* ✅質問ごとの点線仕切り */
   .faqItem {
-    border-bottom: 2px dotted #ccc; /* ✅ 質問ごとの点線仕切り */
+    border-bottom: 2px dotted #ccc; 
     padding: 16px 10px;
  
   }
@@ -35,3 +31,4 @@ html {
   .faqItem a{
     color: #333;
   }
+

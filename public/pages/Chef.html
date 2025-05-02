@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>シェフ紹介</title>
+
+  <link rel="stylesheet" href="/components/index.css">
+  <link rel="stylesheet" href="/components/Header.css">
+  <link rel="stylesheet" href="/components/NavColumn.css">
+  <link rel="stylesheet" href="/components/Chef.css" />
+
+</head>
+
+<!--ヘッダー-->
+<body>
+  <header class="header">
+    <div class="heroHeader">
+      <img src="/photo/header-hero.webp" alt="ICHISARA ヘッダー画像" loading="lazy" />
+    </div>
+  </header>
+
+  <!--Nav-->
+  <div class="mainGrid">
+    <nav class="navColumn" aria-label="サイトメニュー">
+      <ul><br/><br/>
+        <li><a href="/">トップ</a></li>
+        <li><a href="/pages/Menu.html">メニュー</a></li>
+        <li><a href="/pages/Chef.html">シェフ</a></li>
+        <li><a href="/pages/Faq.html">質問</a></li>
+      </ul>
+    </nav>
+
+
+  <!--本文-->
+    <div class="mainContent">
+    <div class="pageTitleWrapper">
+      <h1 class="pageTitleText">シェフ</h1>
+    </div>
+        
+            <!-- 西尾シェフ -->
+              <div class="chefGrid">
+                <div class="chefImages">
+                  <img id="nishio-main" src="/photo/nishio-main.webp" alt="西尾メイン" class="mainImage">
+                  <div class="thumbRow">
+                    <img src="/photo/nishio-main.webp" class="thumb active" data-target="nishio-main" data-src="/public/photo/nishio-main.webp" alt="メイン">
+                    <img src="/photo/nishio-sub.webp" class="thumb" data-target="nishio-main" data-src="/public/photo/nishio-sub.webp" alt="サブ">
+                  </div>
+                </div>
+                <div class="chefIntro">
+                  <h2>西尾シェフ</h2>
+                  機内食調理とホテルレストランにて32年の経歴を持ち、2008年にはシンガポールで行われた世界機内食コンクールで日本人として初の優勝。その後、日本航空（JAL）のコーポレートシェフとして、ファーストクラスや、世界各国の機内食をはじめ、政府専用機のメニュー開発に携わり、皇族への提供も担う。現在は(株)NKフーズコネクション代表取締役兼ICHISARAのオーナーシェフとして心を込めた一皿をお届けしております。
+                </div>
+              </div>
+        
+            <!-- 尾身シェフ -->
+              <div class="chefGrid">
+                <div class="chefImages">
+                  <img id="omi-main" src="/photo/omi-main.webp" alt="尾身メイン" class="mainImage">
+                  <div class="thumbRow">
+                    <img src="/photo/omi-main.webp" class="thumb active" data-target="omi-main" data-src="/public/photo/omi-main.webp" alt="メイン">
+                    <img src="/photo/omi-sub.webp" class="thumb" data-target="omi-main" data-src="/public/photo/omi-sub.webp" alt="サブ">
+                  </div>
+                </div>
+                <div class="chefIntro">
+                  <h2>尾身シェフ</h2>
+                  東京都内有名洋食レストランでキャリアをスタートし、その後、関西料理を経て和食の道へ。ユナイテッド航空の和食メニュー開発責任者として就任。和食料理長に。アメリカ及びアジア主要都市すべての日本発着路線で開発・提供した和食メニューは、在職32年の間において1000種類を超える。現在は(株)NKフーズコネクション、ICHISARAで心を込めた一皿をお届けしております。
+                </div>
+              </div>
+        
+          <script>
+            const thumbs = document.querySelectorAll('.thumb');
+        
+            thumbs.forEach(thumb => {
+              thumb.addEventListener('click', () => {
+                const targetId = thumb.dataset.target;
+                const targetImg = document.getElementById(targetId);
+                const newSrc = thumb.dataset.src;
+        
+                targetImg.src = newSrc;
+        
+                // アクティブ枠を切り替え
+                const groupThumbs = document.querySelectorAll(`.thumb[data-target="${targetId}"]`);
+                groupThumbs.forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+              });
+            });
+          </script>
+</body>
+</body>
+</html>
+

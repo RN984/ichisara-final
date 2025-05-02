@@ -1,6 +1,6 @@
 .navColumn {
     width: 100%;
-    min-height: none;
+    min-height: 100%;
     background-image: url('/src/assets/navbg.webp');
     background-repeat: repeat-y; /* ✅ 縦方向に繰り返す */
     background-size:100%;

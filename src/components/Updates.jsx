@@ -5,9 +5,11 @@ import './Updates.css';
 const SHEET_API = import.meta.env.VITE_SHEET_API;
 const fetcher = url => fetch(url).then(r => r.json());
 
+//データ取得
 export default function Updates() {
   const { data, error } = useSWR(SHEET_API, fetcher);
 
+//改行処理 
   const renderMultiline = (text) => {
     if (!text) return null;
     return text.split(/\r?\n/).map((line, idx) => (
@@ -15,6 +17,7 @@ export default function Updates() {
     ));
   };
 
+  //カテゴリ分け
   const grouped = {
     'シェフの気まぐれランチ': [],
     '臨時休業': [],
@@ -22,49 +25,59 @@ export default function Updates() {
     'その他': [],
   };
 
-  const today = new Date().toISOString().slice(0, 10); // "2025-05-08"
+  //今日の日付と火曜（定休日）かどうか
+  const today = new Date().toISOString().slice(0, 10); 
   const isTuesday = new Date().getDay() === 2;
 
-  let isClosedToday = false;
+  let todaysNotice = null;
   let todaysLunch = null;
 
-  if (data) {
-    data.forEach(item => {
-      const type = item.type || 'その他';
-      if (grouped[type]) grouped[type].push(item);
-    });
+    if (data) {
+      data.forEach(item => {
+        const type = item.type || 'その他';
+        if (grouped[type]) grouped[type].push(item);
+      });
 
-    // ✅ 今日以前のランチから最新1件だけ取得
+      //今日が休みか
+      const matched = grouped['営業日の変更'].find(item => item.date === today);
+    if (matched) {
+      todaysNotice = `今日は ${matched.title} です。`;
+    }
+  }
+    if (isTuesday) {
+      todaysNotice = '今日は 定休日です。';
+    }
+
+    // 今日以前のランチから最新1件だけ取得
+    if(data){
     const pastLunches = grouped['シェフの気まぐれランチ']
       .filter(item => item.date && new Date(item.date) <= new Date(today))
       .sort((a, b) => new Date(b.date) - new Date(a.date));
 
     todaysLunch = pastLunches[0] || null;
+    }
 
-    // ✅ 今日が臨時休業か
-    isClosedToday = grouped['臨時休業'].some(item => item.date === today);
-  }
-
-  return (
-    <div className="updatesSection">
-      {(isTuesday || isClosedToday) && (
-        <p className="todayNotice">
-          本日は{isClosedToday ? '臨時休業' : '定休日'}です
-        </p>
+    return (
+    
+      <div className="updatesSection"> 
+      {/*今日のお知らせ 営業日について　*/}
+      {todaysNotice && (
+        <p className="todayNotice">{todaysNotice}</p>
       )}
 
-      <div className="updatesHeadingWrapper">
-        <img src={titleN} alt="最新投稿" loading="lazy" className="updatesHeadingImg" />
-      </div>
-
-      {/* ✅ 日付タイトルは「今日の日付」、内容は「最新の過去ランチ」 */}
-      {todaysLunch?.title && (
-        <section>
-          <h2 className="updatesCategoryTitle">
-            {new Date().toLocaleDateString('ja-JP', {
-              month: 'long',
-              day: 'numeric',
-            })} の気まぐれランチ
+        {/*見出し画像 */}
+        <div className="updatesHeadingWrapper">
+          <img src={titleN} alt="最新投稿" loading="lazy" className="updatesHeadingImg" />
+        </div>
+  
+        {/*  気まぐれランチ */}
+        {todaysLunch?.title && (
+          <section>
+            <h2 className="updatesCategoryTitle">
+              {new Date().toLocaleDateString('ja-JP', {
+                month: 'long',
+                day: 'numeric',
+              })} の気まぐれランチ 
           </h2>
           <ul className="updatesList">
             <p className="lunchText">
@@ -98,17 +111,20 @@ export default function Updates() {
       {grouped['その他'].some(it => it.title || it.link) && (
         <section>
           <h2 className="updatesCategoryTitle">その他</h2>
-          <ul className="updatesList">
-            {grouped['その他'].map((it, idx) => (
+          <ul className="othersList">
+            {grouped['その他']
+            .filter(it => it.title || it.link)
+            .map((it, idx)=> (
               <li key={`other-${idx}`} className="othersText">
                 {it.link
                   ? <a href={it.link}>{renderMultiline(it.title)}</a>
                   : renderMultiline(it.title)}
               </li>
-            ))}
+            ))} 
           </ul>
+         
         </section>
       )}
     </div>
-  );
-}
+    );
+  }

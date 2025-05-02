@@ -1,8 +1,10 @@
 import HeroSection from '../components/HeroSection';
 import Updates from '../components/Updates';
 import InstaFeed from '../components/InstaFeed';
+import './Home.css'
 
-export default function Home(){
+  export default function Home () {
+
   return (
     <>
       <div className='pageTitleWrapper'>

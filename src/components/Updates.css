@@ -37,13 +37,23 @@
 
 .updatesList{
   border-bottom: 1px dashed #ccc;
-  padding-left: 0px;
+  padding-left: 0;
   padding-bottom: 20px;
 }
 
 .updatesList a {
 color: black;
 }
+
+.othersList{
+  border-bottom: 1px dashed #ccc;
+  padding-left: 25px;
+  padding-bottom: 20px;
+}
+
+.othersList a {
+  color: black;
+  }
 
 .lunchText,.dayoffText{
   text-align: center;

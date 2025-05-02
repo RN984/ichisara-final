@@ -17,7 +17,7 @@ export default function Layout() {
         </nav>
 
         <div className="mainContent">
-          <Outlet /> {/* ✅ ここを children → Outlet に修正！！ */}
+          <Outlet />
         </div>
       </div>
     </>

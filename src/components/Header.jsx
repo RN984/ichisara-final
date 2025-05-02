@@ -1,5 +1,5 @@
 import heroHeader from '../assets/header-hero.webp'; // 比率2.5:1の画像推奨
-import './Header.css';
+import './Header.css'
 
 export default function Header() {
   return (

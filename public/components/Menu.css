@@ -1,0 +1,30 @@
+/*画像の配置*/
+.menuGrid {
+    display: flex;
+    justify-content: center;
+    gap:40px;
+    flex-wrap: wrap; /*自動で縦積み */
+    padding: 60px 20px;
+  }
+  
+  .menuImg:hover {
+    transform: scale(1.01); /* 拡大 */
+  }
+  
+  .menuImg {
+    display: block;
+    width: 100%;
+    height:auto;
+    max-width: 100%;
+    border-radius: 30px;
+}
+
+.menuNav a{
+  text-decoration: underline;
+  margin: 8px;
+  color: #333;
+}
+
+.menuNav{
+  text-align: center;
+}

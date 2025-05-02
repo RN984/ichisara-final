@@ -1,12 +1,11 @@
 import Home from '/pages/Home.jsx';
 import Menu from './pages/Menu.jsx';
 import Chef from './pages/Chef.jsx';
-import Faq from './pages/Faq.jsx';
 import {
   HashRouter,
   Routes,
   Route
-} from 'react-router-dom'; // ✅ npmインストール済であること！
+} from 'react-router-dom'; 
 
 export default function App() {
   return (
@@ -15,7 +14,6 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/chef" element={<Chef />} />
-        <Route path="/faq" element={<Faq />} />
       </Routes>
     </HashRouter>
   );

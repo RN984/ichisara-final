@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>メニュー</title>
+  <link rel="stylesheet" href="/components/index.css" />
+  <link rel="stylesheet" href="/components/Header.css" />
+  <link rel="stylesheet" href="/components/NavColumn.css" />
+  <link rel="stylesheet" href="/components/Menu.css" />
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="heroHeader">
+      <img src="/photo/header-hero.webp" alt="ICHISARA ヘッダー画像" loading="lazy" />
+    </div>
+  </header>
+
+  <div class="mainGrid">
+    <!-- ナビ -->
+    <nav class="navColumn" aria-label="サイトメニュー">
+      <ul><br/><br/>
+        <li><a href="/">トップ</a></li>
+        <li><a href="/pages/Menu.html">メニュー</a></li>
+        <li><a href="/pages/Chef.html">シェフ</a></li>
+        <li><a href="/pages/Faq.html">質問</a></li>
+      </ul>
+    </nav>
+
+    <!-- メイン -->
+    <div class="mainContent">
+      <div class="pageTitleWrapper">
+        <h1 class="pageTitleText">メニュー</h1>
+      </div>
+
+      <!-- カテゴリ一覧（アンカーリンク） -->
+      <div class="menuNav">
+        <a href="#lunch">ランチ</a> 
+        <a href="#cafe">カフェ</a> 
+        <a href="#dinner">ディナー</a>
+        <a href="#other">その他</a>
+      </div>
+
+      <div class="menuGrid">
+        <section id="lunch" class="menuWrapper">
+          <img src="/photo/menu/menu1.webp" alt="メニュー1" class="menuImg" loading="lazy" />
+        </section>
+        <div class="menuWrapper">
+          <img src="/photo/menu/menu2.webp" alt="メニュー2" class="menuImg" loading="lazy" />
+        </div>
+        <section id="cafe" class="menuWrapper">
+          <img src="/photo/menu/menu3.webp" alt="メニュー3" class="menuImg" loading="lazy" />
+        </section>
+        <section id="dinner" class="menuWrapper">
+          <img src="/photo/menu/menu4.webp" alt="メニュー4" class="menuImg" loading="lazy" />
+        </section>
+        <section id="other" class="menuWrapper">
+          <img src="/photo/menu/menu5.webp" alt="メニュー5" class="menuImg" loading="lazy" />
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
