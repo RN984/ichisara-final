@@ -6,7 +6,7 @@
     background-size:100%;
     background-position: top center;
     position: sticky;
-    top: 24px;
+    top:0px;
   }
   
   .navColumn li {

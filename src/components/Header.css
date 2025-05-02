@@ -15,7 +15,6 @@
     display: block;/*ブロック扱いにする*/
     object-fit:cover; 
     margin: 0 auto;
-   
   }
 
   @media (max-width: 768px) {
