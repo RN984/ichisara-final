@@ -1,7 +1,7 @@
 import './InstaFeed.css';
-import titleI from '../assets/titleI.webp';
+import titleInsta from '../assets/titles/titleInsta.webp';
 
-
+//インスタ投稿のリスト
 const posts = [
   {
     url: 'https://www.instagram.com/ichisara240/p/DITR3bBp6L-/',
@@ -20,14 +20,16 @@ const posts = [
 export default function InstaFeed() {
   return (
     <section className="instaSection">
+      {/*見出し部分 */}
       <div className="instaHeadingWrapper">
         <img
-          src={titleI}
+          src={titleInsta}
           alt="Instagram見出し"
           className="instaHeadingImg"
           loading="lazy"
         />
       </div>
+      {/*グリッド表示部分 */}
       <div className="instaGrid">
         {posts.map((post, i) => (
           <a

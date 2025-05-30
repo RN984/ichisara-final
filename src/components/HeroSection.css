@@ -23,3 +23,10 @@
     display: block;
   }
   
+  .heroItem strong {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: rgb(177, 177, 177); /* 好きな色 */
+  }
+
+ 

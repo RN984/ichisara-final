@@ -1,7 +1,5 @@
 .updatesSection {
   display: block;
-  margin: 0 auto;
-  max-width: 600px;
   width: 100%;
 }
 
@@ -15,15 +13,18 @@
 .updatesHeadingImg {
   width: 30%;
   height: auto;
+  padding-bottom: 20px;
 }
 
-.todayNotice {
+.todaysNotice {
   color: #d63333;
   font-weight: bold;
   font-size: 1.1rem;
-  text-align: center;
+  text-align: start;
   margin-bottom: 1rem;
-
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 20px;
+  padding-left: 20px;
 } 
 
 .updatesCategoryTitle {
