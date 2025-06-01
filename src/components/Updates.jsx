@@ -1,3 +1,22 @@
+//SHEET_API　str Google SheetsのAPI（url)
+//fetcher func フェッチ関数
+//renderMultiline func 改行レンタリング
+
+//todayStr　Str [today]→YYYY/M/D形式の今日の日付 
+//isTuesday boolean [today]→今日が火曜か
+  //today　Date 今日の日付
+
+//cleanDate func　[dateStr]→item.dateをYYYY/M/D形式に統一
+  //dateStr str 呼び出し元(item.date)から渡される日付文字列
+  //parts arr [dateStr]の/または-で分割した配列
+
+//grouped obj データをカテゴリ(type)別に仕分け
+//todaysNotice str 今日のお知らせのメッセージテキスト
+//todaysLunch　obj　最新の気まぐれランチデータ
+//todaysChanges Arr　今日の営業日の変更のタイトルリスト
+//todaysOthers　Arr　今日のその他カテゴリのタイトルリスト
+//allLunches　Arr ランチデータの日付降順
+
 import useSWR from 'swr';
 import titleNews from '../assets/titles/titleNews.webp';
 import './Updates.css';
@@ -14,9 +33,9 @@ export default function Updates() {
       <span key={idx}>{line}<br /></span>
     ));
   };
-
+ 
   const today = new Date();
-  const todayStr = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+  const todayStr = `${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`;
   const isTuesday = today.getDay() === 2;
 
   const cleanDate = (dateStr) => {
@@ -24,11 +43,10 @@ export default function Updates() {
     const parts = dateStr.split(/[\/\-]/);
     if (parts.length !== 3) return null;
     return `${parts[0]}/${Number(parts[1])}/${Number(parts[2])}`;
-  };
+  }
 
   const grouped = {
     'シェフの気まぐれランチ': [],
-    '臨時休業': [],
     '営業日の変更': [],
     'その他': [],
   };
@@ -67,12 +85,12 @@ export default function Updates() {
     }
 
     if (!isTuesday && data) {
-      const pastLunches = grouped['シェフの気まぐれランチ']
-        .filter(item => cleanDate(item.date) && new Date(cleanDate(item.date)) <= today)
-        .sort((a, b) => new Date(cleanDate(b.date)) - new Date(cleanDate(a.date)));
-    
-      todaysLunch = pastLunches[0] || null;
-    }
+      const allLunches = grouped['シェフの気まぐれランチ']
+    .filter(item => cleanDate(item.date))
+    .sort((a, b) => new Date(cleanDate(b.date)) - new Date(cleanDate(a.date)));
+
+  todaysLunch = allLunches[0] || null;
+}
     
   }
 
@@ -89,19 +107,22 @@ export default function Updates() {
 
       {/* 気まぐれランチ */}
       {todaysLunch?.title && (
-        <section>
-          <h2 className="updatesCategoryTitle">
-            {today.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })} の気まぐれランチ
-          </h2>
-          <ul className="updatesList">
-            <p className="lunchText">
-              {todaysLunch.link
-                ? <a href={todaysLunch.link}>{todaysLunch.title}</a>
-                : todaysLunch.title}
-            </p>
-          </ul>
-        </section>
-      )}
+  <section>
+    <h2 className="updatesCategoryTitle">
+      {new Date(cleanDate(todaysLunch.date)).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })} の気まぐれランチ
+    </h2>
+
+    <ul className="updatesList">
+  <li className="lunchText">
+    {todaysLunch.link
+      ? <a href={todaysLunch.link}>{todaysLunch.title}</a>
+      : todaysLunch.title}
+  </li>
+</ul>
+
+  </section>
+)}
+
 
       {/* 営業日の変更 */}
       {grouped['営業日の変更'].some(it => it.title || it.link) && (
@@ -122,7 +143,7 @@ export default function Updates() {
       {/* その他 */}
       {grouped['その他'].some(it => it.title || it.link) && (
         <section>
-          <h2 className="updatesCategoryTitle">その他</h2>
+          <h2 className="updatesCategoryTitle">お知らせ</h2>
           <ul className="othersList">
             {grouped['その他']
               .filter(it => it.title || it.link)
