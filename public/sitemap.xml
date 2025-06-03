@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<urlset xmlns='htpp://www.sitemaps.org/schemas/sitemap/0.9'>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>https://dining-hills-cafe-ichisara.vercel.app/</loc>
     </url>
@@ -10,7 +10,7 @@
         <loc>https://dining-hills-cafe-ichisara.vercel.app/Menu</loc>
     </url>
     <url>
-        <loc>https://dining-hils-cafe-ichisara.vercel.app/Chef</loc>
+        <loc>https://dining-hills-cafe-ichisara.vercel.app/Chef</loc>
     </url>
     <url>
         <loc>https://dining-hills-cafe-ichisara.vercel.app/Faq</loc>
