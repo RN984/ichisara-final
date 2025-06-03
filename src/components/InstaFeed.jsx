@@ -1,3 +1,5 @@
+{/*ホームページ右カラム下 */}
+
 import './InstaFeed.css';
 import titleInsta from '../assets/titles/titleInsta.webp';
 

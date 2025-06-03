@@ -1,20 +1,20 @@
 import { useState } from "react";
 import "../pages/Chef.css";
 
-export default function ChefProfile({ name, images, intro }) {
+export default function ChefProfile({ altName, name, images, intro }) {
   const [mainImage, setMainImage] = useState(images[0]);
 
   return (
     <div className="chefBlock">
       <div className="chefGrid">
         <div className="chefImages">
-          <img src={mainImage} alt={`${name} メイン`} className="mainImage" />
+          <img src={mainImage} alt={`${altName} メイン`} className="mainImage" />
           <div className="thumbRow">
             {images.map((img, i) => (
               <img
                 key={i}
                 src={img}
-                alt={`${name} サムネ${i + 1}`}
+                alt={`${altName} サムネ${i + 1}`}
                 className={`thumb ${mainImage === img ? "active" : ""}`}
                 onClick={() => setMainImage(img)}
               />

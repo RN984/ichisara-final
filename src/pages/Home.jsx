@@ -10,7 +10,7 @@ import titleHp from '../assets/titles/titleHp.webp';
   return (
     <>
       <div className='pageTitleWrapper'>
-        <PageTitle src={titleHp} alt='ホームページタイトル'/>
+        <PageTitle src={titleHp} alt='ICHISARA DINING HILLS CAFE イチサラ'/>
       </div>
 
       <div className='contentGrid'>
