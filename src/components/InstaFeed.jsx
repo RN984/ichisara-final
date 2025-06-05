@@ -26,7 +26,7 @@ export default function InstaFeed() {
       <div className="instaHeadingWrapper">
         <img
           src={titleInsta}
-          alt="Instagram見出し"
+          alt="ICHISARA DINING HILLS CAFE Instagram見出し"
           className="instaHeadingImg"
           loading="lazy"
         />
@@ -43,7 +43,7 @@ export default function InstaFeed() {
           >
             <img
               src={post.thumb}
-              alt={`Instagram thumbnail ${i + 1}`}
+              alt={`ICHISARA DINING HILLS CAFE Instagram thumbnail ${i + 1}`}
               loading="lazy"
               decoding="async"
               fetchPriority="low"

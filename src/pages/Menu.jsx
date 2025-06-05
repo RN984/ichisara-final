@@ -46,19 +46,19 @@ export default function Menu() {
         <div className="menuGrid">
 
           <section id="lunch" className="menuWrapper">
-          <img src={menu1} alt="メニュー1" className="menuImg" loading="lazy" />
+          <img src={menu1} alt="ICHISARA DINING HILLS CAFE ランチメニュー" className="menuImg" loading="lazy" />
           </section>
           <div className="menuWrapper">
-          <img src={menu2} alt="メニュー2" className="menuImg" loading="lazy" />
+          <img src={menu2} alt="ICISARA DINING HILLS CAFE 気まぐれランチ" className="menuImg" loading="lazy" />
           </div>
           <section id="cafe" className="menuWrapper">
-          <img src={menu3} alt="メニュー3" className="menuImg" loading="lazy" />
+          <img src={menu3} alt="ICISARA DINING HILLS CAFE カフェメニュー" className="menuImg" loading="lazy" />
           </section>
           <section id="dinner" className="menuWrapper">
-          <img src={menu4} alt="メニュー4" className="menuImg" loading="lazy" />
+          <img src={menu4} alt="ICISARA DINING HILLS CAFE ディナーメニュー" className="menuImg" loading="lazy" />
           </section>
           <section id="other" className="menuWrapper">
-          <img src={menu5} alt="メニュー5" className="menuImg" loading="lazy" />
+          <img src={menu5} alt="KURIBO ピクルス 自家製ドレッシング販売" className="menuImg" loading="lazy" />
           </section>
         </div>
       </div>

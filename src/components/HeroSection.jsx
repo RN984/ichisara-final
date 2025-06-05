@@ -10,7 +10,7 @@ export default function HeroSection() {
       
        {/*イチサラ紹介*/}
       <div className="heroItem">
-        <img src={hero} alt="ICHISARA 看板" width='100%'/>
+        <img src={hero} alt="ICHISARA DINING HILLS CAFE 看板" width='100%'/>
         <p>
   <span>光が差し込む開放的な空間で、<strong>元ファーストクラスシェフ</strong>の絶品グルメを。</span><br /><br/>
   <strong>千葉県酒々井町</strong>の話題のカフェで心ほどける贅沢なひとときをお過ごしください。
@@ -21,7 +21,7 @@ export default function HeroSection() {
       {/*予約方法*/}
       <div className="reservation">
         <h1><br/>ご予約方法</h1>
-        <a href="tel:04734973630" className="phoneResevation">📞電話で予約する<br/></a>
+        <a href="tel:0434973630" className="phoneResevation">📞電話で予約する<br/></a>
         <a href="https://www.instagram.com/ichisara240" className="instagramResevation">💬DMで予約する</a>
       </div>
       {/*アクセス　住所、電話番号など*/}
