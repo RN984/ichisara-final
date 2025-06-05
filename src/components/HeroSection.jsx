@@ -33,7 +33,7 @@ export default function HeroSection() {
       
          TEL：<br/>
         
-        <a href="tel:04734973630" className="phoneNb">043-497-3630</a><br/><br/>
+        <a href="tel:0434973630" className="phoneNb">043-497-3630</a><br/><br/>
         定休日：火曜日<br/>
         <br/> 営業時間：<br/>11:00-17:00<br/>
         18:00-21:00<br/><br/>
