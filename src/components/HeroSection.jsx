@@ -10,7 +10,7 @@ export default function HeroSection() {
       
        {/*イチサラ紹介*/}
       <div className="heroItem">
-        <img src={hero} alt="ICHISARA DINING HILLS CAFE 看板" width='100%'/>
+        <img src={hero} alt="イチサラ 看板" width='100%'/>
         <p>
   <span>光が差し込む開放的な空間で、<strong>元ファーストクラスシェフ</strong>の絶品グルメを。</span><br /><br/>
   <strong>千葉県酒々井町</strong>の話題のカフェで心ほどける贅沢なひとときをお過ごしください。
