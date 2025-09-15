@@ -40,7 +40,7 @@ export default function Home2() {
   return (
     <>
       {/* 1画面目：ヒーロー */}
-      <section ref={ref} className="home2-section" aria-label="hero" style={{ outline: '4px solid magenta' }}>
+      <section ref={ref} className="home2-section" aria-label="hero" >
         <motion.div className="home2-motion" initial={{ opacity: 0 }} animate={imgCtrl}>
           <img src={humberger} alt="Hero" className="home2-img" />
         </motion.div>
