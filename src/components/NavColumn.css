@@ -1,5 +1,5 @@
 .navColumn {
-    width: 100%;
+    max-width:230px;
     height:100vh;
     background-image: url('/src/assets/navbg.webp');
     background-repeat: repeat-y; /* ✅ 縦方向に繰り返す */

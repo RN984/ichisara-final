@@ -43,7 +43,7 @@ export default function Faq() {
         <section id="reservation" className="faqSection">
 
           <div className="faqItem">
-            <h3>◉ランチの予約</h3>
+            <h3>- ランチの予約 -</h3>
             <p>混雑しますと長時間待っていただくことになりますので、お時間と人数が決まっていましたら
               ご予約をお勧めしております。
               <a href="https://www.instagram.com/ichisara240" className="instagramResevation">インスタグラム</a>
@@ -56,13 +56,13 @@ export default function Faq() {
 
 
           <div className="faqItem">
-            <h3>◉ディナーの予約</h3>
+            <h3>- ディナーの予約 -</h3>
             <p>ディナーは前日までのご予約が必須です。忘れずにご予約お願いします。</p>
           </div>
 
 
               <div className="faqItem">
-            <h3>◉限定メニューの予約</h3>
+            <h3>- 限定メニューの予約 -</h3>
             <p>イチサラでは、限定メニューとして２０食限定の「ICHISARAハンバーグ」、「ICHISARA和風ハンバーグ」、
               数量限定の「シェフの気まぐれランチ」がございますが、
               気まぐれランチのみ先着順となっております。
@@ -75,7 +75,7 @@ export default function Faq() {
 
           <section id='pet' className="faqSection">
             <div className="faqItem">
-            <h3>◉ペットの同伴</h3>
+            <h3>- ペットの同伴 -</h3>
                 <p>ランチタイムはテラス席でしたら可能です。ディナータイムの場合は初めにご予約されたお客様が
                   わんちゃん同伴希望でしたら、店内でも同伴可能に致します。ディナータイム、わんちゃん同伴希望
                   の方はお早めのご予約をお勧めいたします。また↓の注意点に目を通していただけますと幸いです。</p>
@@ -93,7 +93,7 @@ export default function Faq() {
 
         <section id="payment" className="faqSection">
           <div className="faqItem">
-          <h3>◉お支払い</h3>
+          <h3>- お支払い- </h3>
           <p>現金、各種カード、PayPayがご利用できます。</p>
           </div>
         </section>
@@ -101,7 +101,7 @@ export default function Faq() {
           
         <section id="others" className="faqSection">
           <div className="faqItem">
-            <h3>◉誕生日のお祝いなどメッセージプレートについて</h3>
+            <h3>- メッセージプレートについて- </h3>
             <p>２種類ございます。<br/><br/>食後に堂島ロール(&nbsp;400&nbsp;円)を注文していただき、<br/>
             ①そのお皿にメッセージを入れる（&nbsp;+300&nbsp;円）<br/>
             ②メッセージ＋オレンジカップ（オレンジの皮を切り細工し、中をくり抜き、フルーツやアイスなどをトッピング）
@@ -112,20 +112,20 @@ export default function Faq() {
           </div>
           
           <div className="faqItem">
-            <h3>◉車椅子、ベビーカー</h3>
+            <h3>- 車椅子 / ベビーカー -</h3>
             <p>店内、テラス席どちらも歓迎しております。
             </p>
             </div>
 
 
           <div className="faqItem">
-          <h3>◉駐車場</h3>
+          <h3>- 駐車場 -</h3>
           <p>店舗前の駐車場は14台駐車可能です。店舗前の駐車場が満車の場合、スタッフまでご連絡ください。
           </p>
           </div>
 
           <div className="faqItem">
-            <h3>◉混雑時のお願い</h3>
+            <h3>- 混雑時のお願い -</h3>
             <p>混雑時はお料理提供に時間がかかる場合がございます。あらかじめご了承くださいませ。
               大変心苦しいですが、他のお客様が待っていらっしゃる場合は、２時間程度の滞在時間にご協力を
               お願い致しております。

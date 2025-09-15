@@ -1,30 +1,102 @@
-/*画像の配置*/
+/* 画像の配置 */
 .menuGrid {
-    display: flex;
-    justify-content: center;
-    gap:40px;
-    flex-wrap: wrap; 
-    padding: 60px 20px;
-  }
-  
-  .menuImg:hover {
-    transform: scale(1.01);
-  }
-  
-  .menuImg {
-    display: block;
-    width: 100%;
-    height:auto;
-    max-width: 100%;
-    border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 60px 20px;
 }
 
-.menuNav a{
+.menuImg:hover {
+  transform: scale(1.01);
+}
+
+/* 閉じている間は .onlyWhenOpen を隠す */
+.panel:not(.open) .onlyWhenOpen { display: none; }
+
+/* 開いたときの見栄え（2枚目の上に余白） */
+.panel.open .menuImg + .menuImg { margin-top: 16px; }
+
+/* お好みでフェードイン */
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+.panel.open .onlyWhenOpen { animation: fadeIn .2s ease; }
+
+
+.menuImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  border-radius: 30px;
+}
+
+/* ナビのクラス名は menuNav に統一 */
+.menuNav a {
   text-decoration: underline;
   margin: 8px;
   color: #333;
 }
-
-.menuNav{
+.menuNav {
   text-align: center;
+}
+
+/* 折りたたみ */
+.collapsible .panel {
+  position: relative;
+  overflow: hidden;
+  transition: max-height 260ms ease;
+  border-radius: 12px;
+}
+
+/* 白いぼかしのオーバーレイ */
+.fadeOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px; /* ぼかしの高さ */
+  background: linear-gradient(to top, rgb(255, 255, 255), rgba(255,255,255,0));
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 10px;
+}
+
+/* 「もっと見る」ボタンをオーバーレイ内に表示 */
+.overlayBtn {
+  background: #ffffff7b;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 15px;
+  font-weight: bold;
+  color: #929191;
+}
+.overlayBtn:hover {
+  background: #f7f7f7;
+}
+
+/* 開いたときの閉じるボタン */
+.toggleBtn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+.toggleBtn:hover {
+  background: #f7f7f7;
+}
+
+.home2-title {
+  /* 既存のスタイルはそのままにしてOK */
+  font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro",
+               "YuMincho", "游明朝",
+               "MS PMincho", "MS 明朝",
+               "Noto Serif JP", serif;
+  font-weight: 500; /* 太さは好みに応じて 600〜900 あたり */
 }

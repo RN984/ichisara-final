@@ -1,0 +1,21 @@
+/* リンク風の共通スタイル */
+.buck {
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0;
+  font: inherit;
+  line-height: 1;
+  color: #551A8B;                 /* いわゆる“リンクの紫” */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+/* レイアウトはそのまま */
+.galleryNav {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}

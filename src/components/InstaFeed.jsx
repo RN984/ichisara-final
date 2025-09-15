@@ -24,12 +24,19 @@ export default function InstaFeed() {
     <section className="instaSection">
       {/*見出し部分 */}
       <div className="instaHeadingWrapper">
+         <a
+          href="https://www.instagram.com/ichisara240/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="ICHISARA DINING HILLSのInstagramプロフィールへ"
+        >
         <img
           src={titleInsta}
           alt="イチサラ Instagram見出し"
           className="instaHeadingImg"
           loading="lazy"
         />
+         </a>
       </div>
       {/*グリッド表示部分 */}
       <div className="instaGrid">

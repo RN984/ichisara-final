@@ -5,24 +5,28 @@ html {
   font-size:100% ;
 }
 
-html, body,#root{
+html, body, #root {
+  margin: 0;
+  padding: 0;
   width: 100%;
+  min-height: 100%;
+}
+
+
+/*背景、フォント*/
+body {
+  background: #fff url('/body.webp') top left repeat;
+  background-size: auto;
+  font-family: 'Hiragino Maru Gothic ProN','Meiryo',sans-serif;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }
 
-/*背景、フォント*/
-body {
-  background-color: #ffffff; /* 失敗時に白ベース */
-  background-image: url('/src/assets/body.webp');
-  background-repeat: repeat;
-  background-size: auto;
-  background-position: top left;
-  font-family:
-  'Hiragino Maru Gothic ProN',
-  'Meiryo',
-  'sans-serif';
-}
 
 /*
 -------------------------
@@ -35,7 +39,7 @@ body {
 .mainGrid {
   display: grid;
   grid-template-columns: 15% 1fr;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: 0 auto;
   min-height: 100%;
 }
@@ -50,6 +54,7 @@ body {
     .pageTitleWrapper{
       text-align: center;
     }
+
 
 
 @media (max-width: 768px) {
