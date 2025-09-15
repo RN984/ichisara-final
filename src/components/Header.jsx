@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';  //
 
 export default function Header() {
   return (
-      <Link to="/gallery" aria-label="ギャラリーへ移動">
+      <Link to="/gallery" aria-label="ギャラリーへ移動" className='header-img'>
         <img src={Headerimg} alt="イチサラ ヘッダー画像" loading="lazy" />
       </Link>
   );

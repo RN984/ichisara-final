@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import RootChooser from "./entry/RootChooser.jsx";
 import "./index.css";
+import "./pages/Home2.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

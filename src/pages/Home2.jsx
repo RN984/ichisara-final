@@ -2,10 +2,9 @@ import { useInView } from "react-intersection-observer";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import humberger from "../assets/humberger.webp"; // 背景
-import "./Home2.css";
 import Home from "./Home.jsx";
 import Layout from "../components/Layout.jsx";
-
+import "./Home2.css";
 
 export default function Home2() {
   const { ref, inView } = useInView({ threshold: 0.1 });
@@ -41,7 +40,7 @@ export default function Home2() {
   return (
     <>
       {/* 1画面目：ヒーロー */}
-      <section ref={ref} className="home2-section" aria-label="hero">
+      <section ref={ref} className="home2-section" aria-label="hero" style={{ outline: '4px solid magenta' }}>
         <motion.div className="home2-motion" initial={{ opacity: 0 }} animate={imgCtrl}>
           <img src={humberger} alt="Hero" className="home2-img" />
         </motion.div>
@@ -52,7 +51,7 @@ export default function Home2() {
 
       </section>
       <Layout>
-        <div id="home-under-hero">
+        <div id="home-under-hero" >
         <Home />
       </div>
       </Layout>

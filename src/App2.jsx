@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import ScrollToTop from "./components/ScrollToTop";
 import { useEffect } from "react";
 import Layout from './components/Layout.jsx';

@@ -1,47 +1,47 @@
-/* 1画面目（ヒーロー） */
-.heroWrap {
-  /* お好みで 160〜220svh に調整 */
-  height: 180svh; /* ← まずはコレで様子見 */
-}
 
-/* 画面上部に貼り付ける */
-.heroSticky {
-  position: sticky;
-  top: 0;
-}
+/* 1画面目（ヒーロー） */
 
 .home2-section {
-  position: relative;
-  width: 100%;      /* ← 100vw は横ズレ出やすいので 100% に */
-  height: 100svh;   /* ← iOSでも安定 */
-  overflow: hidden;
+  position: relative;      /* 絶対配置の基準にする */
+  min-height: 100dvh;      /* 1画面ぶんの高さを確保（iOSはdvhが安全） */
+  overflow: clip;          /* はみ出し防止（任意） */
+  display: block;          /* 念のため明示 */
 }
 
+.home2-motion {            /* 背景レイヤー */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.home2-title {             /* タイトル最前面 */
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 10;
+}
+
+/* 画像レイヤー */
 .home2-motion {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   will-change: opacity, filter, transform;
-  z-index: 0;       /* ← 背面（画像レイヤー） */
+  z-index: 0;
 }
 
+/* 背景画像は全面カバー */
 .home2-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* 明朝体 */
-.mincho {
-  font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro",
-               "YuMincho", "游明朝",
-               "MS PMincho", "MS 明朝",
-               "Noto Serif JP", serif;
-  font-weight: 700;
-}
-
-/* タイトルのオーバーレイ */
+/* タイトルは最前面に */
 .home2-title {
   position: absolute;
   inset: 0;
@@ -51,7 +51,11 @@
   color: #fff;
   font-size: clamp(28px, 6vw, 64px);
   letter-spacing: 0.08em;
-  text-shadow: 0 2px 14px rgba(0,0,0,0.35), 0 0 2px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 14px rgba(0,0,0,.35), 0 0 2px rgba(0,0,0,.2);
   pointer-events: none;
-  z-index: 1;       /* ← 最前面に */
+  z-index: 10;
 }
+
+/* ヘッダーが潜り込む時の保険（ヘッダー側のCSSに） */
+header { position: relative; z-index: 20; }
+
