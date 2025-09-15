@@ -67,7 +67,7 @@ export default function RootChooser() {
   }, []);
 
   if (!Comp) {
-    return <div style={{ textAlign: "center", marginTop: 100 }}>環境を判定中…</div>;
+    return <div style={{ textAlign: "center", marginTop: 100 }}>少々お待ちください…</div>;
   }
   const Chosen = Comp;
   return <Chosen />;
