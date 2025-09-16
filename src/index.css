@@ -20,7 +20,7 @@ body {
   background: #fff url('/body.webp') top left repeat;
   background-size: auto;
     font-family:body {
-  font-family: "Hiragino Maru Gothic ProN", system-ui, sans-serif;
+  font-family: "Hiragino Maru Gothic ProN",'Meiryo', system-ui, sans-serif;
 }
 
 }
