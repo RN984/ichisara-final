@@ -74,12 +74,13 @@ export default function Home2() {
           ICHISARA DAINING HILLS CAFE
         </motion.h1>
       </section>
-
+<div id="home-under-hero" ref={targetRef}>
       <Layout>
-        <div id="home-under-hero" ref={targetRef}>
+        
           <Home />
-        </div>
+        
       </Layout>
+      </div>
     </>
   );
 }
