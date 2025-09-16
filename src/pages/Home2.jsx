@@ -1,19 +1,45 @@
 import { useInView } from "react-intersection-observer";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import humberger from "../assets/humberger.webp"; // 背景
 import Home from "./Home.jsx";
 import Layout from "../components/Layout.jsx";
 import "./Home2.css";
 
 export default function Home2() {
-  const { ref, inView } = useInView({ threshold: 0.1 });
+  const { ref: heroRef, inView: heroInView } = useInView({ threshold: 0.1 });
+  const { ref: targetRef, inView: targetInView } = useInView({ threshold: 0.4 });
 
   const imgCtrl = useAnimation();
   const textCtrl = useAnimation();
+  const timerRef = useRef(null);
 
+  // 5秒後にHomeへスクロール（条件を満たすときだけ）
   useEffect(() => {
-    if (!inView) {
+    if (targetInView || !heroInView) return;
+
+    timerRef.current = setTimeout(() => {
+      if (targetInView || !heroInView) return;
+
+      const prefersReducedMotion = window.matchMedia?.(
+        "(prefers-reduced-motion: reduce)"
+      )?.matches;
+
+      document.getElementById("home-under-hero")?.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    }, 6000);
+
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = null;
+    };
+  }, [heroInView, targetInView]);
+
+  // アニメーション（元のまま）
+  useEffect(() => {
+    if (!heroInView) {
       imgCtrl.set({ opacity: 0, filter: "blur(0px)" });
       textCtrl.set({ opacity: 0, y: 10 });
       return;
@@ -35,12 +61,11 @@ export default function Home2() {
         transition: { duration: 0.8, ease: "easeOut" },
       });
     })();
-  }, [inView, imgCtrl, textCtrl]);
+  }, [heroInView, imgCtrl, textCtrl]);
 
   return (
     <>
-      {/* 1画面目：ヒーロー */}
-      <section ref={ref} className="home2-section" aria-label="hero" >
+      <section ref={heroRef} className="home2-section" aria-label="hero">
         <motion.div className="home2-motion" initial={{ opacity: 0 }} animate={imgCtrl}>
           <img src={humberger} alt="Hero" className="home2-img" />
         </motion.div>
@@ -48,14 +73,13 @@ export default function Home2() {
         <motion.h1 className="home2-title mincho" initial={{ opacity: 0, y: 10 }} animate={textCtrl}>
           ICHISARA DAINING HILLS CAFE
         </motion.h1>
-
       </section>
-      <Layout>
-        <div id="home-under-hero" >
-        <Home />
-      </div>
-      </Layout>
 
+      <Layout>
+        <div id="home-under-hero" ref={targetRef}>
+          <Home />
+        </div>
+      </Layout>
     </>
   );
 }
