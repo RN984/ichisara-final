@@ -101,7 +101,7 @@ export default function PhotoGrid({ items = [] }) {
               aria-label="一覧に戻る"
               title="一覧に戻る"
             >
-              ↩
+              {"\u21A9\uFE0E"}
             </button>
 
             {/* 画像 */}
