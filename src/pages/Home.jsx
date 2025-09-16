@@ -7,7 +7,7 @@ import titleHp from '../assets/titles/titleHp.webp';
 import { Link } from "react-router-dom";
 
   export default function Home () {
-
+//
   return (
     <>
       <div className='pageTitleWrapper'>
