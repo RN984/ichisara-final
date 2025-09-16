@@ -46,8 +46,8 @@
     flex: 1 1 auto; 
     display: flex;
     flex-wrap:wrap ;
-    justify-content: end;
-    align-items:end;
+    justify-content: center;
+    align-items:center;
     padding-top: 40px;
     padding-right: 12px;
   }
