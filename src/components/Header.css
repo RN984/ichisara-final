@@ -1,6 +1,6 @@
 /* ヘッダーコンテナ：高さを70pxに固定し、絶対配置の基準にする */
 .header {
-  height: 70px;
+  height: 10%;
   position: relative; /* 子要素のabsolute配置に備える */
   overflow: hidden;   /* はみ出す部分は隠す */
 }
