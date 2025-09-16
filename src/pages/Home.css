@@ -9,7 +9,7 @@
 
 
 .contentGrid{
-    display: flex;
+    display: grid;
     grid-template-columns: minmax(250px,30%) 1fr;
     width: 100%;
     align-items: stretch;
