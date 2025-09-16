@@ -22,6 +22,9 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 6px;
+  border-bottom: 1px dashed #ccc;
+  padding-left: 0;
+  padding-bottom: 40px;
 }
 
 .instaGrid a {
@@ -43,3 +46,4 @@
 .instaGrid img:hover {
   transform: scale(1.05);
 }
+

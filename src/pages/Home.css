@@ -9,10 +9,18 @@
 
 
 .contentGrid{
-    display: grid;
+    display: flex;
     grid-template-columns: minmax(250px,30%) 1fr;
     width: 100%;
+    align-items: stretch;
+    padding-bottom: 100px;
   }
+
+.updatesColumn{
+      display: flex;
+      flex-direction: column; 
+          
+}
 
   .heroColumn{
     display: flex;
@@ -26,9 +34,25 @@
     width:100%;
     border-radius: 8px;
     overflow: hidden;
+
+      
   }
   
   .heroItem-map a{
+    color: black;
+  }
+
+  .galleryLinkBtn {
+    flex: 1 1 auto; 
+    display: flex;
+    flex-wrap:wrap ;
+    justify-content: end;
+    align-items:end;
+    padding-top: 40px;
+    padding-right: 12px;
+  }
+
+  .galleryLinkBtn a{
     color: black;
   }
 
