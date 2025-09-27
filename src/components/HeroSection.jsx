@@ -15,19 +15,20 @@ export default function HeroSection() {
   <span>光が差し込む開放的な空間で、<strong>元ファーストクラスシェフ</strong>の絶品グルメを。</span>
 </p>
       </div>
-      <p className='herodetail'>
-<br/>定休日：火曜日<br/>
-        <br/> 営業時間：<br/>11:00-17:00<br/>
-        18:00-21:00<br/>
-        
-        ※ランチのラストオーダーは14:30です<br/>※ディナーは前日までの予約制です
-         </p>
+
       
       {/*予約方法*/}
       <div className="reservation">
         <h3>ご予約方法</h3>
         <a href="tel:0434973630" className="phoneResevaßtion">📞電話で予約する<br/></a>
         <a href="https://www.instagram.com/ichisara240" className="instagramResevation">💬DM (メッセージ) で予約する</a>
+              <p className='herodetail'>
+<br/>定休日：火曜日<br/>
+        <br/> 営業時間：<br/>11:00-17:00<br/>
+        18:00-21:00<br/>
+        
+        ※ランチのラストオーダーは14:30です<br/>※ディナーは前日までの予約制です
+         </p>
       </div>
       {/*アクセス　住所、電話番号など*/}
       <div className="address">
