@@ -27,13 +27,13 @@ export default function HeroSection() {
       <div className="reservation">
         <h3>ご予約方法</h3>
         <a href="tel:0434973630" className="phoneResevaßtion">📞電話で予約する<br/></a>
-        <a href="https://www.instagram.com/ichisara240" className="instagramResevation">💬DMで予約する</a>
+        <a href="https://www.instagram.com/ichisara240" className="instagramResevation">💬DM (メッセージ) で予約する</a>
       </div>
       {/*アクセス　住所、電話番号など*/}
       <div className="address">
         <h3>アクセス</h3>
         
-        <span>
+        <span  className='herodetail'>
           TEL：<br/>     
         <a href="tel:0434973630" className="phoneNb">043-497-3630</a><br/><br/>住所：
         <a href = 'https://maps.app.goo.gl/1xjnVfYvYMPf9WFR8' 
