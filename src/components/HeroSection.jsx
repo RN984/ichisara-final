@@ -15,10 +15,11 @@ export default function HeroSection() {
   <span>光が差し込む開放的な空間で、<strong>元ファーストクラスシェフ</strong>の絶品グルメを。</span>
 </p>
       </div>
+      <p className='herodetail'>
 <br/>定休日：火曜日<br/>
         <br/> 営業時間：<br/>11:00-17:00<br/>
         18:00-21:00<br/>
-        <p className='herodetail'>
+        
         ※ランチのラストオーダーは14:30です<br/>※ディナーは前日までの予約制です
          </p>
       
