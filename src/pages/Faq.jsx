@@ -102,7 +102,7 @@ export default function Faq() {
         <section id="others" className="faqSection">
           <div className="faqItem">
             <h3>- メッセージプレートについて- </h3>
-            <p>２種類ございます。<br/><br/>食後に堂島ロール(&nbsp;400&nbsp;円)を注文していただき、<br/>
+            <p>２種類ございます。<br/><br/>食後に堂島ロール(&nbsp;500&nbsp;円)を注文していただき、<br/>
             ①そのお皿にメッセージを入れる（&nbsp;+300&nbsp;円）<br/>
             ②メッセージ＋オレンジカップ（オレンジの皮を切り細工し、中をくり抜き、フルーツやアイスなどをトッピング）
             （&nbsp;+1100&nbsp;円）<br/><br/>
