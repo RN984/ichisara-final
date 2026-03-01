@@ -47,7 +47,7 @@ export default function Faq() {
             <p>混雑しますと長時間待っていただくことになりますので、お時間と人数が決まっていましたら
               ご予約をお勧めしております。
               <a href="https://www.instagram.com/ichisara240" className="instagramResevation">インスタグラム</a>
-              のDM、お急ぎの方は
+              の DM、お急ぎの方は
               <a href="tel:04734973630" className="phoneNb">お電話</a>
               からご予約お待ちしております。
               また、混雑具合は日によりますので、ご予約されていないお客様もお気軽にお越しください。
