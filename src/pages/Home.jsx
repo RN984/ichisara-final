@@ -77,9 +77,9 @@ export default function Home({ hideCover = false }) {
           <div className="hero-text">
             <div>
               <div className="hero-tag">Signature · Hamburg Steak</div>
-              <h1 className="hero-title jp">光が差し込む空間で、<br/><em>元ファーストクラスシェフ</em>の一皿を。</h1>
+              <h1 className="hero-title jp">光が差し込む空間で、<em>元ファーストクラスシェフ</em>の一皿を。</h1>
             </div>
-            <div className="hero-meta en">Est. 2024<br/>Shisui, Chiba</div>
+            <div className="hero-meta en">Est. 2024 · Shisui, Chiba</div>
           </div>
         </div>
       </section>

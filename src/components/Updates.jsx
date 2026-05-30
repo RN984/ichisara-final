@@ -77,11 +77,9 @@ export default function Updates() {
     todayBanner = '本日　通常営業 / 気まぐれランチあり';
   }
 
-  const displayRows = [
-    ...grouped['シェフの気まぐれランチ'].slice(0, 3),
-    ...grouped['営業日の変更'].slice(0, 3),
-    ...grouped['その他'].slice(0, 2),
-  ].sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付']))).slice(0, 6);
+  const displayRows = rows
+    .filter(r => cleanDate(r['日付']))
+    .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
 
   if (!data) {
     return (

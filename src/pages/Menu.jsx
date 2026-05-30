@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useSWR from 'swr';
 import './Menu.css';
 
 import humberger2 from '../assets/Gallery/humberger2.webp';
@@ -6,42 +7,42 @@ import roll from '../assets/Gallery/dojimaroll.webp';
 import curry from '../assets/Gallery/curry.webp';
 import pan from '../assets/Gallery/pan.webp';
 
-const tabs = [
-  { id: 'lunch',  jp: 'ランチ',   en: 'Lunch' },
-  { id: 'cafe',   jp: 'カフェ',   en: 'Cafe & Sweets' },
-  { id: 'dinner', jp: 'ディナー', en: 'Dinner' },
-  { id: 'other',  jp: 'その他',   en: 'Goods' },
-];
+import { useDriveFolder, resolveUrl } from '../hooks/useDriveFolder';
 
-const tabImages = { lunch: humberger2, cafe: roll, dinner: curry, other: pan };
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
+const fetcher = url => fetch(url).then(r => r.json());
 
-const menuData = {
-  lunch: [
-    { name: 'ICHISARA ハンバーグ', en: 'Signature Hamburg Steak', desc: '20食限定 / 元ファーストクラスシェフの真骨頂。デミグラスソースとホワイトソースの二重奏。', price: '¥ 2,200' },
-    { name: 'ICHISARA 和風ハンバーグ', en: 'Wafu Hamburg', desc: '20食限定 / 大根おろしとポン酢、和の出汁が香るもうひとつの主役。', price: '¥ 2,200' },
-    { name: '秘伝のカレー', en: 'First-Class Lounge Curry', desc: '空港のファーストラウンジで提供されていた一皿を、そのままに。', price: '¥ 1,800' },
-    { name: 'シェフの気まぐれランチ', en: "Chef's Whim", desc: '数量限定・先着順。内容は日替わり。', price: '¥ 1,650〜' },
-  ],
-  cafe: [
-    { name: '堂島ロール', en: 'Dojima Roll', desc: '千葉でここだけ。卵の風味豊かな生地と軽やかなクリーム。', price: '¥ 500' },
-    { name: 'メッセージプレート', en: 'Message Plate', desc: '堂島ロールにメッセージ。お祝いに。', price: '+¥ 300' },
-    { name: 'オレンジカップ', en: 'Orange Cup', desc: 'オレンジの皮を細工し、フルーツとアイスを。', price: '+¥ 1,100' },
-    { name: 'コーヒー / 紅茶', en: 'Coffee / Tea', desc: 'ハンドドリップ / セレクション。', price: '¥ 550' },
-  ],
-  dinner: [
-    { name: 'ICHISARA コース A', en: 'Course A · 5 dishes', desc: '前菜・スープ・魚または肉・デザート・ドリンク。前日までの予約制。', price: '¥ 5,500' },
-    { name: 'ICHISARA コース B', en: 'Course B · 7 dishes', desc: 'シェフのおまかせコース。お祝い・記念日に。', price: '¥ 8,800' },
-    { name: 'ペアリングワイン', en: 'Wine Pairing', desc: 'ソムリエセレクト 3 種。', price: '+¥ 3,300' },
-  ],
-  other: [
-    { name: 'KURIBO ピクルス', en: 'Kuribo Pickles', desc: '店頭・テイクアウト販売。3 種より選べます。', price: '¥ 900' },
-    { name: '自家製ドレッシング', en: 'House Dressing', desc: '和風 / 玉ねぎ / バルサミコ。お土産にも。', price: '¥ 1,200' },
-  ],
-};
+const fallbackImages = { 'ランチ': humberger2, 'カフェ': roll, 'ディナー': curry, 'その他': pan };
 
 export default function Menu() {
-  const [tab, setTab] = useState('lunch');
-  const cur = tabs.find(t => t.id === tab);
+  const { data: menuTable } = useSWR(
+    `https://opensheet.elk.sh/${SHEET_ID}/M_%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E8%A1%A8`,
+    fetcher
+  );
+  const { data: menuItems } = useSWR(
+    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%A2%E3%82%A4%E3%83%86%E3%83%A0`,
+    fetcher
+  );
+
+  const thumbMap = useDriveFolder(import.meta.env.VITE_DRIVE_THUMB_FOLDER, 'image');
+  const pdfMap   = useDriveFolder(import.meta.env.VITE_DRIVE_PDF_FOLDER,   'pdf');
+
+  const [tab, setTab] = useState('');
+
+  const tabs = Array.isArray(menuTable) ? menuTable : [];
+  const activeId = tab || (tabs[0]?.ID ?? '');
+  const activeTab = tabs.find(t => t.ID === activeId);
+
+  const items = Array.isArray(menuItems)
+    ? menuItems
+        .filter(r => r['削除'] !== 'TRUE' && r['種別'] === activeId)
+        .sort((a, b) => Number(a['並び替え']) - Number(b['並び替え']))
+    : [];
+
+  const imgSrc = resolveUrl(activeTab?.['サムネイル'], thumbMap)
+    ?? fallbackImages[activeTab?.['種別']]
+    ?? humberger2;
+  const pdfUrl = resolveUrl(activeTab?.['PDF'], pdfMap);
 
   return (
     <>
@@ -51,44 +52,57 @@ export default function Menu() {
           <h1>メニュー</h1>
           <div className="en-name">Lunch · Cafe · Dinner · Goods</div>
         </div>
-        <div className="page-hero-meta">
-          価格はすべて税込
-        </div>
+        <div className="page-hero-meta">価格はすべて税込</div>
       </div>
 
       <div className="shell" style={{ paddingTop: 32, paddingBottom: 100 }}>
-        <div className="menu-tabs">
-          {tabs.map(t => (
-            <button
-              key={t.id}
-              className={`menu-tab${tab === t.id ? ' active' : ''}`}
-              onClick={() => setTab(t.id)}
-            >
-              <span className="en">{t.en}</span>
-              {t.jp}
-            </button>
-          ))}
-        </div>
+        {tabs.length === 0 ? (
+          <div className="menu-loading">読み込み中…</div>
+        ) : (
+          <>
+            <div className="menu-tabs">
+              {tabs.map(t => (
+                <button
+                  key={t.ID}
+                  className={`menu-tab${activeId === t.ID ? ' active' : ''}`}
+                  onClick={() => setTab(t.ID)}
+                >
+                  {t['種別']}
+                </button>
+              ))}
+            </div>
 
-        <div className="menu-display reveal">
-          <div className="menu-image">
-            <img src={tabImages[tab]} alt={cur.jp} />
-          </div>
-          <div className="menu-list">
-            <h3>{cur.jp}</h3>
-            <div className="en-caps">{cur.en}</div>
-            {menuData[tab].map((item, i) => (
-              <div className="menu-item" key={i}>
-                <div>
-                  <h4>{item.name}</h4>
-                  <p>{item.desc}</p>
-                  <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--green)', marginTop: 4 }}>{item.en}</p>
-                </div>
-                <div className="menu-price">{item.price}</div>
+            <div className="menu-display reveal">
+              <div className="menu-image">
+                {pdfUrl ? (
+                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                    <img src={imgSrc} alt={activeTab?.['種別']} />
+                  </a>
+                ) : (
+                  <img src={imgSrc} alt={activeTab?.['種別']} />
+                )}
               </div>
-            ))}
-          </div>
-        </div>
+              <div className="menu-list">
+                <h3>{activeTab?.['種別']}</h3>
+                {items.length === 0 ? (
+                  <div className="menu-loading">読み込み中…</div>
+                ) : (
+                  items.map((item, i) => (
+                    <div className="menu-item" key={i}>
+                      <div>
+                        <h4>{item['商品名']}</h4>
+                        {item['備考'] && <p>{item['備考']}</p>}
+                      </div>
+                      {item['値段'] && (
+                        <div className="menu-price">¥ {Number(item['値段']).toLocaleString()}</div>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

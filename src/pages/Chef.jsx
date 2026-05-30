@@ -2,10 +2,8 @@ import './Chef.css';
 
 import nishioMain from '../assets/chef/nishio-main.webp';
 import nishioSub from '../assets/chef/nishio-sub.webp';
-import humberger2 from '../assets/Gallery/humberger2.webp';
 import omiMain from '../assets/chef/omi-main.webp';
 import omiSub from '../assets/chef/omi-sub.webp';
-import curry from '../assets/Gallery/curry.webp';
 
 export default function Chef() {
   return (
@@ -25,7 +23,6 @@ export default function Chef() {
             <div className="chef-feature-images">
               <div className="cf-main"><img src={nishioMain} alt="西尾シェフ" /></div>
               <div className="cf-sub"><img src={nishioSub} alt="西尾シェフ 調理風景" /></div>
-              <div className="cf-sub"><img src={humberger2} alt="シグネチャーハンバーグ" /></div>
             </div>
             <div className="chef-feature-text">
               <h2>西尾 義光</h2>
@@ -55,7 +52,6 @@ export default function Chef() {
             <div className="chef-feature-images">
               <div className="cf-main"><img src={omiMain} alt="尾身シェフ" /></div>
               <div className="cf-sub"><img src={omiSub} alt="尾身シェフ 調理風景" /></div>
-              <div className="cf-sub"><img src={curry} alt="秘伝のカレー" /></div>
             </div>
           </div>
         </section>

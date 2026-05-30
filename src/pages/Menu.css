@@ -31,6 +31,9 @@
 .menu-item p { margin: 0; font-size: 13px; color: var(--ink-muted); line-height: 1.8; }
 .menu-price { font-family: "Cormorant Garamond", serif; font-size: 18px; letter-spacing: 0.04em; color: var(--ink); white-space: nowrap; }
 
+.menu-image a { display: block; }
+.menu-loading { color: var(--ink-muted); font-size: 14px; padding: 24px 0; }
+
 @media (max-width: 960px) {
   .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: none; margin-bottom: 32px; }
   .menu-tab { padding: 13px 8px; white-space: nowrap; border-bottom: 1px solid var(--rule); text-align: center; }
