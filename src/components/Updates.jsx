@@ -26,6 +26,18 @@ const tagLabel = type => {
   return 'Info';
 };
 
+// 本文に含まれる日付文字列を「本日」に置換（当日の行のみ）
+const replaceWithToday = (text, dateStr) => {
+  if (!text || !dateStr) return text;
+  const clean = cleanDate(dateStr);
+  // dateStr（元の形式）と clean（YYYY/M/D形式）の両方を試みる
+  let result = text;
+  for (const pattern of [dateStr, clean].filter(Boolean)) {
+    result = result.replace(pattern, '本日');
+  }
+  return result;
+};
+
 export default function Updates() {
   const { data, error } = useSWR(API_URL, fetcher);
 
@@ -55,11 +67,14 @@ export default function Updates() {
 
   let todayBanner = '';
   if (todaysChanges.length > 0) {
-    todayBanner = todaysChanges.map(r => r['本文']).join('・');
+    // 本文中の日付を「本日」に置換してから結合
+    todayBanner = todaysChanges
+      .map(r => replaceWithToday(r['本文'], r['日付']))
+      .join('・');
   } else if (isTuesday) {
     todayBanner = '本日は定休日です。';
   } else if (latestLunch) {
-    todayBanner = `通常営業 / 気まぐれランチあり`;
+    todayBanner = '本日　通常営業 / 気まぐれランチあり';
   }
 
   const displayRows = [
@@ -79,9 +94,7 @@ export default function Updates() {
   return (
     <div className="news-schedule">
       {todayBanner && (
-        <div className="updates-today">
-          <strong>本日</strong>　{todayBanner}
-        </div>
+        <div className="updates-today">{todayBanner}</div>
       )}
 
       {displayRows.map((r, i) => (
@@ -91,9 +104,14 @@ export default function Updates() {
             <span className="tag">{tagLabel(r['種別'])}</span>
           </div>
           <div className="updates-title">
-            {r['URL'] && r['URL'] !== 'http://' && r['URL'] !== 'https://'
-              ? <a href={r['URL']} target="_blank" rel="noopener noreferrer">{r['本文']}</a>
-              : r['本文']}
+            {(() => {
+              const isToday = cleanDate(r['日付']) === todayStr;
+              const text = isToday ? replaceWithToday(r['本文'], r['日付']) : r['本文'];
+              const hasLink = r['URL'] && r['URL'] !== 'http://' && r['URL'] !== 'https://';
+              return hasLink
+                ? <a href={r['URL']} target="_blank" rel="noopener noreferrer">{text}</a>
+                : text;
+            })()}
           </div>
         </div>
       ))}
