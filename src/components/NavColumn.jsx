@@ -3,14 +3,15 @@ import './NavColumn.css';
 
 export default function NavColumn() {
   return (
-    <nav className="navCol" aria-label="サイトメニュー">
-      <ul>
-        <br /><br />
-        <li><Link to="/">トップ</Link></li>
-        <li><Link to="/chef">シェフ</Link></li>
-        <li><Link to="/menu">メニュー</Link></li>
-        <li><Link to="/faq">質問</Link></li>
-      </ul>
-    </nav>
+    <aside className="rail">
+      <div className="rail-num">No. 001</div>
+      <Link to="/" className="rail-mark" aria-label="トップへ">
+        ICHISARA
+      </Link>
+      <div className="rail-soc">
+        <a href="https://www.instagram.com/ichisara240" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="tel:0434973630">043 · 497 · 3630</a>
+      </div>
+    </aside>
   );
 }

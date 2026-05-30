@@ -1,20 +1,55 @@
-/* リンク風の共通スタイル */
-.buck {
-  background: none !important;
-  border: 0 !important;
-  padding: 0 !important;
-  margin: 0;
-  font: inherit;
-  line-height: 1;
-  color: #551A8B;                 /* いわゆる“リンクの紫” */
-  text-decoration: underline;
-  cursor: pointer;
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  grid-auto-rows: 110px;
 }
+.g-tile {
+  position: relative; overflow: hidden; background: var(--bg-deep); cursor: pointer;
+}
+.g-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+.g-tile:hover img { transform: scale(1.04); }
+.gcap {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 14px 16px;
+  background: linear-gradient(transparent, rgba(20,18,12,0.7));
+  color: oklch(0.98 0.008 80);
+  font-family: "Shippori Mincho", serif; font-size: 13px;
+  opacity: 0; transform: translateY(8px); transition: all .3s;
+}
+.g-tile:hover .gcap { opacity: 1; transform: translateY(0); }
 
-/* レイアウトはそのまま */
-.galleryNav {
-  margin-top: 24px;
-  display: flex;
-  gap: 16px;
-  justify-content: center;
+.g-tile.span-6     { grid-column: span 6; grid-row: span 4; }
+.g-tile.span-4     { grid-column: span 4; grid-row: span 3; }
+.g-tile.span-3     { grid-column: span 3; grid-row: span 3; }
+.g-tile.span-3-tall{ grid-column: span 3; grid-row: span 4; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(15, 12, 8, 0.88);
+  display: grid; place-items: center; padding: 40px;
+}
+.lightbox img { max-width: 90vw; max-height: 80vh; }
+.lb-cap {
+  position: absolute; bottom: 32px; left: 0; right: 0; text-align: center;
+  color: oklch(0.95 0.008 80); font-family: "Shippori Mincho", serif; font-size: 14px; letter-spacing: 0.06em;
+}
+.lb-close {
+  position: absolute; top: 32px; right: 32px;
+  background: none; border: 1px solid oklch(0.6 0 0);
+  color: oklch(0.95 0.008 80); width: 40px; height: 40px; border-radius: 50%; font-size: 22px;
+}
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: none; border: 1px solid oklch(0.5 0 0);
+  color: oklch(0.95 0.008 80); width: 48px; height: 48px; border-radius: 50%; font-size: 24px;
+}
+.lb-nav.prev { left: 32px; }
+.lb-nav.next { right: 32px; }
+
+@media (max-width: 960px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; grid-auto-rows: 116px; }
+  .g-tile { grid-column: span 1 !important; grid-row: span 2 !important; }
+  .g-tile:nth-child(1), .g-tile:nth-child(6) { grid-column: span 2 !important; }
 }

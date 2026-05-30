@@ -1,140 +1,82 @@
+import './Faq.css';
 
-import "./Faq.css";
+const sections = [
+  {
+    id: 'reservation', jp: '予約について', en: 'Reservation',
+    items: [
+      { q: 'ランチの予約はできますか?', a: '混雑時は長時間お待ちいただく場合がございます。お時間と人数が決まっていましたら、Instagram の DM またはお急ぎの方はお電話よりご予約をお勧めしております。ご予約なしでのご来店も大歓迎です。' },
+      { q: 'ディナーは予約必須ですか?', a: 'ディナーは前日までのご予約が必須です。お忘れなく。' },
+      { q: '限定メニューは予約できますか?', a: 'ICHISARA ハンバーグ・和風ハンバーグ（各 20 食）はご予約可能です。シェフの気まぐれランチは先着順となります。' },
+    ],
+  },
+  {
+    id: 'pet', jp: 'ペット同伴', en: 'With Pets',
+    items: [
+      { q: 'ワンちゃんと一緒に入れますか?', a: 'ランチタイムはテラス席なら可能です。ディナータイムは、初めにご予約されたお客様がワンちゃん同伴希望の場合、店内可となります。お早めのご予約をお勧めいたします。' },
+      { q: 'ご利用の際のお願い', a: 'ペットカート / キャリーバッグ / スリングのご利用、椅子やテーブルの上に乗せない、トイレは事前に、ノミダニ予防 / 1 年以内の予防接種をお願いいたします。' },
+    ],
+  },
+  {
+    id: 'payment', jp: 'お支払い', en: 'Payment',
+    items: [
+      { q: '使えるお支払い方法は?', a: '現金 / 各種カード / PayPay がご利用いただけます。' },
+    ],
+  },
+  {
+    id: 'others', jp: 'その他', en: 'Other',
+    items: [
+      { q: 'メッセージプレートはありますか?', a: '2 種類あります。堂島ロール（¥500）＋メッセージ（¥300）または ＋オレンジカップ（¥1,100）。名前（ひらがな）も可能です。' },
+      { q: '車椅子・ベビーカーで入れますか?', a: '店内・テラス席どちらも歓迎しております。' },
+      { q: '駐車場はありますか?', a: '店舗前に 14 台駐車可能です。満車の場合はスタッフまで。' },
+      { q: '混雑時はどうすれば?', a: '事前ご予約がおすすめです。当日・お急ぎの方はお電話でご連絡ください。ご予約なしの来店も大歓迎です。' },
+    ],
+  },
+];
 
-import PageTitle from "../components/PageTitle";
-import titleFaq from '../assets/titles/titleFaq.webp';
-
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+function FaqItem({ q, a }) {
+  return (
+    <details className="faq-item">
+      <summary>
+        <span className="faq-q">{q}</span>
+        <span className="faq-toggle">+</span>
+      </summary>
+      <p>{a}</p>
+    </details>
+  );
+}
 
 export default function Faq() {
-  const location = useLocation();
-
-  useEffect(() => {
-    const id = location.hash?.replace('#', '');
-    if (id) {
-      // 遅延してスクロールすることで「描画が終わってから動作」させる
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 50); // 50ms 遅延（ここが超重要！！）
-    }
-  }, [location]);
-
   return (
-
-<div className="mainContent">
-
-              <div className="pageTitleWrapper">
-                <PageTitle src={titleFaq} alt='FAQページのタイトル'/>
-                </div>
-
-        {/* カテゴリ一覧（アンカーリンク） */}
-        <div className="faqNav">
-          <a href="#reservation">予約</a> 
-          <a href="#pet">ペット同伴</a> 
-          <a href="#payment">お支払いについて</a>
-          <a href="#others">その他</a>
+    <>
+      <div className="page-hero">
+        <div className="page-hero-text">
+          <div className="eyebrow">FAQ · 05</div>
+          <h1>よくあるご質問</h1>
+          <div className="en-name">Frequently Asked Questions</div>
         </div>
+      </div>
 
-        {/* 各カテゴリごとのFAQセクション */}
-        <section id="reservation" className="faqSection">
+      <div className="shell" style={{ paddingTop: 24, paddingBottom: 100 }}>
+        <nav className="faq-nav" aria-label="FAQ カテゴリ">
+          {sections.map(s => (
+            <a key={s.id} href={`#${s.id}`} onClick={e => { e.preventDefault(); document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>
+              {s.jp}
+            </a>
+          ))}
+        </nav>
 
-          <div className="faqItem">
-            <h3>- ランチの予約 -</h3>
-            <p>混雑しますと長時間待っていただくことになりますので、お時間と人数が決まっていましたら
-              ご予約をお勧めしております。
-              <a href="https://www.instagram.com/ichisara240" className="instagramResevation">インスタグラム</a>
-              の DM、お急ぎの方は
-              <a href="tel:04734973630" className="phoneNb">お電話</a>
-              からご予約お待ちしております。
-              また、混雑具合は日によりますので、ご予約されていないお客様もお気軽にお越しください。
-            </p>
-          </div>
-
-
-          <div className="faqItem">
-            <h3>- ディナーの予約 -</h3>
-            <p>ディナーは前日までのご予約が必須です。忘れずにご予約お願いします。</p>
-          </div>
-
-
-              <div className="faqItem">
-            <h3>- 限定メニューの予約 -</h3>
-            <p>イチサラでは、限定メニューとして 20 食限定の「ICHISARA ハンバーグ」、「ICHISARA 和風ハンバーグ」、
-              数量限定の「シェフの気まぐれランチ」がございますが、
-              気まぐれランチのみ先着順となっております。
-              ハンバーグはご予約可能なので、お席ご予約の際にスタッフにお伝えください。
-            </p>
-          </div>
-
-          </section>
-              
-
-          <section id='pet' className="faqSection">
-            <div className="faqItem">
-            <h3>- ペットの同伴 -</h3>
-                <p>ランチタイムはテラス席でしたら可能です。ディナータイムの場合は初めにご予約されたお客様が
-                  わんちゃん同伴希望でしたら、店内でも同伴可能に致します。ディナータイム、わんちゃん同伴希望
-                  の方はお早めのご予約をお勧めいたします。また下記の注意点に目を通していただけますと幸いです。</p>
-            
-            <h3>※ わんちゃんと店内ご利用際の注意</h3>  
-                <p>・ペットカート、キャリーバッグ、スリングのご利用をお願いします。<br/>
-                ・食品衛生上、人間用の食器やカトラリーをわんちゃんに使わないようお願いします。<br/>
-                ・衛生の問題上、椅子やテーブルの上に乗せないようお願いします。<br/>
-                ・おトイレはご来店前に済ませてからご利用ください。<br/>
-                ・ノミ、ダニ予防は済ませてからお越しください。<br/>
-                ・予防接種 (狂犬病など) 1 年以内にワクチンを接種していない場合はご来店できません。</p>  
+        {sections.map((s, si) => (
+          <section className="faq-section" id={s.id} key={s.id}>
+            <h2>
+              <span className="en-caps">{`0${si + 1} · ${s.en}`}</span>
+              {s.jp}
+            </h2>
+            <div style={{ marginTop: 24 }}>
+              {s.items.map((it, i) => <FaqItem key={i} {...it} />)}
             </div>
-            </section>
-
-
-        <section id="payment" className="faqSection">
-          <div className="faqItem">
-          <h3>- お支払い- </h3>
-          <p>現金、各種カード、PayPay がご利用できます。</p>
-          </div>
-        </section>
-
-          
-        <section id="others" className="faqSection">
-          <div className="faqItem">
-            <h3>- メッセージプレートについて- </h3>
-            <p>2 種類ございます。<br/><br/>食後に堂島ロール (&nbsp;500 &nbsp;円) を注文していただき、<br/>
-            ①そのお皿にメッセージを入れる（&nbsp;+300 &nbsp;円）<br/>
-            ②メッセージ＋オレンジカップ (オレンジの皮を切り細工し、中をくり抜き、フルーツやアイスなどをトッピング)
-            (&nbsp;+1100 &nbsp;円)<br/><br/>
-            ご希望の方をご予約時にスタッフにお伝えください。
-            名前 (平仮名) をメッセージに入れることも可能です。
-            </p>
-          </div>
-          
-          <div className="faqItem">
-            <h3>- 車椅子 / ベビーカー -</h3>
-            <p>店内、テラス席どちらも歓迎しております。
-            </p>
-            </div>
-
-
-          <div className="faqItem">
-          <h3>- 駐車場 -</h3>
-          <p>店舗前の駐車場は 14 台駐車可能です。店舗前の駐車場が満車の場合、スタッフまでご連絡ください。
-          </p>
-          </div>
-
-          <div className="faqItem">
-            <h3>- 混雑時のお願い -</h3>
-            <p>混雑時はお待ち時間が発生する場合がございます。ご予定がお決まりでしたら、事前のご予約がおすすめです。<br/><br/>
-              ご予約は Instagram の DM またはお電話にて承っております。<strong>当日予約やお急ぎの方は、お電話でのご連絡をお願いいたします。</strong> (Instagram の DM は確認・返信にお時間をいただく場合がございます。) 
-              <br/>ご予約なしでのご来店も大歓迎です。            </p>
-          </div>
-
-        
-
           </section>
-        </div>
-        );
-      };
-  
+        ))}
+      </div>
+    </>
+  );
+}

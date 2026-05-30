@@ -1,31 +1,43 @@
-.navColumn {
-    max-width:230px;
-    height:100vh;
-    background-image: url('/src/assets/navbg.webp');
-    background-repeat: repeat-y; /* ✅ 縦方向に繰り返す */
-    background-size:100%;
-    background-position: top center;
-    position: sticky;
-    top:0px;
-  }
-  
-  .navColumn li {
-    margin-bottom: 20px;
-  }
- 
-  .navColumn a{
-    color: rgb(84, 84, 84);
-    text-decoration:none;
-    text-align: center;
-    margin-bottom: 20px;
-  } 
-  .navColumn ul {
-    list-style: none;  
-    padding-left: 8px;
-    margin: 0;
-    align-items: center;
-    margin-bottom: 20px; 
-    text-align: center;
-    justify-content: center;
+.rail {
+  position: fixed; left: 0; top: 0; bottom: 0; width: 76px; z-index: 60;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  padding: 30px 0;
+  background: color-mix(in oklch, var(--bg) 90%, transparent);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-right: 1px solid var(--rule-soft);
+}
 
-  } 
+.rail-num {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 11px; letter-spacing: 0.28em; color: var(--ink-muted);
+  writing-mode: vertical-rl;
+}
+
+.rail-mark {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: "Cormorant Garamond", serif; font-weight: 500;
+  font-size: 30px; letter-spacing: 0.46em; color: var(--ink);
+  text-decoration: none;
+  transition: color .25s;
+}
+.rail-mark:hover { color: var(--green); }
+
+.rail-soc {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: "Cormorant Garamond", serif; font-size: 11px; letter-spacing: 0.34em;
+  color: var(--ink-muted); text-transform: uppercase;
+}
+.rail-soc a {
+  text-decoration: none; display: block; margin: 10px 0; transition: color .2s;
+}
+.rail-soc a:hover { color: var(--green); }
+
+@media (max-width: 960px) {
+  .rail {
+    position: relative; width: 100%; flex-direction: row; height: auto;
+    justify-content: flex-start; padding: 12px 20px; gap: 16px;
+    backdrop-filter: none; border-right: 0; border-bottom: 1px solid var(--rule-soft);
+  }
+  .rail-mark { writing-mode: horizontal-tb; transform: none; font-size: 22px; letter-spacing: 0.24em; }
+  .rail-num, .rail-soc { display: none; }
+}

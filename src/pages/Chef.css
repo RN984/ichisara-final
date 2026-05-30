@@ -1,80 +1,35 @@
-/*
-------------------------------
-title
-------------------------------
-(西尾さんのchefGrid)
-mainImage|chefIntro
-thumb    |
-------------------------------
-(尾身さんのchefgrid)
-------------------------------
-*/
-  
- 
+.chef-feature { padding: 80px 0; }
+.chef-feature:first-of-type { padding-top: 0; }
 
-  .chefGrid {
-    display: grid;
-    grid-template-columns: minmax(200px, 50%) 1fr;
-    gap: 24px;
-    align-items: flex-start;
-    padding-left: 5px;
-    margin-bottom: 60px;
-  }
-  
-  .chefImages {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .mainImage {
-    width: 100%;
-    max-width: 600px;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 8px;
-  }
-  
-  .thumbRow {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .thumb {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 4px;
-    opacity: 0.7;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  
-  .thumb:hover,
-  .thumb.active {
-    opacity: 1;
-    outline: 2px solid #333;
-  }
-  
-  .chefIntro {
-    line-height: 1.6;
-    text-align: start;
-    padding-right: 5px;
-    max-width: 500px;
-  }
+.chef-feature-inner {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: start;
+}
+.chef-feature.right .chef-feature-inner { grid-template-columns: 1fr 1.1fr; }
+.chef-feature.right .chef-feature-text { order: -1; }
 
-  
-  
-  /* 横並びを絶対キープ（スマホでも縦積みにしない） */
-  @media (max-width: 768px) {
-    .chefGrid {
-      grid-template-columns:  100px 1fr;
-      padding-left: 5px;
-    }
-  
-    .thumb {
-      width: 30px;
-      height: 30px;
-    }
-  }
-  
+.chef-feature-images { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cf-main { grid-column: 1 / 3; aspect-ratio: 16/10; overflow: hidden; }
+.cf-sub { aspect-ratio: 4/5; overflow: hidden; }
+.chef-feature-images img { width: 100%; height: 100%; object-fit: cover; }
+
+.chef-feature h2 {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(32px, 4vw, 56px); font-weight: 500; margin: 0; letter-spacing: 0.04em; line-height: 1.2;
+}
+.chef-feature .en-name {
+  font-family: "Cormorant Garamond", serif; font-size: 14px; letter-spacing: 0.32em;
+  text-transform: uppercase; color: var(--green); margin: 12px 0 32px;
+}
+.chef-feature p { font-family: "Shippori Mincho", serif; font-size: 15px; line-height: 2.1; color: var(--ink-soft); }
+
+.chef-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--rule);
+}
+.chef-stat .n { font-family: "Cormorant Garamond", serif; font-size: 36px; color: var(--green); }
+.chef-stat .l { font-family: "Shippori Mincho", serif; font-size: 12px; letter-spacing: 0.18em; color: var(--ink-muted); }
+
+@media (max-width: 960px) {
+  .chef-feature-inner, .chef-feature.right .chef-feature-inner { grid-template-columns: 1fr; gap: 24px; }
+  .chef-feature.right .chef-feature-text { order: 0; }
+}

@@ -1,8 +1,26 @@
+/* ===== ICHISARA — Design System ===== */
+:root {
+  --bg: oklch(0.965 0.012 78);
+  --bg-deep: oklch(0.93 0.018 78);
+  --paper: oklch(0.985 0.006 80);
+  --ink: oklch(0.22 0.012 70);
+  --ink-soft: oklch(0.42 0.012 70);
+  --ink-muted: oklch(0.58 0.012 70);
+  --rule: oklch(0.85 0.015 78);
+  --rule-soft: oklch(0.90 0.012 78);
+  --green: oklch(0.36 0.045 150);
+  --green-soft: oklch(0.52 0.040 150);
+  --green-tint: oklch(0.94 0.020 150);
+  --ochre: oklch(0.58 0.12 58);
+  --notice: oklch(0.50 0.13 35);
+  --shadow: 0 10px 30px -18px rgba(40, 30, 15, 0.18);
+}
 
+* { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-  font-size:100% ;
+  font-size: 100%;
 }
 
 html, body, #root {
@@ -12,61 +30,139 @@ html, body, #root {
   min-height: 100%;
 }
 
-
-/*背景、フォント*/
-
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% -10%, oklch(0.99 0.012 82) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
 
 body {
-  background: #fff url('/body.webp') top left repeat;
-  background-size: auto;
-  font-family: "Hiragino Maru Gothic ProN",'Meiryo', system-ui,sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; cursor: pointer; }
+
+/* ===== Typography utilities ===== */
+.jp { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; font-weight: 500; letter-spacing: 0.02em; }
+.en { font-family: "Cormorant Garamond", "Times New Roman", serif; font-weight: 400; letter-spacing: 0.04em; }
+.en-caps { font-family: "Cormorant Garamond", serif; font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; }
+
+/* ===== Layout: rail + content ===== */
+.layout { display: grid; grid-template-columns: 76px 1fr; min-height: 100vh; position: relative; }
+.content { grid-column: 2; min-width: 0; }
+
+/* ===== Shell (max-width container) ===== */
+.shell { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+
+/* ===== Page hero (shared: Menu, Chef, Gallery, FAQ) ===== */
+.page-hero {
+  padding: 80px 32px 40px;
+  max-width: 1320px; margin: 0 auto;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 32px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.page-hero-text .eyebrow {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px; letter-spacing: 0.36em; text-transform: uppercase; color: var(--green);
+}
+.page-hero-text h1 {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(36px, 5vw, 64px); font-weight: 500;
+  margin: 12px 0 0; letter-spacing: 0.04em; line-height: 1.2;
+}
+.page-hero-text .en-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 18px; letter-spacing: 0.16em; color: var(--ink-muted); margin-top: 6px;
+}
+.page-hero-meta {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 13px; letter-spacing: 0.2em; color: var(--ink-muted); text-align: right;
 }
 
+/* ===== Decorative rule ===== */
+.deco-rule { height: 1px; margin: 4px 0 48px; background: var(--rule); }
 
-/*
--------------------------
-|        ヘッダー       |
--------------------------
-（mainGrid)
-| Nav | メインコンテンツ |
--------------------------
-*/
+/* ===== Scroll reveal ===== */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .85s cubic-bezier(.22,.61,.36,1), transform .85s cubic-bezier(.22,.61,.36,1);
+}
+.js-reveal .reveal.in { opacity: 1; transform: none; }
 
+.js-reveal .reveal .tile,
+.js-reveal .reveal .insta a,
+.js-reveal .reveal .chef-card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.js-reveal .reveal.in .tile,
+.js-reveal .reveal.in .insta a,
+.js-reveal .reveal.in .chef-card { opacity: 1; transform: none; }
+.js-reveal .reveal.in :is(.tile, .insta a, .chef-card):nth-child(1) { transition-delay: .05s; }
+.js-reveal .reveal.in :is(.tile, .insta a, .chef-card):nth-child(2) { transition-delay: .11s; }
+.js-reveal .reveal.in :is(.tile, .insta a, .chef-card):nth-child(3) { transition-delay: .17s; }
+.js-reveal .reveal.in :is(.tile, .insta a, .chef-card):nth-child(4) { transition-delay: .23s; }
+.js-reveal .reveal.in :is(.tile, .insta a, .chef-card):nth-child(5) { transition-delay: .29s; }
+.js-reveal .reveal.in :is(.tile, .insta a, .chef-card):nth-child(6) { transition-delay: .35s; }
 
-.mainGrid {
-  display: grid;
-  grid-template-columns: 15% 1fr;
-  max-width: 1800px;
-  margin: 0 auto;
-  min-height: 100%;
+.js-reveal.reveal-failsafe .reveal,
+.js-reveal.reveal-failsafe .reveal .tile,
+.js-reveal.reveal-failsafe .reveal .insta a,
+.js-reveal.reveal-failsafe .reveal .chef-card {
+  opacity: 1 !important; transform: none !important; transition: none !important;
 }
 
-  .mainContent{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 100%;
+/* ===== Focus / selection ===== */
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+::selection { background: var(--green-tint); color: var(--green); }
+
+/* ===== CTA button (shared) ===== */
+.cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green); color: var(--bg);
+  border: 0; border-radius: 999px;
+  padding: 10px 22px; font-size: 12px; letter-spacing: 0.22em;
+  font-family: "Shippori Mincho", serif;
+  transition: background .2s, transform .2s, box-shadow .2s;
+  box-shadow: 0 6px 18px -10px oklch(0.36 0.045 150 / 0.6);
+  white-space: nowrap; text-decoration: none;
+}
+.cta:hover { background: oklch(0.32 0.045 150); transform: translateY(-1px); box-shadow: 0 10px 22px -10px oklch(0.36 0.045 150 / 0.7); }
+.cta-ghost {
+  background: transparent; color: var(--green);
+  border: 1px solid var(--green); box-shadow: none;
+}
+.cta-ghost:hover { background: var(--green); color: var(--bg); }
+
+/* ===== Responsive ===== */
+@media (max-width: 960px) {
+  .layout { grid-template-columns: 1fr; }
+  .content { grid-column: 1; }
+  .shell { padding: 0 20px; }
+  .page-hero { flex-direction: column; align-items: flex-start; padding: 48px 20px 24px; }
+  .page-hero-meta { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .reveal .tile, .reveal .insta a, .reveal .chef-card {
+    opacity: 1 !important; transform: none !important; transition: none !important;
   }
-
-    .pageTitleWrapper{
-      text-align: center;
-    }
-
-@media (max-width: 768px) {
-  html{
-    font-size: 10px;
-  }
-  .mainContent{
-    gap: 5px;
-  }
-
-
 }
-

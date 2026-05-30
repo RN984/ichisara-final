@@ -1,102 +1,40 @@
-/* 画像の配置 */
-.menuGrid {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding: 60px 20px;
+.menu-tabs {
+  display: flex; gap: 0; border-bottom: 1px solid var(--rule); margin-bottom: 40px;
 }
-
-.menuImg:hover {
-  transform: scale(1.01);
+.menu-tab {
+  background: none; border: 0;
+  padding: 18px 28px;
+  font-family: "Shippori Mincho", serif;
+  font-size: 16px; letter-spacing: 0.15em; color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
 }
+.menu-tab .en { font-family: "Cormorant Garamond", serif; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; display: block; margin-bottom: 2px; opacity: 0.7; }
+.menu-tab:hover { color: var(--ink); }
+.menu-tab.active { color: var(--green); border-bottom-color: var(--green); }
 
-/* 閉じている間は .onlyWhenOpen を隠す */
-.panel:not(.open) .onlyWhenOpen { display: none; }
-
-/* 開いたときの見栄え（2枚目の上に余白） */
-.panel.open .menuImg + .menuImg { margin-top: 16px; }
-
-/* お好みでフェードイン */
-@keyframes fadeIn { from {opacity:0} to {opacity:1} }
-.panel.open .onlyWhenOpen { animation: fadeIn .2s ease; }
-
-
-.menuImg {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 600px;
-  border-radius: 30px;
+.menu-display {
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; padding: 24px 0;
 }
+.menu-image { background: var(--bg-deep); border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); align-self: start; }
+.menu-image img { width: 100%; height: auto; display: block; }
 
-/* ナビのクラス名は menuNav に統一 */
-.menuNav a {
-  text-decoration: underline;
-  margin: 8px;
-  color: #333;
-}
-.menuNav {
-  text-align: center;
-}
+.menu-list h3 { font-family: "Shippori Mincho", serif; font-size: 28px; font-weight: 500; margin: 0 0 4px; }
+.menu-list .en-caps { color: var(--green); font-size: 12px; margin-bottom: 24px; display: block; }
 
-/* 折りたたみ */
-.collapsible .panel {
-  position: relative;
-  overflow: hidden;
-  transition: max-height 260ms ease;
-  border-radius: 12px;
+.menu-item {
+  display: grid; grid-template-columns: 1fr auto; gap: 24px;
+  padding: 18px 0; border-top: 1px dashed var(--rule);
 }
+.menu-item:first-of-type { border-top: 1px solid var(--rule); }
+.menu-item h4 { font-family: "Shippori Mincho", serif; font-size: 16px; margin: 0 0 6px; font-weight: 500; }
+.menu-item p { margin: 0; font-size: 13px; color: var(--ink-muted); line-height: 1.8; }
+.menu-price { font-family: "Cormorant Garamond", serif; font-size: 18px; letter-spacing: 0.04em; color: var(--ink); white-space: nowrap; }
 
-/* 白いぼかしのオーバーレイ */
-.fadeOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100px; /* ぼかしの高さ */
-  background: linear-gradient(to top, rgb(255, 255, 255), rgba(255,255,255,0));
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 10px;
-}
-
-/* 「もっと見る」ボタンをオーバーレイ内に表示 */
-.overlayBtn {
-  background: #ffffff7b;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 2;
-  font-size: 15px;
-  font-weight: bold;
-  color: #929191;
-}
-.overlayBtn:hover {
-  background: #f7f7f7;
-}
-
-/* 開いたときの閉じるボタン */
-.toggleBtn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 8px;
-  background: #fff;
-  cursor: pointer;
-}
-.toggleBtn:hover {
-  background: #f7f7f7;
-}
-
-.home2-title {
-  /* 既存のスタイルはそのままにしてOK */
-  font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro",
-               "YuMincho", "游明朝",
-               "MS PMincho", "MS 明朝",
-               "Noto Serif JP", serif;
-  font-weight: 500; /* 太さは好みに応じて 600〜900 あたり */
+@media (max-width: 960px) {
+  .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: none; margin-bottom: 32px; }
+  .menu-tab { padding: 13px 8px; white-space: nowrap; border-bottom: 1px solid var(--rule); text-align: center; }
+  .menu-tab.active { border-bottom-color: var(--green); }
+  .menu-tab .en { white-space: nowrap; letter-spacing: 0.16em; font-size: 10px; }
+  .menu-display { grid-template-columns: 1fr; gap: 24px; }
 }

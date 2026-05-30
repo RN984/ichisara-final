@@ -1,162 +1,112 @@
-//SHEET_API　str Google SheetsのAPI（url)
-//fetcher func フェッチ関数
-//renderMultiline func 改行レンタリング
-
-//todayStr　Str [today]→YYYY/M/D形式の今日の日付 
-//isTuesday boolean [today]→今日が火曜か
-  //today　Date 今日の日付
-
-//cleanDate func　[dateStr]→item.dateをYYYY/M/D形式に統一
-  //dateStr str 呼び出し元(item.date)から渡される日付文字列
-  //parts arr [dateStr]の/または-で分割した配列
-
-//grouped obj データをカテゴリ(type)別に仕分け
-//todaysNotice str 今日のお知らせのメッセージテキスト
-//todaysLunch　obj　最新の気まぐれランチデータ
-//todaysChanges Arr　今日の営業日の変更のタイトルリスト
-//todaysOthers　Arr　今日のその他カテゴリのタイトルリスト
-//allLunches　Arr ランチデータの日付降順
-
 import useSWR from 'swr';
-import titleNews from '../assets/titles/titleNews.webp';
 import './Updates.css';
 
-const SHEET_API = import.meta.env.VITE_SHEET_API;
+// VITE_SHEET_ID を .env.development / .env.production に設定してください
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
+const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`;
+
 const fetcher = url => fetch(url).then(r => r.json());
 
-export default function Updates() {
-  const { data, error } = useSWR(SHEET_API, fetcher);
+const cleanDate = dateStr => {
+  if (!dateStr) return null;
+  const parts = dateStr.split(/[\/\-]/);
+  if (parts.length !== 3) return null;
+  return `${parts[0]}/${Number(parts[1])}/${Number(parts[2])}`;
+};
 
-  const renderMultiline = (text) => {
-    if (!text) return null;
-    return text.split(/\r?\n/).map((line, idx) => (
-      <span key={idx}>{line}<br /></span>
-    ));
-  };
- 
+const formatDate = dateStr => {
+  const d = cleanDate(dateStr);
+  if (!d) return dateStr ?? '';
+  return new Date(d).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }) + '日';
+};
+
+const tagLabel = type => {
+  if (type === 'シェフの気まぐれランチ') return 'Lunch';
+  if (type === '営業日の変更') return 'Change';
+  return 'Info';
+};
+
+export default function Updates() {
+  const { data, error } = useSWR(API_URL, fetcher);
+
   const today = new Date();
-  const todayStr = `${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`;
+  const todayStr = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
   const isTuesday = today.getDay() === 2;
 
-  const cleanDate = (dateStr) => {
-    if (!dateStr) return null;
-    const parts = dateStr.split(/[\/\-]/);
-    if (parts.length !== 3) return null;
-    return `${parts[0]}/${Number(parts[1])}/${Number(parts[2])}`;
-  }
+  if (error) return null;
+
+  // 新列名: 種別, 日付, 本文, URL
+  const rows = Array.isArray(data) ? data.filter(r => r['削除'] !== 'TRUE') : [];
 
   const grouped = {
-    'シェフの気まぐれランチ': [],
-    '営業日の変更': [],
-    'その他': [],
+    'シェフの気まぐれランチ': rows.filter(r => r['種別'] === 'シェフの気まぐれランチ'),
+    '営業日の変更': rows.filter(r => r['種別'] === '営業日の変更'),
+    'その他': rows.filter(r => r['種別'] !== 'シェフの気まぐれランチ' && r['種別'] !== '営業日の変更'),
   };
 
-  let todaysNotice = '';
-  let todaysLunch = null;
+  const allLunches = grouped['シェフの気まぐれランチ']
+    .filter(r => cleanDate(r['日付']))
+    .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
 
-  if (data) {
-    data.forEach(item => {
-      const type = item.type || 'その他';
-      if (grouped[type]) {
-        grouped[type].push(item);
-      }
-    });
+  const latestLunch = allLunches[0] ?? null;
 
-    const todaysChanges = grouped['営業日の変更']
-      .filter(item => cleanDate(item.date) === todayStr)
-      .map(item => item.title)
-      .filter(Boolean);
+  const todaysChanges = grouped['営業日の変更']
+    .filter(r => cleanDate(r['日付']) === todayStr);
 
-    const todaysOthers = grouped['その他']
-      .filter(item => cleanDate(item.date) === todayStr)
-      .map(item => item.title)
-      .filter(Boolean);
+  let todayBanner = '';
+  if (todaysChanges.length > 0) {
+    todayBanner = todaysChanges.map(r => r['本文']).join('・');
+  } else if (isTuesday) {
+    todayBanner = '本日は定休日です。';
+  } else if (latestLunch) {
+    todayBanner = `通常営業 / 気まぐれランチあり`;
+  }
 
-    if (todaysChanges.length > 0) {
-      todaysNotice += `【営業日の変更】本日は ${todaysChanges.join('、')} です。\n`;
-    }
+  const displayRows = [
+    ...grouped['シェフの気まぐれランチ'].slice(0, 3),
+    ...grouped['営業日の変更'].slice(0, 3),
+    ...grouped['その他'].slice(0, 2),
+  ].sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付']))).slice(0, 6);
 
-    if (todaysOthers.length > 0) {
-      todaysNotice += `【本日】${todaysOthers.join('、')}`;
-    }
-
-    if (!todaysNotice && isTuesday) {
-      todaysNotice = '本日は 定休日です。';
-    }
-
-    if (!isTuesday && data) {
-      const allLunches = grouped['シェフの気まぐれランチ']
-    .filter(item => cleanDate(item.date))
-    .sort((a, b) => new Date(cleanDate(b.date)) - new Date(cleanDate(a.date)));
-
-  todaysLunch = allLunches[0] || null;
-}
-    
+  if (!data) {
+    return (
+      <div className="news-schedule">
+        <div className="updates-today loading">読み込み中…</div>
+      </div>
+    );
   }
 
   return (
-    <div className="updatesSection">
-      <div className="updatesHeadingWrapper">
-        <img src={titleNews} alt="最新投稿" loading="lazy" className="updatesHeadingImg" />
-      </div>
-
-      {/* 今日のお知らせ */}
-      {todaysNotice && (
-        <p className="todaysNotice">{renderMultiline(todaysNotice)}</p>
+    <div className="news-schedule">
+      {todayBanner && (
+        <div className="updates-today">
+          <strong>本日</strong>　{todayBanner}
+        </div>
       )}
 
-      {/* 気まぐれランチ */}
-      {todaysLunch?.title && (
-  <section>
-    <h2 className="updatesCategoryTitle">
-      {new Date(cleanDate(todaysLunch.date)).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' })} の気まぐれランチ
-    </h2>
-
-    <ul className="updatesList">
-  <li className="lunchText">
-    {todaysLunch.link
-      ? <a href={todaysLunch.link}>{todaysLunch.title}</a>
-      : todaysLunch.title}
-  </li>
-</ul>
-
-  </section>
-)}
-
-
-      {/* 営業日の変更 */}
-      {grouped['営業日の変更'].some(it => it.title || it.link) && (
-        <section>
-          <h2 className="updatesCategoryTitle">営業日の変更</h2>
-          <ul className="updatesList">
-            {grouped['営業日の変更'].map((it, idx) => (
-              <li key={`change-${idx}`} className="dayoffText">
-                <strong>{new Date(cleanDate(it.date)).toLocaleDateString('ja-JP', {
-                  month: 'long', day: 'numeric', weekday: 'short',
-                })}</strong>：{renderMultiline(it.title)}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* その他 */}
-      {grouped['その他'].some(it => it.title || it.link) && (
-        <section>
-          <h2 className="updatesCategoryTitle">お知らせ</h2>
-          <ul className="othersList">
-            {grouped['その他']
-              .filter(it => it.title || it.link)
-              .map((it, idx) => (
-                <li key={`other-${idx}`} className="othersText">
-                  {it.link
-                    ? <a href={it.link}>{renderMultiline(it.title)}</a>
-                    : renderMultiline(it.title)}
-                </li>
-              ))}
-          </ul>
-        </section>
-      )}
+      {displayRows.map((r, i) => (
+        <div className={`updates-row${r['種別'] === 'シェフの気まぐれランチ' ? ' lunch' : ''}`} key={i}>
+          <div className="updates-date">
+            {formatDate(r['日付'])}
+            <span className="tag">{tagLabel(r['種別'])}</span>
+          </div>
+          <div className="updates-title">
+            {r['URL'] && r['URL'] !== 'http://' && r['URL'] !== 'https://'
+              ? <a href={r['URL']} target="_blank" rel="noopener noreferrer">{r['本文']}</a>
+              : r['本文']}
+          </div>
+        </div>
+      ))}
     </div>
   );
+}
+
+export { cleanDate, allLunchesFromData };
+
+function allLunchesFromData(data) {
+  if (!Array.isArray(data)) return null;
+  const lunches = data
+    .filter(r => r['種別'] === 'シェフの気まぐれランチ' && r['削除'] !== 'TRUE' && cleanDate(r['日付']))
+    .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
+  return lunches[0] ?? null;
 }

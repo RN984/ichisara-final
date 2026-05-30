@@ -76,9 +76,7 @@ export default function Home2() {
       </section>
 <div id="home-under-hero" ref={targetRef}>
       <Layout>
-        
-          <Home />
-        
+        <Home hideCover />
       </Layout>
       </div>
     </>

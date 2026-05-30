@@ -10,14 +10,13 @@ import Gallery from './pages/Gallery.jsx';
 export default function App() {
   return (
     <BrowserRouter>
-    
       <Routes>
-        <Route path="gallery" element={<Gallery />} /> 
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />         
-          <Route path="menu" element={<Menu />} />   
-          <Route path="chef" element={<Chef />} />  
-          <Route path="faq" element={<Faq />} />  
+          <Route index element={<Home />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="chef" element={<Chef />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="gallery" element={<Gallery />} />
         </Route>
       </Routes>
     </BrowserRouter>

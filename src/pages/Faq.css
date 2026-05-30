@@ -1,34 +1,38 @@
+.faq-nav {
+  display: flex; gap: 32px; padding: 24px 0;
+  border-bottom: 1px solid var(--rule); margin-bottom: 40px; flex-wrap: wrap;
+}
+.faq-nav a {
+  font-family: "Shippori Mincho", serif; font-size: 14px; letter-spacing: 0.12em;
+  color: var(--ink-muted); text-decoration: none; cursor: pointer;
+}
+.faq-nav a:hover { color: var(--green); }
 
-  .faqNav {
-    margin-bottom: 24px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 1.1rem;
-  }
-  
-  .faqNav a {
-    text-decoration: underline;
-    margin: 8px;
-    color: #333;
-  }
-  
-  .faqNav a:hover {
-    text-decoration: underline;
-  }
+.faq-section { padding: 40px 0; }
+.faq-section h2 {
+  font-family: "Shippori Mincho", serif; font-size: 22px; font-weight: 500;
+  letter-spacing: 0.1em; margin: 0 0 4px;
+}
+.faq-section h2 .en-caps {
+  display: block; font-size: 11px; color: var(--green); letter-spacing: 0.36em; margin-bottom: 6px;
+}
 
-  /* カテゴリタイトルの下に点線仕切り */
-  .faqSection h2 {
-    border-bottom: 1px dashed #ccc; 
-  }
-
-  /* ✅質問ごとの点線仕切り */
-  .faqItem {
-    border-bottom: 2px dotted #ccc; 
-    padding: 16px 10px;
- 
-  }
-  
-  .faqItem a{
-    color: #333;
-  }
-
+.faq-item {
+  border-top: 1px solid var(--rule-soft); padding: 20px 0; cursor: pointer;
+}
+.faq-item summary {
+  list-style: none;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  font-family: "Shippori Mincho", serif; font-size: 16px; font-weight: 500;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-q { flex: 1; }
+.faq-toggle {
+  font-family: "Cormorant Garamond", serif; font-size: 22px;
+  color: var(--ink-muted); transition: transform .25s; flex-shrink: 0;
+}
+.faq-item[open] .faq-toggle { transform: rotate(45deg); color: var(--green); }
+.faq-item p {
+  padding: 16px 0 0 0; margin: 0; font-size: 14px; line-height: 2; color: var(--ink-soft);
+}
+.faq-item a { color: var(--green); }

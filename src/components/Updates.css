@@ -1,73 +1,37 @@
-.updatesSection {
-  display: block;
-  width: 100%;
+.news-schedule { padding-top: 4px; }
+
+.updates-today {
+  background: linear-gradient(90deg, var(--green-tint), color-mix(in oklch, var(--green-tint) 40%, var(--paper)));
+  border-left: 2px solid var(--green);
+  border-radius: 0 4px 4px 0;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-family: "Shippori Mincho", serif;
+  font-size: 14px;
+  color: var(--green);
 }
+.updates-today strong { color: var(--green); }
+.updates-today.loading { color: var(--ink-muted); background: var(--bg-deep); border-color: var(--rule); }
 
-
-.updatesHeadingWrapper {
-  text-align: center;
-  margin-bottom: 1rem;
-
+.updates-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  padding: 18px 0;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 14px;
+  align-items: baseline;
 }
+.updates-row:first-of-type { border-top: 0; }
 
-.updatesHeadingImg {
-  width: 30%;
-  max-width: 230px;
-  height: auto;
-  padding-bottom: 20px;
+.updates-date { font-family: "Cormorant Garamond", serif; letter-spacing: 0.1em; color: var(--ink-muted); }
+.updates-date .tag {
+  display: inline-block; margin-left: 8px;
+  padding: 2px 8px; border: 1px solid var(--rule); border-radius: 999px;
+  font-size: 10px; letter-spacing: 0.2em; color: var(--ink-soft); text-transform: uppercase;
 }
+.updates-row.lunch .tag { color: var(--green); border-color: color-mix(in oklch, var(--green) 60%, transparent); }
 
-.todaysNotice {
-  color: #d63333;
-  font-weight: bold;
-  font-size: 1.1rem;
-  text-align: start;
-  margin-bottom: 1rem;
-  border-bottom: 1px dashed #ccc;
-  padding-bottom: 20px;
-  padding-left: 20px;
-} 
-
-.updatesCategoryTitle {
-  text-align: center;
-  font-size: 1rem; /* 本文と同じサイズに */
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  
-}
-
-.updatesList{
-  border-bottom: 1px dashed #ccc;
-  padding-left: 0;
-  padding-bottom: 20px;
-}
-
-.updatesList a {
-color: black;
-}
-
-.othersList{
-  border-bottom: 1px dashed #ccc;
-  padding-left: 25px;
-  padding-bottom: 20px;
-}
-
-.othersList a {
-  color: black;
-  }
-
-.lunchText,.dayoffText{
-  text-align: center;
-  line-height: 2;
-  list-style: none;
-}
-
-.othersText{
-  text-align: left;
-  line-height: 2;
-  list-style:circle;
-  padding-left: 6px;
-  padding-right: 6px;
-  font-size: 80%;
-}
+.updates-title { font-family: "Shippori Mincho", serif; color: var(--ink); }
+.updates-title a { text-decoration: none; color: var(--green); }
+.updates-title a:hover { text-decoration: underline; }
