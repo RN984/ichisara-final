@@ -10,7 +10,7 @@ export default function Footer() {
           <img src={heroImg} alt="ICHISARA DINING HILLS CAFE" className="footer-logo" />
           <div className="brand-mark">ICHISARA</div>
           <div className="brand-sub">Dining Hills Cafe</div>
-          <p>光が差し込む開放的な空間で、<br/>元ファーストクラスシェフの<br/>絶品グルメを。</p>
+          <p>光が差し込む開放的な空間で、<br/>元ファーストクラスシェフの<br/>一皿を。</p>
         </div>
         <div className="footer-col">
           <h4>Hours</h4>
