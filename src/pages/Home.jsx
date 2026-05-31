@@ -19,7 +19,7 @@ function TodayCard({ data }) {
   return (
     <article className="today-card">
       <div className="today-ribbon">Today</div>
-      <div className="today-eyebrow">Chef's Whim · 気まぐれランチ</div>
+      <div className="today-eyebrow"><span>Chef's Whim</span> · <span>気まぐれランチ</span></div>
       <h3 className="today-dish jp">{latest ? latest['本文'] : '本日の気まぐれランチ\nをご用意しています。'}</h3>
       <div className="today-foot">
         <span className="today-note">{latest ? '数量限定・先着順' : '店頭でご確認ください。'}</span>
