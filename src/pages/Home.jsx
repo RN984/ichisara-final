@@ -54,7 +54,15 @@ export default function Home({ hideCover = false }) {
           <div className="hero-text">
             <div>
               <div className="hero-tag">Signature · Hamburg Steak</div>
-              <h1 className="hero-title jp">光が差し込む空間で、<em>元ファーストクラスシェフ</em>の一皿を。</h1>
+              <h1 className="hero-title jp">
+                <span className="nb">光が</span>
+                <span className="nb">差し込む</span>
+                <span className="nb">空間で、</span>
+                <span className="nb"><em>元ファースト</em></span>
+                <span className="nb"><em>クラス</em></span>
+                <span className="nb"><em>シェフ</em>の</span>
+                <span className="nb">一皿を。</span>
+              </h1>
             </div>
             <div className="hero-meta en">Est. 2024 · Shisui, Chiba</div>
           </div>
@@ -86,10 +94,16 @@ export default function Home({ hideCover = false }) {
             </div>
             <blockquote className="fq-text jp">
               <span className="fq-quote" aria-hidden="true">"</span>
-              光が差し込む、<br/>
-              <span style={{ color: 'var(--green)' }}>温かなテーブル</span>。<br/>
-              ファーストクラスで磨いた一皿を、<br/>
-              ふらりと普段着で。
+              <span className="nb">光が</span>
+              <span className="nb">差し込む、</span>
+              <span className="nb" style={{ color: 'var(--green)' }}>温かな</span>
+              <span className="nb" style={{ color: 'var(--green)' }}>テーブル</span>。
+              <span className="nb">ファースト</span>
+              <span className="nb">クラスで</span>
+              <span className="nb">磨いた</span>
+              <span className="nb">一皿を、</span>
+              <span className="nb">ふらりと</span>
+              <span className="nb">普段着で。</span>
               <cite>— From the Chef</cite>
             </blockquote>
           </div>
