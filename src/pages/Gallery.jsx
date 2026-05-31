@@ -5,8 +5,6 @@ import './Gallery.css';
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%82%AE%E3%83%A3%E3%83%A9%E3%83%AA%E3%83%BC`;
 
-const fetcher = url => fetch(url).then(r => r.json());
-
 
 function driveThumb(url) {
   if (!url) return null;
@@ -44,7 +42,7 @@ function Lightbox({ items, index, onClose, onNav }) {
 
 export default function Gallery() {
   const [lbIdx, setLbIdx] = useState(null);
-  const { data, error } = useSWR(API_URL, fetcher);
+  const { data, error } = useSWR(API_URL);
 
   const items = Array.isArray(data)
     ? data

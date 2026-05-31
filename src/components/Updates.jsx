@@ -14,8 +14,6 @@ const ExternalLinkIcon = () => (
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`;
 
-const fetcher = url => fetch(url).then(r => r.json());
-
 const formatDate = dateStr => {
   const d = cleanDate(dateStr);
   if (!d) return dateStr ?? '';
@@ -41,7 +39,7 @@ const replaceWithToday = (text, dateStr) => {
 };
 
 export default function Updates() {
-  const { data, error } = useSWR(API_URL, fetcher);
+  const { data, error } = useSWR(API_URL);
 
   const today = new Date();
   const todayStr = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;

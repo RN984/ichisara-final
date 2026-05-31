@@ -2,12 +2,10 @@ import useSWR from 'swr';
 import './InstaFeed.css';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
-const fetcher = url => fetch(url).then(r => r.json());
 
 export default function InstaFeed() {
   const { data } = useSWR(
-    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%82%A2%E3%82%A4%E3%83%86%E3%83%A0`,
-    fetcher
+    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%82%A2%E3%82%A4%E3%83%86%E3%83%A0`
   );
 
   const loading = data === undefined;

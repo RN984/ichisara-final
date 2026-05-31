@@ -10,7 +10,6 @@ import humberger from '../assets/humberger.webp';
 import instore from '../assets/Gallery/instore.webp';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
-const fetcher = url => fetch(url).then(r => r.json());
 
 
 function TodayCard({ data }) {
@@ -30,8 +29,7 @@ function TodayCard({ data }) {
 
 export default function Home({ hideCover = false }) {
   const { data } = useSWR(
-    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`,
-    fetcher
+    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`
   );
 
   const today = new Date();

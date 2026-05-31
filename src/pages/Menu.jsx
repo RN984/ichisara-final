@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import useSWR from 'swr';
 import './Menu.css';
 
@@ -8,7 +8,6 @@ import curry from '../assets/Gallery/curry.webp';
 import pan from '../assets/Gallery/pan.webp';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
-const fetcher = url => fetch(url).then(r => r.json());
 
 const fallbackImages = { 'ランチ': humberger2, 'カフェ': roll, 'ディナー': curry, 'その他': pan };
 
@@ -17,23 +16,47 @@ const httpsUrl = u => (u && /^https:\/\//.test(u) ? u : null);
 
 export default function Menu() {
   const { data: menuTable } = useSWR(
-    `https://opensheet.elk.sh/${SHEET_ID}/M_%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E8%A1%A8`,
-    fetcher
+    `https://opensheet.elk.sh/${SHEET_ID}/M_%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E8%A1%A8`
   );
   const { data: menuItems } = useSWR(
-    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%A2%E3%82%A4%E3%83%86%E3%83%A0`,
-    fetcher
+    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%A2%E3%82%A4%E3%83%86%E3%83%A0`
   );
 
   const [tab, setTab] = useState('');
   const [pdfOpen, setPdfOpen] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfSlow, setPdfSlow] = useState(false);
+  const iframeRef = useRef(null);
+
+  const openPdf = useCallback(() => {
+    setPdfSlow(false);
+    setPdfLoading(true);
+    setPdfOpen(true);
+  }, []);
+
+  // 重いビューア(Googleドライブ)を読み込み途中で破棄するとモバイルで固まるため、
+  // 先に iframe の読み込みを中断してから閉じる。
+  const closePdf = useCallback(() => {
+    const frame = iframeRef.current;
+    if (frame) { try { frame.src = 'about:blank'; } catch { /* クロスオリジンでも src 代入は可 */ } }
+    setPdfOpen(false);
+    setPdfLoading(false);
+    setPdfSlow(false);
+  }, []);
 
   useEffect(() => {
     if (!pdfOpen) return;
-    const onKey = e => { if (e.key === 'Escape') setPdfOpen(false); };
+    const onKey = e => { if (e.key === 'Escape') closePdf(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [pdfOpen]);
+  }, [pdfOpen, closePdf]);
+
+  // 読み込みが遅い場合は別タブで開くフォールバックを提示
+  useEffect(() => {
+    if (!pdfOpen || !pdfLoading) return;
+    const t = setTimeout(() => setPdfSlow(true), 6000);
+    return () => clearTimeout(t);
+  }, [pdfOpen, pdfLoading]);
 
   const tabs = Array.isArray(menuTable) ? menuTable : [];
   const activeId = tab || (tabs[0]?.ID ?? '');
@@ -82,7 +105,7 @@ export default function Menu() {
               <div className="menu-image-col">
                 <div
                   className="menu-image"
-                  onClick={() => pdfUrl && setPdfOpen(true)}
+                  onClick={() => pdfUrl && openPdf()}
                   style={{ cursor: pdfUrl ? 'pointer' : 'default' }}
                 >
                   <img src={imgSrc} alt={activeTab?.['種別']} loading="lazy" decoding="async" />
@@ -99,7 +122,7 @@ export default function Menu() {
                   )}
                 </div>
                 {pdfUrl && (
-                  <button className="menu-pdf-link" onClick={() => setPdfOpen(true)}>
+                  <button className="menu-pdf-link" onClick={openPdf}>
                     <span className="menu-pdf-link-label">
                       <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15">
                         <path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
@@ -134,13 +157,31 @@ export default function Menu() {
         )}
       </div>
       {pdfOpen && pdfUrl && (
-        <div className="pdf-modal-backdrop" onClick={() => setPdfOpen(false)}>
+        <div className="pdf-modal-backdrop" onClick={closePdf}>
           <div className="pdf-modal" onClick={e => e.stopPropagation()}>
             <div className="pdf-modal-bar">
               <span className="pdf-modal-title">{activeTab?.['種別']}メニュー</span>
-              <button className="pdf-modal-close" onClick={() => setPdfOpen(false)} aria-label="閉じる">✕</button>
+              <button className="pdf-modal-close" onClick={closePdf} aria-label="閉じる">✕</button>
             </div>
-            <iframe src={pdfUrl} className="pdf-modal-iframe" title={`${activeTab?.['種別']}メニュー`} sandbox="allow-scripts allow-same-origin" />
+            {pdfLoading && (
+              <div className="pdf-modal-loading">
+                <span className="pdf-spinner" aria-hidden="true" />
+                <span>PDFを読み込み中…</span>
+                {pdfSlow && (
+                  <a className="pdf-slow-link" href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                    表示されない場合は別タブで開く
+                  </a>
+                )}
+              </div>
+            )}
+            <iframe
+              ref={iframeRef}
+              src={pdfUrl}
+              className="pdf-modal-iframe"
+              title={`${activeTab?.['種別']}メニュー`}
+              sandbox="allow-scripts allow-same-origin allow-popups"
+              onLoad={() => setPdfLoading(false)}
+            />
           </div>
         </div>
       )}
