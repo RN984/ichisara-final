@@ -20,16 +20,15 @@
         var q = new URLSearchParams(location.search);
         if (q.get('full') === '1') return;                      // 通常版を明示指定
         if (q.get('variant')) return;                           // 既存の variant 指定は尊重
-        if (!matchMedia('(max-width: 768px)').matches) return;  // スマホ専用
         var go = function () { try { location.replace('/lite.html'); } catch (e) {} };
 
-        // Network Information API（Android Chrome 等）: 4G未満 または データ節約ONなら即遷移
+        // Network Information API（Android Chrome 等）: データ節約ON、または 4G未満なら即遷移
         var c = navigator.connection;
         if (c && (c.saveData || (c.effectiveType && c.effectiveType !== '4g'))) return go();
 
-        // iOS Safari 等は上記API非対応 → ping レースで実測判定（500ms以内に返らなければ低速とみなす）
+        // iOS Safari 等は上記API非対応 → ping レースで実測判定（600ms以内に返らなければ低速とみなす）
         var done = false;
-        var t = setTimeout(function () { if (!done) { done = true; go(); } }, 500);
+        var t = setTimeout(function () { if (!done) { done = true; go(); } }, 600);
         fetch('/ping.txt?cb=' + Date.now(), { cache: 'reload' })
           .then(function () { if (!done) { done = true; clearTimeout(t); } })
           .catch(function () { if (!done) { done = true; clearTimeout(t); go(); } });
