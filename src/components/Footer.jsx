@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import heroImg from '../assets/hero.webp';
 import './Footer.css';
 
 export default function Footer() {
@@ -6,6 +7,7 @@ export default function Footer() {
     <footer className="siteFooter">
       <div className="footerInner">
         <div className="footer-brand">
+          <img src={heroImg} alt="ICHISARA DINING HILLS CAFE" className="footer-logo" />
           <div className="brand-mark">ICHISARA</div>
           <div className="brand-sub">Dining Hills Cafe</div>
           <p>光が差し込む開放的な空間で、<br/>元ファーストクラスシェフの<br/>絶品グルメを。</p>

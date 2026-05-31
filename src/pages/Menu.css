@@ -16,12 +16,57 @@
 .menu-display {
   display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; padding: 24px 0;
 }
-.menu-image { background: var(--bg-deep); border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); align-self: start; }
-.menu-image img { width: 100%; height: auto; display: block; }
 
+/* image column */
+.menu-display .menu-image-col { align-self: start; }
+.menu-display .menu-image {
+  display: block; position: relative;
+  background: var(--bg-deep); border-radius: 4px; overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow .3s, transform .3s;
+}
+.menu-display .menu-image img { width: 100%; height: auto; display: block; transition: transform .6s ease; }
+.menu-display .menu-image:hover { box-shadow: 0 22px 44px -24px rgba(40,30,15,0.4); }
+.menu-display .menu-image:hover img { transform: scale(1.04); }
+
+/* hover overlay */
+.menu-pdf-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(0deg, oklch(0.22 0.012 70 / 0.55), oklch(0.22 0.012 70 / 0.25));
+  opacity: 0; transition: opacity .3s;
+}
+.menu-display .menu-image:hover .menu-pdf-overlay { opacity: 1; }
+.menu-pdf-hint {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: oklch(0.985 0.006 80 / 0.95); color: var(--ink);
+  padding: 12px 22px; border-radius: 999px;
+  font-family: "Shippori Mincho", serif; font-size: 14px; letter-spacing: 0.1em;
+  box-shadow: 0 10px 28px -12px rgba(40,30,15,0.5);
+  transform: translateY(6px); transition: transform .3s;
+}
+.menu-display .menu-image:hover .menu-pdf-hint { transform: none; }
+.menu-pdf-hint svg { display: block; color: var(--green); }
+
+/* PDF text link under image */
+.menu-pdf-link {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-top: 12px; padding: 13px 18px;
+  border: 1px solid var(--green); border-radius: 4px;
+  background: var(--paper); text-decoration: none; color: var(--green);
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+.menu-pdf-link:hover { background: var(--green); color: var(--bg); box-shadow: 0 10px 24px -14px oklch(0.36 0.045 150 / 0.7); }
+.menu-pdf-link-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: "Shippori Mincho", serif; font-size: 14px; letter-spacing: 0.06em;
+}
+.menu-pdf-link-label svg { display: block; }
+.menu-pdf-link-arrow { font-size: 16px; }
+
+/* item list */
 .menu-list h3 { font-family: "Shippori Mincho", serif; font-size: 28px; font-weight: 500; margin: 0 0 4px; }
 .menu-list .en-caps { color: var(--green); font-size: 12px; margin-bottom: 24px; display: block; }
-
 .menu-item {
   display: grid; grid-template-columns: 1fr auto; gap: 24px;
   padding: 18px 0; border-top: 1px dashed var(--rule);
@@ -31,9 +76,40 @@
 .menu-item p { margin: 0; font-size: 13px; color: var(--ink-muted); line-height: 1.8; }
 .menu-price { font-family: "Cormorant Garamond", serif; font-size: 18px; letter-spacing: 0.04em; color: var(--ink); white-space: nowrap; }
 
-.menu-image a { display: block; }
 .menu-loading { color: var(--ink-muted); font-size: 14px; padding: 24px 0; }
 
+/* PDF modal */
+.pdf-modal-backdrop {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.72);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.pdf-modal {
+  position: relative;
+  width: 100%; max-width: 900px; height: 85vh;
+  background: var(--paper); border-radius: 6px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 32px 80px -24px rgba(0,0,0,0.6);
+}
+.pdf-modal-close {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  width: 34px; height: 34px;
+  background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%;
+  font-size: 15px; cursor: pointer; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.pdf-modal-close:hover { background: rgba(0,0,0,0.85); }
+.pdf-modal-iframe { width: 100%; flex: 1; border: none; display: block; }
+
+/* PDFリンクボタンのリセット */
+button.menu-pdf-link { width: 100%; text-align: left; font-family: inherit; font-size: inherit; }
+
+@media (max-width: 960px) {
+  .pdf-modal-backdrop { padding: 12px; }
+  .pdf-modal { height: 90vh; }
+}
 @media (max-width: 960px) {
   .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: none; margin-bottom: 32px; }
   .menu-tab { padding: 13px 8px; white-space: nowrap; border-bottom: 1px solid var(--rule); text-align: center; }

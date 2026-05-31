@@ -1,6 +1,14 @@
 import useSWR from 'swr';
 import './Updates.css';
 
+const ExternalLinkIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+    <polyline points="15 3 21 3 21 9"/>
+    <line x1="10" y1="14" x2="21" y2="3"/>
+  </svg>
+);
+
 // VITE_SHEET_ID を .env.development / .env.production に設定してください
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`;
@@ -66,20 +74,41 @@ export default function Updates() {
     .filter(r => cleanDate(r['日付']) === todayStr);
 
   let todayBanner = '';
+  let isClosed = false;
   if (todaysChanges.length > 0) {
-    // 本文中の日付を「本日」に置換してから結合
     todayBanner = todaysChanges
       .map(r => replaceWithToday(r['本文'], r['日付']))
       .join('・');
+    isClosed = todaysChanges.some(r => r['本文'] && r['本文'].includes('休'));
   } else if (isTuesday) {
-    todayBanner = '本日は定休日です。';
-  } else if (latestLunch) {
-    todayBanner = '本日　通常営業 / 気まぐれランチあり';
+    todayBanner = '毎週火曜は定休日です。';
+    isClosed = true;
+  } else {
+    todayBanner = '本日　通常営業';
   }
 
+  const catOrder = r => {
+    if (r['種別'] === 'シェフの気まぐれランチ') return 0;
+    if (r['種別'] === '営業日の変更') return 1;
+    return 2;
+  };
+
   const displayRows = rows
-    .filter(r => cleanDate(r['日付']))
-    .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
+    .filter(r => {
+      const d = cleanDate(r['日付']);
+      if (!d) return r['種別'] !== 'シェフの気まぐれランチ' && r['種別'] !== '営業日の変更';
+      return new Date(d) >= new Date(todayStr);
+    })
+    .sort((a, b) => {
+      const catDiff = catOrder(a) - catOrder(b);
+      if (catDiff !== 0) return catDiff;
+      const da = cleanDate(a['日付']);
+      const db = cleanDate(b['日付']);
+      if (!da && !db) return 0;
+      if (!da) return 1;
+      if (!db) return -1;
+      return new Date(da) - new Date(db);
+    });
 
   if (!data) {
     return (
@@ -92,27 +121,30 @@ export default function Updates() {
   return (
     <div className="news-schedule">
       {todayBanner && (
-        <div className="updates-today">{todayBanner}</div>
+        <div className={`updates-today${isClosed ? ' closed' : ''}`}>{todayBanner}</div>
       )}
 
-      {displayRows.map((r, i) => (
-        <div className={`updates-row${r['種別'] === 'シェフの気まぐれランチ' ? ' lunch' : ''}`} key={i}>
-          <div className="updates-date">
-            {formatDate(r['日付'])}
-            <span className="tag">{tagLabel(r['種別'])}</span>
+      {displayRows.map((r, i) => {
+        const text = r['本文'];
+        const hasLink = r['URL'] && r['URL'] !== 'http://' && r['URL'] !== 'https://';
+        const isLunch = r['種別'] === 'シェフの気まぐれランチ';
+        return (
+          <div className={`updates-row${isLunch ? ' lunch' : ''}`} key={i}>
+            <div className="updates-date">
+              {formatDate(r['日付'])}
+              <span className="tag">{tagLabel(r['種別'])}</span>
+            </div>
+            <div className="updates-title">
+              {hasLink ? (
+                <a href={r['URL']} target="_blank" rel="noopener noreferrer" className="ut-link">
+                  <span className="ut-text">{text}</span>
+                  <span className="ut-link-icon"><ExternalLinkIcon /></span>
+                </a>
+              ) : text}
+            </div>
           </div>
-          <div className="updates-title">
-            {(() => {
-              const isToday = cleanDate(r['日付']) === todayStr;
-              const text = isToday ? replaceWithToday(r['本文'], r['日付']) : r['本文'];
-              const hasLink = r['URL'] && r['URL'] !== 'http://' && r['URL'] !== 'https://';
-              return hasLink
-                ? <a href={r['URL']} target="_blank" rel="noopener noreferrer">{text}</a>
-                : text;
-            })()}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

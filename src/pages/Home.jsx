@@ -7,22 +7,10 @@ import './Home.css';
 import headerImg from '../assets/header.webp';
 import humberger from '../assets/humberger.webp';
 import instore from '../assets/Gallery/instore.webp';
-import outlook from '../assets/Gallery/outlook.webp';
-import curry from '../assets/Gallery/curry.webp';
-import humberger2 from '../assets/Gallery/humberger2.webp';
-import roll from '../assets/Gallery/dojimaroll.webp';
-import nishioMain from '../assets/chef/nishio-main.webp';
-import omiMain from '../assets/chef/omi-main.webp';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 const fetcher = url => fetch(url).then(r => r.json());
 
-const galleryItems = [
-  { src: humberger, alt: 'ICHISARA ハンバーグ', text: 'イチサラといえばハンバーグ。元ファーストクラスシェフが仕上げる、肉汁あふれる一皿。' },
-  { src: instore, alt: '店内', text: '大きな窓から光が差し込む、開放的なダイニング。' },
-  { src: outlook, alt: 'テラス席', text: '緑にかこまれたテラス席。ペットとご一緒に。' },
-  { src: curry, alt: '秘伝のカレー', text: 'ファーストクラスラウンジで提供されていた秘伝のカレー。' },
-];
 
 function TodayCard({ data }) {
   const cleanDate = d => {
@@ -110,10 +98,10 @@ export default function Home({ hideCover = false }) {
             <blockquote className="fq-text jp">
               <span className="fq-quote" aria-hidden="true">"</span>
               光が差し込む、<br/>
-              <span style={{ color: 'var(--green)' }}>静かなテーブル</span>。<br/>
+              <span style={{ color: 'var(--green)' }}>温かなテーブル</span>。<br/>
               ファーストクラスで磨いた一皿を、<br/>
               ふらりと普段着で。
-              <cite>— Editor's Note</cite>
+              <cite>— From the Chef</cite>
             </blockquote>
           </div>
         </section>
@@ -153,56 +141,6 @@ export default function Home({ hideCover = false }) {
         </div>
       </div>
 
-      {/* Gallery preview */}
-      <div className="shell">
-        <section className="home-section reveal">
-          <div className="section-head">
-            <div>
-              <div className="section-eyebrow">Gallery · 02</div>
-              <h2 className="section-title">空間と一皿</h2>
-            </div>
-            <Link to="/gallery" className="cta cta-ghost">すべて見る →</Link>
-          </div>
-          <div className="gallery-preview">
-            {galleryItems.map((g, i) => (
-              <div className="tile" key={i}>
-                <img src={g.src} alt={g.alt} loading="lazy" />
-                <div className="cap">{g.alt}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <div className="deco-rule" aria-hidden="true"></div>
-
-        <section className="home-section reveal">
-          <div className="section-head">
-            <div>
-              <div className="section-eyebrow">Chef · 03</div>
-              <h2 className="section-title">2人のシェフ、機内食の記憶</h2>
-            </div>
-            <Link to="/chef" className="cta cta-ghost">シェフ紹介 →</Link>
-          </div>
-          <div className="chef-teaser">
-            <div className="chef-card">
-              <img src={nishioMain} alt="西尾シェフ" />
-              <div>
-                <h3>西尾 義光</h3>
-                <div className="en-name">Yoshimitsu Nishio</div>
-                <p>機内食調理とホテルレストランにて 32 年。2008 年、世界機内食コンクールで日本人として初優勝。JAL コーポレートシェフとしてファーストクラスのメニュー開発を担う。</p>
-              </div>
-            </div>
-            <div className="chef-card">
-              <img src={omiMain} alt="尾身シェフ" />
-              <div>
-                <h3>尾身 雅志</h3>
-                <div className="en-name">Masashi Omi</div>
-                <p>ユナイテッド航空の和食メニュー開発責任者として在職 32 年。1,000 種類を超える和食メニューを開発。</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
     </>
   );
 }

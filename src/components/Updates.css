@@ -12,6 +12,11 @@
 }
 .updates-today strong { color: var(--green); }
 .updates-today.loading { color: var(--ink-muted); background: var(--bg-deep); border-color: var(--rule); }
+.updates-today.closed {
+  background: linear-gradient(90deg, oklch(0.95 0.018 20), color-mix(in oklch, oklch(0.95 0.018 20) 40%, var(--paper)));
+  border-left-color: oklch(0.45 0.10 20);
+  color: oklch(0.45 0.10 20);
+}
 
 .updates-row {
   display: grid;
@@ -33,5 +38,31 @@
 .updates-row.lunch .tag { color: var(--green); border-color: color-mix(in oklch, var(--green) 60%, transparent); }
 
 .updates-title { font-family: "Shippori Mincho", serif; color: var(--ink); }
-.updates-title a { text-decoration: none; color: var(--green); }
-.updates-title a:hover { text-decoration: underline; }
+
+.ut-link {
+  display: inline;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color .2s;
+}
+.ut-link .ut-text {
+  background-image: linear-gradient(var(--green), var(--green));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size .35s ease;
+}
+.ut-link .ut-link-icon {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: middle;
+  color: var(--ink-soft);
+  opacity: .55;
+  transform: translateY(1px);
+  transition: color .2s, opacity .2s, transform .25s;
+}
+.ut-link .ut-link-icon svg { display: block; }
+
+.ut-link:hover { color: var(--green); }
+.ut-link:hover .ut-text { background-size: 100% 1px; }
+.ut-link:hover .ut-link-icon { color: var(--green); opacity: 1; transform: translate(2px, -1px); }

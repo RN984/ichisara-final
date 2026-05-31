@@ -1,12 +1,20 @@
+import useSWR from 'swr';
 import './InstaFeed.css';
 
-const posts = [
-  { url: 'https://www.instagram.com/ichisara240/p/DITR3bBp6L-/', thumb: '/insta/insta1.webp' },
-  { url: 'https://www.instagram.com/ichisara240/p/C4FPs0CvB-B/', thumb: '/insta/insta2.webp' },
-  { url: 'https://www.instagram.com/ichisara240/reel/DIwLSphPBEr/', thumb: '/insta/insta3.webp' },
-];
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
+const fetcher = url => fetch(url).then(r => r.json());
 
 export default function InstaFeed() {
+  const { data } = useSWR(
+    `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%82%A2%E3%82%A4%E3%83%86%E3%83%A0`,
+    fetcher
+  );
+
+  const loading = data === undefined;
+  const posts = Array.isArray(data)
+    ? data.filter(r => r['削除'] !== 'TRUE')
+    : [];
+
   return (
     <div className="insta-col reveal">
       <div className="insta-head">
@@ -25,13 +33,21 @@ export default function InstaFeed() {
         </a>
       </div>
       <div className="insta">
-        {posts.map((p, i) => (
-          <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={`Instagram post ${i + 1}`}>
-            <img src={p.thumb} alt={`イチサラ Instagram ${i + 1}`} loading="lazy" decoding="async" />
-          </a>
-        ))}
+        {loading
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="insta-skeleton" />
+            ))
+          : posts.map((p, i) => {
+              const src = p['サムネイル URL'];
+              if (!src) return null;
+              return (
+                <a key={p['ID'] ?? i} href={p['URL']} target="_blank" rel="noopener noreferrer" aria-label={`Instagram post ${i + 1}`}>
+                  <img src={src} alt={`イチサラ Instagram ${i + 1}`} loading="lazy" decoding="async" />
+                </a>
+              );
+            })
+        }
       </div>
-      <div className="insta-foot">最新の一皿とテラスの様子は Instagram で。</div>
     </div>
   );
 }

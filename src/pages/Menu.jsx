@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import './Menu.css';
 
@@ -28,6 +28,14 @@ export default function Menu() {
   const pdfMap   = useDriveFolder(import.meta.env.VITE_DRIVE_PDF_FOLDER,   'pdf');
 
   const [tab, setTab] = useState('');
+  const [pdfOpen, setPdfOpen] = useState(false);
+
+  useEffect(() => {
+    if (!pdfOpen) return;
+    const onKey = e => { if (e.key === 'Escape') setPdfOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [pdfOpen]);
 
   const tabs = Array.isArray(menuTable) ? menuTable : [];
   const activeId = tab || (tabs[0]?.ID ?? '');
@@ -48,9 +56,9 @@ export default function Menu() {
     <>
       <div className="page-hero">
         <div className="page-hero-text">
-          <div className="eyebrow">Menu · 01</div>
+          <div className="eyebrow">Menu · 02</div>
           <h1>メニュー</h1>
-          <div className="en-name">Lunch · Cafe · Dinner · Goods</div>
+          <div className="en-name">Lunch · Cafe · Dinner · Takeout</div>
         </div>
         <div className="page-hero-meta">価格はすべて税込</div>
       </div>
@@ -73,13 +81,36 @@ export default function Menu() {
             </div>
 
             <div className="menu-display reveal">
-              <div className="menu-image">
-                {pdfUrl ? (
-                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                    <img src={imgSrc} alt={activeTab?.['種別']} />
-                  </a>
-                ) : (
-                  <img src={imgSrc} alt={activeTab?.['種別']} />
+              <div className="menu-image-col">
+                <div
+                  className="menu-image"
+                  onClick={() => pdfUrl && setPdfOpen(true)}
+                  style={{ cursor: pdfUrl ? 'pointer' : 'default' }}
+                >
+                  <img src={imgSrc} alt={activeTab?.['種別']} loading="lazy" decoding="async" />
+                  {pdfUrl && (
+                    <span className="menu-pdf-overlay">
+                      <span className="menu-pdf-hint">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.7"/>
+                        </svg>
+                        {activeTab?.['種別']}メニューを見る
+                      </span>
+                    </span>
+                  )}
+                </div>
+                {pdfUrl && (
+                  <button className="menu-pdf-link" onClick={() => setPdfOpen(true)}>
+                    <span className="menu-pdf-link-label">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15">
+                        <path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                        <path d="M14 2v4h4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
+                      </svg>
+                      {activeTab?.['種別']}メニュー（PDF）を見る
+                    </span>
+                    <span className="menu-pdf-link-arrow">→</span>
+                  </button>
                 )}
               </div>
               <div className="menu-list">
@@ -104,6 +135,14 @@ export default function Menu() {
           </>
         )}
       </div>
+      {pdfOpen && pdfUrl && (
+        <div className="pdf-modal-backdrop" onClick={() => setPdfOpen(false)}>
+          <div className="pdf-modal" onClick={e => e.stopPropagation()}>
+            <button className="pdf-modal-close" onClick={() => setPdfOpen(false)} aria-label="閉じる">✕</button>
+            <iframe src={pdfUrl} className="pdf-modal-iframe" title={`${activeTab?.['種別']}メニュー`} />
+          </div>
+        </div>
+      )}
     </>
   );
 }

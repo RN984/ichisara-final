@@ -1,16 +1,16 @@
 .chef-feature { padding: 80px 0; }
 .chef-feature:first-of-type { padding-top: 0; }
 
-.chef-feature-inner {
-  display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: start;
-}
+.chef-feature-inner { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: start; }
 .chef-feature.right .chef-feature-inner { grid-template-columns: 1fr 1.1fr; }
 .chef-feature.right .chef-feature-text { order: -1; }
 
-.chef-feature-images { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.cf-main { grid-column: 1 / 3; aspect-ratio: 16/10; overflow: hidden; }
-.cf-sub { grid-column: 1 / 2; aspect-ratio: 3/4; overflow: hidden; }
-.chef-feature-images img { width: 100%; height: 100%; object-fit: cover; }
+.chef-feature-images { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; align-items: stretch; }
+.chef-feature-images .main { aspect-ratio: 4/5; overflow: hidden; }
+.chef-feature-images .chef-feature-subs { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; min-height: 0; }
+.chef-feature-images img { width: 100%; height: 100%; object-fit: cover; object-position: center 12%; }
+.chef-feature-images .sub { overflow: hidden; min-height: 0; }
+.chef-feature-images .sub img { object-position: center; }
 
 .chef-feature h2 {
   font-family: "Shippori Mincho", serif;

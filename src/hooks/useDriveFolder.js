@@ -6,12 +6,16 @@ const fetcher = url => fetch(url).then(r => r.json());
 
 // フォルダ内の全ファイルを取得して { ファイル名: URL } のマップを返す
 export function useDriveFolder(folderId, type = 'image') {
-  const { data } = useSWR(
+  const q = encodeURIComponent(`'${folderId}' in parents`);
+  const { data, error } = useSWR(
     folderId && API_KEY
-      ? `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&fields=files(id,name)&key=${API_KEY}`
+      ? `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&key=${API_KEY}`
       : null,
     fetcher
   );
+
+  if (error) console.error('Drive API error:', error);
+  if (data?.error) console.error('Drive API response error:', data.error);
 
   if (!data?.files) return {};
 
@@ -19,8 +23,8 @@ export function useDriveFolder(folderId, type = 'image') {
     data.files.map(f => [
       f.name,
       type === 'image'
-        ? `https://drive.google.com/uc?export=view&id=${f.id}`
-        : `https://drive.google.com/file/d/${f.id}/view`,
+        ? `https://drive.google.com/thumbnail?id=${f.id}&sz=w1280`
+        : `https://drive.google.com/file/d/${f.id}/preview`,
     ])
   );
 }

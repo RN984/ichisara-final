@@ -11,6 +11,12 @@
   display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px;
 }
 
+.footer-logo {
+  width: 96px;
+  margin-bottom: 16px;
+  display: block;
+}
+
 .footer-brand .brand-mark {
   font-family: "Cormorant Garamond", serif; font-weight: 500;
   font-size: 26px; letter-spacing: 0.24em; line-height: 1;

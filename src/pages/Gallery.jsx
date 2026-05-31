@@ -1,29 +1,21 @@
 import { useState, useCallback, useEffect } from 'react';
+import useSWR from 'swr';
 import './Gallery.css';
 
-import exterior from '../assets/Gallery/exterior.webp';
-import outlook from '../assets/Gallery/outlook.webp';
-import humberger from '../assets/humberger.webp';
-import instore from '../assets/Gallery/instore.webp';
-import humberger2 from '../assets/Gallery/humberger2.webp';
-import curry from '../assets/Gallery/curry.webp';
-import roll from '../assets/Gallery/dojimaroll.webp';
-import pan from '../assets/Gallery/pan.webp';
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
+const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%82%AE%E3%83%A3%E3%83%A9%E3%83%AA%E3%83%BC`;
 
-const items = [
-  { src: humberger,  alt: 'ICHISARA ハンバーグ',  text: 'イチサラといえばハンバーグ。元ファーストクラスシェフが仕上げる、肉汁あふれる一皿。' },
-  { src: instore,    alt: '店内',                  text: '大きな窓から光が差し込む、開放的なダイニング。' },
-  { src: outlook,    alt: 'テラス席',              text: '緑にかこまれたテラス席。ペットとご一緒に。' },
-  { src: curry,      alt: '秘伝のカレー',           text: 'ファーストクラスラウンジで提供されていた秘伝のカレー。' },
-  { src: humberger2, alt: 'ハンバーグ別アングル',  text: '断面まで、ふわふわの食感。' },
-  { src: roll,       alt: '堂島ロール',            text: '千葉県でここだけ。卵の風味豊かな堂島ロール。' },
-  { src: exterior,   alt: '外観',                  text: '倉庫のような外観。駐車場は14台ご用意。' },
-  { src: pan,        alt: 'パンとごちそう',        text: 'ワンちゃんも猫ちゃんも、家族と一緒に。' },
-];
+const fetcher = url => fetch(url).then(r => r.json());
 
-const spans = ['span-6', 'span-3-tall', 'span-3-tall', 'span-4', 'span-4', 'span-4', 'span-6', 'span-3'];
 
-function Lightbox({ index, onClose, onNav }) {
+function driveThumb(url) {
+  if (!url) return null;
+  if (url.includes('thumbnail')) return url;
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1280` : url;
+}
+
+function Lightbox({ items, index, onClose, onNav }) {
   useEffect(() => {
     const onKey = e => {
       if (e.key === 'Escape') onClose();
@@ -45,16 +37,30 @@ function Lightbox({ index, onClose, onNav }) {
       <button className="lb-nav prev" onClick={e => { e.stopPropagation(); onNav(-1); }} aria-label="前へ">‹</button>
       <button className="lb-nav next" onClick={e => { e.stopPropagation(); onNav(1); }} aria-label="次へ">›</button>
       <img src={it.src} alt={it.alt} onClick={e => e.stopPropagation()} />
-      <div className="lb-cap">{it.text}</div>
+      {it.text && <div className="lb-cap">{it.text}</div>}
     </div>
   );
 }
 
 export default function Gallery() {
   const [lbIdx, setLbIdx] = useState(null);
+  const { data, error } = useSWR(API_URL, fetcher);
+
+  const items = Array.isArray(data)
+    ? data
+        .filter(r => r['削除'] !== 'TRUE')
+        .sort((a, b) => Number(a['並び替え'] || 999) - Number(b['並び替え'] || 999))
+        .map(r => ({
+          src: driveThumb(r['画像 URL']),
+          alt: r['画像'] || 'ギャラリー',
+          text: r['本文'] || '',
+        }))
+        .filter(r => r.src)
+    : [];
+
   const open = useCallback(i => setLbIdx(i), []);
   const close = useCallback(() => setLbIdx(null), []);
-  const nav = useCallback(d => setLbIdx(i => (i + d + items.length) % items.length), []);
+  const nav = useCallback(d => setLbIdx(i => (i + d + items.length) % items.length), [items.length]);
 
   return (
     <>
@@ -64,28 +70,33 @@ export default function Gallery() {
           <h1>ギャラリー</h1>
           <div className="en-name">Spaces · Plates · Moments</div>
         </div>
-        <div className="page-hero-meta">{items.length} photographs</div>
+        <div className="page-hero-meta">{items.length > 0 ? `${items.length} photographs` : ''}</div>
       </div>
 
       <div className="shell" style={{ paddingTop: 40, paddingBottom: 100 }}>
-        <div className="gallery-grid reveal">
-          {items.map((g, i) => (
-            <div
-              className={`g-tile ${spans[i % spans.length]}`}
-              key={i}
-              onClick={() => open(i)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => e.key === 'Enter' && open(i)}
-            >
-              <img src={g.src} alt={g.alt} loading="lazy" />
-              <div className="gcap">{g.text}</div>
-            </div>
-          ))}
-        </div>
+        {!data && !error && (
+          <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--ink-muted)' }}>読み込み中…</div>
+        )}
+        {items.length > 0 && (
+          <div className="gallery-grid reveal">
+            {items.map((g, i) => (
+              <div
+                className="g-tile"
+                key={i}
+                onClick={() => open(i)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={e => e.key === 'Enter' && open(i)}
+              >
+                <img src={g.src} alt={g.alt} loading="lazy" />
+                {g.text && <div className="gcap">{g.text}</div>}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {lbIdx !== null && <Lightbox index={lbIdx} onClose={close} onNav={nav} />}
+      {lbIdx !== null && <Lightbox items={items} index={lbIdx} onClose={close} onNav={nav} />}
     </>
   );
 }
