@@ -1,6 +1,12 @@
+import useSWR from 'swr';
 import './Faq.css';
 
-const sections = [
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1nqLq1P4rfE-I7E4J8QBZGA-to1lXBmBHDmx5Fx9Bdjg';
+const CAT_URL = `https://opensheet.elk.sh/${SHEET_ID}/M_FAQ%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA`;
+const FAQ_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_FAQ`;
+
+// スプシ取得前 / 取得失敗時に表示する静的フォールバック
+const fallbackSections = [
   {
     id: 'reservation', jp: '予約について', en: 'Reservation',
     items: [
@@ -33,6 +39,31 @@ const sections = [
   },
 ];
 
+// スプシの2シート（カテゴリ・項目）から表示用 sections を組み立てる。
+// 取得できない / 空のときは null を返し、呼び出し側でフォールバックする。
+function buildSections(cats, faqs) {
+  if (!Array.isArray(cats) || !Array.isArray(faqs)) return null;
+
+  const liveCats = cats
+    .filter(c => c['削除'] !== 'TRUE' && c['ID'])
+    .sort((a, b) => (Number(a['並び替え']) || 0) - (Number(b['並び替え']) || 0));
+
+  const liveFaqs = faqs.filter(f => f['削除'] !== 'TRUE');
+
+  const sections = liveCats
+    .map(c => ({
+      id: c['ID'],
+      jp: c['カテゴリ'] || '',
+      en: c['英語表記'] || '',
+      items: liveFaqs
+        .filter(f => f['カテゴリ'] === c['ID'])
+        .map(f => ({ q: f['タイトル'] || '', a: f['本文'] || '' })),
+    }))
+    .filter(s => s.items.length > 0);
+
+  return sections.length > 0 ? sections : null;
+}
+
 function FaqItem({ q, a }) {
   return (
     <details className="faq-item">
@@ -46,6 +77,11 @@ function FaqItem({ q, a }) {
 }
 
 export default function Faq() {
+  const { data: cats } = useSWR(CAT_URL);
+  const { data: faqs } = useSWR(FAQ_URL);
+
+  const sections = buildSections(cats, faqs) ?? fallbackSections;
+
   return (
     <>
       <div className="page-hero">
