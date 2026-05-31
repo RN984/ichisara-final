@@ -25,7 +25,7 @@ export default function Footer() {
           <h4>Contact</h4>
           <ul>
             <li>Tel  043-497-3630</li>
-            <li>IG   @ichisara240</li>
+            <li>Instagram  @ichisara240</li>
             <li>Dinner – 前日までの予約制</li>
           </ul>
         </div>
