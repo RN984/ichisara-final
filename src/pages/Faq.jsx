@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import './Faq.css';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1nqLq1P4rfE-I7E4J8QBZGA-to1lXBmBHDmx5Fx9Bdjg';
-const CAT_URL = `https://opensheet.elk.sh/${SHEET_ID}/M_FAQ%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA`;
+const CAT_URL = `https://opensheet.elk.sh/${SHEET_ID}/M_FAQ%20%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA`;
 const FAQ_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_FAQ`;
 
 // スプシ取得前 / 取得失敗時に表示する静的フォールバック
@@ -45,20 +45,24 @@ function buildSections(cats, faqs) {
   if (!Array.isArray(cats) || !Array.isArray(faqs)) return null;
 
   const liveCats = cats
-    .filter(c => c['削除'] !== 'TRUE' && c['ID'])
+    .filter(c => c['削除'] !== 'TRUE' && c['カテゴリ'])
     .sort((a, b) => (Number(a['並び替え']) || 0) - (Number(b['並び替え']) || 0));
 
   const liveFaqs = faqs.filter(f => f['削除'] !== 'TRUE');
 
   const sections = liveCats
-    .map(c => ({
-      id: c['ID'],
-      jp: c['カテゴリ'] || '',
-      en: c['英語表記'] || '',
-      items: liveFaqs
-        .filter(f => f['カテゴリ'] === c['ID'])
-        .map(f => ({ q: f['タイトル'] || '', a: f['本文'] || '' })),
-    }))
+    .map((c, i) => {
+      // カテゴリ表に ID 列があれば ID で結合、無ければカテゴリ名で結合
+      const key = c['ID'] || c['カテゴリ'];
+      return {
+        id: c['ID'] || `faq-cat-${i}`,
+        jp: c['カテゴリ'] || '',
+        en: c['英語表記'] || '',
+        items: liveFaqs
+          .filter(f => f['カテゴリ'] === key)
+          .map(f => ({ q: f['タイトル'] || '', a: f['本文'] || '' })),
+      };
+    })
     .filter(s => s.items.length > 0);
 
   return sections.length > 0 ? sections : null;
