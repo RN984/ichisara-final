@@ -11,7 +11,7 @@ const ExternalLinkIcon = () => (
 );
 
 // VITE_SHEET_ID を .env.development / .env.production に設定してください
-const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1nqLq1P4rfE-I7E4J8QBZGA-to1lXBmBHDmx5Fx9Bdjg';
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`;
 
 const formatDate = dateStr => {

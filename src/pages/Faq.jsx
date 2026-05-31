@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import './Faq.css';
 
-const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1nqLq1P4rfE-I7E4J8QBZGA-to1lXBmBHDmx5Fx9Bdjg';
+const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 const CAT_URL = `https://opensheet.elk.sh/${SHEET_ID}/M_FAQ%20%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA`;
 const FAQ_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_FAQ`;
 
