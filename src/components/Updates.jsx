@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { cleanDate } from '../utils/sheet';
 import './Updates.css';
 
 const ExternalLinkIcon = () => (
@@ -14,13 +15,6 @@ const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVX
 const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B`;
 
 const fetcher = url => fetch(url).then(r => r.json());
-
-const cleanDate = dateStr => {
-  if (!dateStr) return null;
-  const parts = dateStr.split(/[\/\-]/);
-  if (parts.length !== 3) return null;
-  return `${parts[0]}/${Number(parts[1])}/${Number(parts[2])}`;
-};
 
 const formatDate = dateStr => {
   const d = cleanDate(dateStr);
@@ -63,12 +57,6 @@ export default function Updates() {
     '営業日の変更': rows.filter(r => r['種別'] === '営業日の変更'),
     'その他': rows.filter(r => r['種別'] !== 'シェフの気まぐれランチ' && r['種別'] !== '営業日の変更'),
   };
-
-  const allLunches = grouped['シェフの気まぐれランチ']
-    .filter(r => cleanDate(r['日付']))
-    .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
-
-  const latestLunch = allLunches[0] ?? null;
 
   const todaysChanges = grouped['営業日の変更']
     .filter(r => cleanDate(r['日付']) === todayStr);
@@ -126,7 +114,8 @@ export default function Updates() {
 
       {displayRows.map((r, i) => {
         const text = r['本文'];
-        const hasLink = r['URL'] && r['URL'] !== 'http://' && r['URL'] !== 'https://';
+        const rawUrl = r['URL'];
+        const hasLink = rawUrl && /^https?:\/\/.+/.test(rawUrl);
         const isLunch = r['種別'] === 'シェフの気まぐれランチ';
         return (
           <div className={`updates-row${isLunch ? ' lunch' : ''}`} key={i}>
@@ -136,7 +125,7 @@ export default function Updates() {
             </div>
             <div className="updates-title">
               {hasLink ? (
-                <a href={r['URL']} target="_blank" rel="noopener noreferrer" className="ut-link">
+                <a href={rawUrl} target="_blank" rel="noopener noreferrer" className="ut-link">
                   <span className="ut-text">{text}</span>
                   <span className="ut-link-icon"><ExternalLinkIcon /></span>
                 </a>
@@ -147,14 +136,4 @@ export default function Updates() {
       })}
     </div>
   );
-}
-
-export { cleanDate, allLunchesFromData };
-
-function allLunchesFromData(data) {
-  if (!Array.isArray(data)) return null;
-  const lunches = data
-    .filter(r => r['種別'] === 'シェフの気まぐれランチ' && r['削除'] !== 'TRUE' && cleanDate(r['日付']))
-    .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
-  return lunches[0] ?? null;
 }

@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 
+// sessionStorage はプライベートモードやストレージ無効時に throw するため、安全に読み書きする
+const readVariant = () => {
+  try { return sessionStorage.getItem("app-variant"); } catch { return null; }
+};
+const writeVariant = value => {
+  try { sessionStorage.setItem("app-variant", value); } catch { /* 保存失敗は無視（次回再計測） */ }
+};
+
 export default function RootChooser() {
   const [Comp, setComp] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
 
-
-    // measure 全体に 1s の締切（1s超えたら Infinity）
     const measureWithTimeout = async (timeoutMs = 1000) => {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), timeoutMs);
       const start = performance.now();
       try {
-        +        await fetch(`/ping.txt?cb=${Date.now()}`, { cache: "reload", signal: ctrl.signal, credentials: "omit" });
+        await fetch(`/ping.txt?cb=${Date.now()}`, { cache: "reload", signal: ctrl.signal, credentials: "omit" });
         return performance.now() - start;
       } catch {
         return Infinity;
@@ -26,27 +32,31 @@ export default function RootChooser() {
       const q = new URLSearchParams(window.location.search);
       const forced = q.get("variant");
 
-      // どのみち必要になる Home(App.jsx) は並行で“読み込みだけ”開始（描画はまだしない）
       const normalPromise = import("../App.jsx");
 
-      // クエリ強制
       if (forced === "heavy" || forced === "normal") {
         const mod = await (forced === "heavy" ? import("../App2.jsx") : normalPromise);
         if (!cancelled) setComp(() => mod.default);
         return;
       }
 
-      // 計測開始（描画は判定まで保留）
-   const ms = await measureWithTimeout(1000);
-    const heavyOk = ms <= 1200; // 
+      // セッション内で計測結果をキャッシュして初回のみ速度計測を行う
+      const cached = readVariant();
+      if (cached) {
+        const mod = await (cached === "heavy" ? import("../App2.jsx") : normalPromise);
+        if (!cancelled) setComp(() => mod.default);
+        return;
+      }
 
-      // heavy なら heavy を import、だめなら 先に読み込み済みの normal を使う
+      const ms = await measureWithTimeout(1000);
+      const heavyOk = ms <= 1200;
+      writeVariant(heavyOk ? "heavy" : "normal");
+
       if (heavyOk) {
-        // ここで重い方の import を開始（この間はまだスピナー）
         const mod = await import("../App2.jsx");
         if (!cancelled) setComp(() => mod.default);
       } else {
-        const mod = await normalPromise; // すでに読み込みは進んでいるので表示が速い
+        const mod = await normalPromise;
         if (!cancelled) setComp(() => mod.default);
       }
     })();

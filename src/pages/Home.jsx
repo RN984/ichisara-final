@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import useSWR from 'swr';
 import Updates from '../components/Updates';
+import { allLunchesFromData } from '../utils/sheet';
 import InstaFeed from '../components/InstaFeed';
 import './Home.css';
 
@@ -13,17 +14,7 @@ const fetcher = url => fetch(url).then(r => r.json());
 
 
 function TodayCard({ data }) {
-  const cleanDate = d => {
-    if (!d) return null;
-    const p = d.split(/[\/\-]/);
-    return p.length === 3 ? `${p[0]}/${Number(p[1])}/${Number(p[2])}` : null;
-  };
-
-  const latest = Array.isArray(data)
-    ? data
-        .filter(r => r['種別'] === 'シェフの気まぐれランチ' && r['削除'] !== 'TRUE' && cleanDate(r['日付']))
-        .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])))[0]
-    : null;
+  const latest = allLunchesFromData(data);
 
   return (
     <article className="today-card">

@@ -30,7 +30,7 @@ export default function HeroSection() {
         ※ランチのラストオーダーは14:30です<br/>※ディナーは前日までの予約制です
          </p>
       </div>
-      {/*アクセス　住所、電話番号など*/}
+      {/* アクセス 住所、電話番号など */}
       <div className="address">
         <h3>アクセス</h3>
         

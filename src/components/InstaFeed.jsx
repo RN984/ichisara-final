@@ -39,9 +39,11 @@ export default function InstaFeed() {
             ))
           : posts.map((p, i) => {
               const src = p['サムネイル URL'];
+              const href = p['URL'];
               if (!src) return null;
+              if (href && !/^https?:\/\//.test(href)) return null;
               return (
-                <a key={p['ID'] ?? i} href={p['URL']} target="_blank" rel="noopener noreferrer" aria-label={`Instagram post ${i + 1}`}>
+                <a key={p['ID'] ?? i} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Instagram post ${i + 1}`}>
                   <img src={src} alt={`イチサラ Instagram ${i + 1}`} loading="lazy" decoding="async" />
                 </a>
               );

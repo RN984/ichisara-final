@@ -50,10 +50,11 @@ export default function Gallery() {
     ? data
         .filter(r => r['削除'] !== 'TRUE')
         .sort((a, b) => Number(a['並び替え'] || 999) - Number(b['並び替え'] || 999))
-        .map(r => ({
+        .map((r, i) => ({
           src: driveThumb(r['画像 URL']),
           alt: r['画像'] || 'ギャラリー',
           text: r['本文'] || '',
+          key: r['ID'] || r['画像 URL'] || i,
         }))
         .filter(r => r.src)
     : [];
@@ -82,7 +83,7 @@ export default function Gallery() {
             {items.map((g, i) => (
               <div
                 className="g-tile"
-                key={i}
+                key={g.key}
                 onClick={() => open(i)}
                 role="button"
                 tabIndex={0}

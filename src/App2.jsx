@@ -41,9 +41,9 @@ function Splash({ onDone }) {
 }
 
 export default function App2() {
-  const reduce = typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const [splash, setSplash] = useState(!reduce);
+  const [splash, setSplash] = useState(
+    () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const endSplash = useCallback(() => setSplash(false), []);
 
   useEffect(() => {
