@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import './Menu.css';
 
@@ -23,40 +23,12 @@ export default function Menu() {
   );
 
   const [tab, setTab] = useState('');
-  const [pdfOpen, setPdfOpen] = useState(false);
-  const [pdfLoading, setPdfLoading] = useState(false);
-  const [pdfSlow, setPdfSlow] = useState(false);
-  const iframeRef = useRef(null);
 
-  const openPdf = useCallback(() => {
-    setPdfSlow(false);
-    setPdfLoading(true);
-    setPdfOpen(true);
-  }, []);
-
-  // 重いビューア(Googleドライブ)を読み込み途中で破棄するとモバイルで固まるため、
-  // 先に iframe の読み込みを中断してから閉じる。
-  const closePdf = useCallback(() => {
-    const frame = iframeRef.current;
-    if (frame) { try { frame.src = 'about:blank'; } catch { /* クロスオリジンでも src 代入は可 */ } }
-    setPdfOpen(false);
-    setPdfLoading(false);
-    setPdfSlow(false);
-  }, []);
-
-  useEffect(() => {
-    if (!pdfOpen) return;
-    const onKey = e => { if (e.key === 'Escape') closePdf(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [pdfOpen, closePdf]);
-
-  // 読み込みが遅い場合は別タブで開くフォールバックを提示
-  useEffect(() => {
-    if (!pdfOpen || !pdfLoading) return;
-    const t = setTimeout(() => setPdfSlow(true), 6000);
-    return () => clearTimeout(t);
-  }, [pdfOpen, pdfLoading]);
+  // 重い埋め込みビューア(Googleドライブ)はモバイルでフリーズの原因になるため、
+  // PDFはブラウザ標準ビューア(別タブ)で開く。
+  const openPdf = url => {
+    if (url) window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   const tabs = Array.isArray(menuTable) ? menuTable : [];
   const activeId = tab || (tabs[0]?.ID ?? '');
@@ -105,7 +77,7 @@ export default function Menu() {
               <div className="menu-image-col">
                 <div
                   className="menu-image"
-                  onClick={() => pdfUrl && openPdf()}
+                  onClick={() => openPdf(pdfUrl)}
                   style={{ cursor: pdfUrl ? 'pointer' : 'default' }}
                 >
                   <img src={imgSrc} alt={activeTab?.['種別']} loading="lazy" decoding="async" />
@@ -122,7 +94,7 @@ export default function Menu() {
                   )}
                 </div>
                 {pdfUrl && (
-                  <button className="menu-pdf-link" onClick={openPdf}>
+                  <button className="menu-pdf-link" onClick={() => openPdf(pdfUrl)}>
                     <span className="menu-pdf-link-label">
                       <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15">
                         <path d="M6 2h8l4 4v16H6z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
@@ -156,35 +128,6 @@ export default function Menu() {
           </>
         )}
       </div>
-      {pdfOpen && pdfUrl && (
-        <div className="pdf-modal-backdrop" onClick={closePdf}>
-          <div className="pdf-modal" onClick={e => e.stopPropagation()}>
-            <div className="pdf-modal-bar">
-              <span className="pdf-modal-title">{activeTab?.['種別']}メニュー</span>
-              <button className="pdf-modal-close" onClick={closePdf} aria-label="閉じる">✕</button>
-            </div>
-            {pdfLoading && (
-              <div className="pdf-modal-loading">
-                <span className="pdf-spinner" aria-hidden="true" />
-                <span>PDFを読み込み中…</span>
-                {pdfSlow && (
-                  <a className="pdf-slow-link" href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                    表示されない場合は別タブで開く
-                  </a>
-                )}
-              </div>
-            )}
-            <iframe
-              ref={iframeRef}
-              src={pdfUrl}
-              className="pdf-modal-iframe"
-              title={`${activeTab?.['種別']}メニュー`}
-              sandbox="allow-scripts allow-same-origin allow-popups"
-              onLoad={() => setPdfLoading(false)}
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 }

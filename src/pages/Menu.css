@@ -78,58 +78,9 @@
 
 .menu-loading { color: var(--ink-muted); font-size: 14px; padding: 24px 0; }
 
-/* PDF modal */
-.pdf-modal-backdrop {
-  position: fixed; inset: 0; z-index: 1000;
-  background: rgba(0,0,0,0.72);
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px;
-}
-.pdf-modal {
-  position: relative;
-  width: 100%; max-width: 900px; height: 85vh;
-  background: var(--paper); border-radius: 6px; overflow: hidden;
-  box-shadow: 0 32px 80px -24px rgba(0,0,0,0.6);
-}
-/* 上部ツールバー。iframe の最上部に重ねてビューアのポップアウトリンクを隠しつつ、確実に閉じられるようにする */
-.pdf-modal-bar {
-  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
-  height: 46px; display: flex; align-items: center; justify-content: space-between;
-  padding: 0 8px 0 16px;
-  background: var(--paper); border-bottom: 1px solid var(--rule);
-}
-.pdf-modal-title { font-family: "Shippori Mincho", serif; font-size: 14px; color: var(--ink); }
-.pdf-modal-close {
-  width: 38px; height: 38px;
-  background: transparent; color: var(--ink); border: none; border-radius: 50%;
-  font-size: 18px; cursor: pointer; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s;
-}
-.pdf-modal-close:hover { background: rgba(0,0,0,0.08); }
-.pdf-modal-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
-/* 読み込み中オーバーレイ（バーの下、iframe の上）。✕バー(z-index:2)は常に操作可能 */
-.pdf-modal-loading {
-  position: absolute; inset: 46px 0 0 0; z-index: 1;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-  background: var(--paper); color: var(--ink-muted);
-  font-family: "Shippori Mincho", serif; font-size: 14px; text-align: center; padding: 0 24px;
-}
-.pdf-spinner {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 3px solid var(--rule); border-top-color: var(--green);
-  animation: pdf-spin 0.8s linear infinite;
-}
-@keyframes pdf-spin { to { transform: rotate(360deg); } }
-.pdf-slow-link { color: var(--green); font-size: 13px; text-decoration: underline; margin-top: 4px; }
-
 /* PDFリンクボタンのリセット */
 button.menu-pdf-link { width: 100%; text-align: left; font-family: inherit; font-size: inherit; }
 
-@media (max-width: 960px) {
-  .pdf-modal-backdrop { padding: 12px; }
-  .pdf-modal { height: 90vh; }
-}
 @media (max-width: 960px) {
   .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: none; margin-bottom: 32px; }
   .menu-tab { padding: 13px 8px; white-space: nowrap; border-bottom: 1px solid var(--rule); text-align: center; }
