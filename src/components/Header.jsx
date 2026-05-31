@@ -16,6 +16,7 @@ const pageEnNames = {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -47,16 +48,39 @@ export default function Header() {
         </nav>
 
         <div className="headRight">
-          <a href="tel:0434973630" className="headPhone">043-497-3630</a>
-          <a
-            href="https://www.instagram.com/ichisara240"
-            className="ctaWrap"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="cta">ご予約</span>
-            <span className="ctaNote">Instagram DMで</span>
-          </a>
+          <div className="headContact">
+            <a href="tel:0434973630" className="headPhone">043-497-3630</a>
+            <a
+              href="https://www.instagram.com/ichisara240"
+              className="headPhone"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram @ichisara240
+            </a>
+          </div>
+
+          <div className="reserveWrap">
+            <div className={`reserveContacts ${contactOpen ? 'open' : ''}`} aria-hidden={!contactOpen}>
+              <a href="tel:0434973630" className="reserveContact">043-497-3630</a>
+              <a
+                href="https://www.instagram.com/ichisara240"
+                className="reserveContact"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram @ichisara240
+              </a>
+            </div>
+            <button
+              className={`reserveBtn ${contactOpen ? 'open' : ''}`}
+              onClick={() => setContactOpen(o => !o)}
+              aria-expanded={contactOpen}
+            >
+              ご予約
+            </button>
+          </div>
+
           <button
             className={`navToggle ${open ? 'open' : ''}`}
             onClick={() => setOpen(o => !o)}

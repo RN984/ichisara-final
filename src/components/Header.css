@@ -36,6 +36,7 @@
 .nav a.active { color: var(--green); border-bottom-color: var(--green); }
 
 .headRight { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+.headContact { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .headPhone {
   font-family: "Cormorant Garamond", serif;
   font-size: 18px; letter-spacing: 0.04em; white-space: nowrap; text-decoration: none;
@@ -57,6 +58,28 @@
   white-space: nowrap; line-height: 1;
 }
 
+.reserveWrap { display: none; }
+.reserveContacts {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+  opacity: 0; transform: translateX(10px); pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.reserveContacts.open { opacity: 1; transform: none; pointer-events: auto; }
+.reserveContact {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 14px; letter-spacing: 0.03em; line-height: 1.1;
+  color: var(--green); text-decoration: none; white-space: nowrap;
+}
+.reserveBtn {
+  flex-shrink: 0;
+  background: var(--green); color: var(--bg);
+  border: 0; border-radius: 999px;
+  padding: 9px 16px; font-size: 13px; letter-spacing: 0.14em;
+  font-family: "Shippori Mincho", serif; white-space: nowrap;
+  transition: background .2s, transform .2s;
+}
+.reserveBtn.open { background: oklch(0.32 0.045 150); }
+
 .navToggle {
   display: none; width: 40px; height: 40px;
   border: 1px solid var(--rule); border-radius: 50%; background: transparent;
@@ -75,6 +98,8 @@
   .siteHeaderInner { position: relative; z-index: 2; grid-template-columns: 1fr auto; padding: 14px 20px; }
   .crumbs { display: none; }
   .nav { display: none; }
+  .headContact { display: none; }
+  .reserveWrap { display: inline-flex; align-items: center; gap: 10px; }
 
   .mobileNav {
     display: none;
