@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# 環境変数（VITE_ 接頭辞のキーはビルドに埋め込まれるため、値の管理はローカル/CI Secretsのみ）
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
