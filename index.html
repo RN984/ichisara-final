@@ -37,7 +37,26 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- 初期ローディング（Reactより前に即表示）。React起動で自動的に置換される。
+           読み込みが詰まった人向けに、一定時間後だけ軽量版リンクを出す。 -->
+      <div id="boot" style="text-align:center;margin-top:100px;font-family:'Shippori Mincho',serif;color:#555;">
+        <div>少々お待ちください…</div>
+        <a id="boot-lite" href="/lite.html"
+           style="display:none;margin-top:20px;font-size:14px;letter-spacing:0.04em;color:#2f5d43;text-decoration:underline;text-underline-offset:3px;">
+          軽くて速い版で見る →
+        </a>
+      </div>
+    </div>
+    <script>
+      /* 1.8秒待っても React が起動しない＝回線が詰まっている可能性。
+         そのときだけ軽量版リンクを表示（速い人には見えない）。
+         React起動後は #boot ごと置換されるため getElementById は null になり何もしない。 */
+      setTimeout(function () {
+        var a = document.getElementById('boot-lite');
+        if (a) a.style.display = 'inline-block';
+      }, 1800);
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
