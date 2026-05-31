@@ -50,11 +50,12 @@ export default function Header() {
           <a href="tel:0434973630" className="headPhone">043-497-3630</a>
           <a
             href="https://www.instagram.com/ichisara240"
-            className="cta"
+            className="ctaWrap"
             target="_blank"
             rel="noopener noreferrer"
           >
-            ご予約
+            <span className="cta">ご予約</span>
+            <span className="ctaNote">Instagram DMで</span>
           </a>
           <button
             className={`navToggle ${open ? 'open' : ''}`}
