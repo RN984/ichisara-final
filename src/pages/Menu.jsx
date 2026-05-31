@@ -136,7 +136,10 @@ export default function Menu() {
       {pdfOpen && pdfUrl && (
         <div className="pdf-modal-backdrop" onClick={() => setPdfOpen(false)}>
           <div className="pdf-modal" onClick={e => e.stopPropagation()}>
-            <button className="pdf-modal-close" onClick={() => setPdfOpen(false)} aria-label="閉じる">✕</button>
+            <div className="pdf-modal-bar">
+              <span className="pdf-modal-title">{activeTab?.['種別']}メニュー</span>
+              <button className="pdf-modal-close" onClick={() => setPdfOpen(false)} aria-label="閉じる">✕</button>
+            </div>
             <iframe src={pdfUrl} className="pdf-modal-iframe" title={`${activeTab?.['種別']}メニュー`} sandbox="allow-scripts allow-same-origin" />
           </div>
         </div>
