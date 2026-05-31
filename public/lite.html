@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>イチサラ｜軽量版</title>
+<meta name="description" content="千葉県酒々井のカフェ イチサラ（ICHISARA）。営業時間・ご予約・アクセスの軽量版ページ。">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<style>
+  :root{
+    --green:#2f5d43; --green-d:#23492f; --ink:#1c2620;
+    --cream:#f6f3ec; --line:#e2ddd2; --muted:#7d7a70;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.7; font-size:16px;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:0 18px}
+  header.hero{
+    background:var(--green); color:#fff;
+    padding:26px 18px 22px; text-align:center;
+  }
+  .hero .mark{font-family:"Cormorant Garamond","Times New Roman",serif;
+    letter-spacing:.32em; font-size:30px; font-weight:600; padding-left:.32em}
+  .hero .sub{font-size:11px; letter-spacing:.28em; opacity:.85; margin-top:6px}
+  .hero .badge{display:inline-block; margin-top:12px; font-size:11px;
+    border:1px solid rgba(255,255,255,.5); border-radius:999px; padding:3px 12px; opacity:.9}
+
+  section{padding:24px 0; border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:"Cormorant Garamond",serif; letter-spacing:.22em;
+    text-transform:uppercase; font-size:12px; color:var(--green); margin-bottom:12px}
+  h2{font-size:17px; font-weight:600; margin-bottom:14px}
+
+  /* お知らせ */
+  .today{background:var(--green); color:#fff; border-radius:10px;
+    padding:12px 14px; font-size:15px; text-align:center; margin-bottom:14px}
+  .today.closed{background:#8a3b32}
+  .news-row{display:flex; gap:10px; padding:9px 0; border-top:1px dashed var(--line); font-size:14px}
+  .news-row:first-child{border-top:0}
+  .news-date{flex:0 0 auto; color:var(--green); font-weight:600; min-width:54px}
+  .news-text a{color:var(--green)}
+  .news-empty{color:var(--muted); font-size:14px}
+
+  /* 予約 */
+  .res a.btn{display:flex; align-items:center; gap:10px;
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px; margin-bottom:10px; text-decoration:none; color:var(--ink); font-size:16px}
+  .res a.btn .ic{font-size:20px}
+  .res a.tel{background:var(--green); color:#fff; border-color:var(--green); font-weight:600}
+  .res .note{color:var(--muted); font-size:13px; margin-top:6px; text-align:center}
+
+  /* 営業時間 */
+  .hours .blk{margin-bottom:14px}
+  .hours .blk:last-child{margin-bottom:0}
+  .hours .t{font-family:"Cormorant Garamond",serif; letter-spacing:.18em;
+    font-size:13px; color:var(--green); text-transform:uppercase}
+  .hours .v{font-size:18px; font-weight:600}
+  .hours .lo{font-size:13px; color:var(--muted)}
+  .hours .closed{color:#8a3b32; font-weight:600}
+
+  /* アクセス */
+  .access p{font-size:15px}
+  .access .small{color:var(--muted); font-size:13px; margin-top:6px}
+  .access a.map{display:inline-block; margin-top:12px; color:var(--green);
+    border:1px solid var(--green); border-radius:999px; padding:8px 18px;
+    text-decoration:none; font-size:14px}
+
+  /* Instagram（画像なし） */
+  .ig a{display:flex; align-items:center; justify-content:space-between;
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px; text-decoration:none; color:var(--ink); font-size:16px}
+  .ig .handle{color:var(--green); font-size:13px}
+
+  /* フッター（黒） */
+  footer{background:#15110d; color:#cfc8bb; text-align:center; padding:26px 18px 30px}
+  footer .fmark{font-family:"Cormorant Garamond",serif; letter-spacing:.3em;
+    font-size:18px; color:#fff; padding-left:.3em}
+  footer .fsub{font-size:10px; letter-spacing:.24em; margin-top:4px; opacity:.7}
+  footer .copy{font-size:11px; margin-top:16px; opacity:.6; line-height:1.9}
+  .tofull{display:block; text-align:center; padding:18px; font-size:13px}
+  .tofull a{color:var(--muted)}
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="mark">ICHISARA</div>
+    <div class="sub">DINING HILLS CAFE</div>
+    <div class="badge">軽量版</div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- お知らせ -->
+    <section>
+      <div class="eyebrow">News</div>
+      <h2>お知らせ</h2>
+      <div id="news"><div class="news-empty">読み込み中…</div></div>
+    </section>
+
+    <!-- 予約 -->
+    <section class="res">
+      <div class="eyebrow">Reservation</div>
+      <h2>ご予約方法</h2>
+      <a class="btn tel" href="tel:0434973630"><span class="ic">📞</span><span>043-497-3630</span></a>
+      <a class="btn" href="https://www.instagram.com/ichisara240" target="_blank" rel="noopener">
+        <span class="ic">💬</span><span>Instagram DM</span></a>
+      <div class="note">※ ディナーは前日までのご予約制</div>
+    </section>
+
+    <!-- 営業時間 -->
+    <section class="hours">
+      <div class="eyebrow">Hours</div>
+      <h2>営業時間</h2>
+      <div class="blk">
+        <div class="t">Lunch</div>
+        <div class="v">11:00 – 17:00</div>
+        <div class="lo">L.O. 14:30</div>
+      </div>
+      <div class="blk">
+        <div class="t">Dinner</div>
+        <div class="v">18:00 – 21:00</div>
+      </div>
+      <div class="blk">
+        <div class="t">Closed</div>
+        <div class="v closed">火曜日</div>
+      </div>
+    </section>
+
+    <!-- アクセス -->
+    <section class="access">
+      <div class="eyebrow">Access</div>
+      <h2>アクセス</h2>
+      <p>〒285-0911<br>千葉県印旛郡酒々井町尾上 77-3</p>
+      <p class="small">酒々井 IC から 5 分 ／ 成田空港 NRT から 20 分</p>
+      <a class="map" href="https://www.google.com/maps/search/?api=1&query=千葉県印旛郡酒々井町尾上77-3" target="_blank" rel="noopener">地図を開く →</a>
+    </section>
+
+    <!-- Instagram（画像なし） -->
+    <section class="ig">
+      <div class="eyebrow">Instagram</div>
+      <a href="https://www.instagram.com/ichisara240" target="_blank" rel="noopener">
+        <span>Instagram を見る<br><span class="handle">@ichisara240</span></span>
+        <span>→</span>
+      </a>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="fmark">ICHISARA</div>
+    <div class="fsub">DINING HILLS CAFE</div>
+    <div class="copy">© ICHISARA Dining Hills Cafe<br>Shisui, Chiba · Japan</div>
+  </footer>
+
+  <div class="tofull"><a href="/?full=1">通常サイトを開く（安定したネットワーク環境でお試しください）</a></div>
+
+<script>
+// お知らせのみ軽量取得（テキストJSONのみ・画像なし・タイムアウト付き）
+(function(){
+  var SHEET_ID = "1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw";
+  var URL_ = "https://opensheet.elk.sh/" + SHEET_ID + "/T_%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B";
+  var box = document.getElementById("news");
+
+  function cleanDate(s){
+    if(!s) return null;
+    var p = String(s).split(/[\/\-]/);
+    if(p.length !== 3) return null;
+    return p[0] + "/" + Number(p[1]) + "/" + Number(p[2]);
+  }
+  function fmt(s){
+    var d = cleanDate(s); if(!d) return s || "";
+    var t = d.split("/"); return Number(t[1]) + "/" + Number(t[2]);
+  }
+
+  var ctrl = new AbortController();
+  var to = setTimeout(function(){ ctrl.abort(); }, 2500);
+
+  fetch(URL_, {signal: ctrl.signal})
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      clearTimeout(to);
+      var rows = Array.isArray(data) ? data.filter(function(r){ return r["削除"] !== "TRUE"; }) : [];
+      var now = new Date();
+      var todayStr = now.getFullYear() + "/" + (now.getMonth()+1) + "/" + now.getDate();
+      var isTue = now.getDay() === 2;
+
+      // 本日のバナー
+      var changes = rows.filter(function(r){
+        return r["種別"] === "営業日の変更" && cleanDate(r["日付"]) === todayStr;
+      });
+      var banner = "本日　通常営業", closed = false;
+      if(changes.length){
+        banner = changes.map(function(r){ return r["本文"]; }).join("・");
+        closed = changes.some(function(r){ return r["本文"] && r["本文"].indexOf("休") !== -1; });
+      } else if(isTue){ banner = "毎週火曜は定休日です。"; closed = true; }
+
+      // 今日以降の行
+      var upcoming = rows.filter(function(r){
+        var d = cleanDate(r["日付"]);
+        if(!d) return r["種別"] !== "シェフの気まぐれランチ" && r["種別"] !== "営業日の変更";
+        return new Date(d) >= new Date(todayStr);
+      }).sort(function(a,b){
+        var da = cleanDate(a["日付"]), db = cleanDate(b["日付"]);
+        if(!da && !db) return 0; if(!da) return 1; if(!db) return -1;
+        return new Date(da) - new Date(db);
+      }).slice(0, 8);
+
+      var html = '<div class="today' + (closed ? " closed" : "") + '">' + esc(banner) + '</div>';
+      upcoming.forEach(function(r){
+        var url = r["URL"], text = esc(r["本文"] || "");
+        var inner = (url && /^https?:\/\//.test(url))
+          ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + text + '</a>' : text;
+        html += '<div class="news-row"><div class="news-date">' + esc(fmt(r["日付"])) +
+                '</div><div class="news-text">' + inner + '</div></div>';
+      });
+      box.innerHTML = html;
+    })
+    .catch(function(){
+      clearTimeout(to);
+      box.innerHTML = '<div class="news-empty">お知らせを読み込めませんでした。お電話でご確認ください。</div>';
+    });
+
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+})();
+</script>
+</body>
+</html>
