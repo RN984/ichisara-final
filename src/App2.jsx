@@ -7,6 +7,7 @@ import Menu from './pages/Menu.jsx';
 import Chef from './pages/Chef.jsx';
 import Faq from './pages/Faq.jsx';
 import Gallery from './pages/Gallery.jsx';
+import { warmSheetCache } from './utils/swr.js';
 import hamburgerImg from "./assets/gallery/hamburger-hero.webp";
 
 /* ===== Intro splash — "Focus" =====
@@ -48,6 +49,8 @@ export default function App2() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    // 初回描画後、遷移先ページのシートをアイドル時に1本ずつ温める（初期表示は阻害しない）
+    warmSheetCache();
   }, []);
 
   return (
