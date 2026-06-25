@@ -7,7 +7,7 @@ import Menu from './pages/Menu.jsx';
 import Chef from './pages/Chef.jsx';
 import Faq from './pages/Faq.jsx';
 import Gallery from './pages/Gallery.jsx';
-import humbergerImg from "./assets/humberger.webp";
+import hamburgerImg from "./assets/gallery/hamburger-hero.webp";
 
 /* ===== Intro splash — "Focus" =====
    ぼかした皿が焦点に合いながらワードマークが立ち上がり、リフトアウト。
@@ -24,7 +24,7 @@ function Splash({ onDone }) {
   const letters = "ICHISARA".split("");
   return (
     <div className={`splash ${on ? "is-on" : ""} ${exit ? "is-exit" : ""}`} aria-hidden="true">
-      <div className="splash-photo"><img src={humbergerImg} alt="" /></div>
+      <div className="splash-photo"><img src={hamburgerImg} alt="" /></div>
       <div className="splash-grad"></div>
       <div className="splash-mark">
         <div className="splash-eyebrow">Dining Hills Cafe</div>

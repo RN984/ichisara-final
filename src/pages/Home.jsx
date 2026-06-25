@@ -5,9 +5,9 @@ import { allLunchesFromData } from '../utils/sheet';
 import InstaFeed from '../components/InstaFeed';
 import './Home.css';
 
-import headerImg from '../assets/header.webp';
-import humberger from '../assets/humberger.webp';
-import instore from '../assets/Gallery/instore.webp';
+import headerImg from '../assets/brand/header.webp';
+import hamburgerHero from '../assets/gallery/hamburger-hero.webp';
+import instore from '../assets/gallery/instore.webp';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 
@@ -49,7 +49,7 @@ export default function Home({ hideCover = false }) {
       {/* Hero */}
       <section className="hero">
         <div className="hero-frame">
-          <img src={humberger} alt="ICHISARA ハンバーグ" />
+          <img src={hamburgerHero} alt="ICHISARA ハンバーグ" />
           <div className="hero-overlay"></div>
           <div className="hero-text">
             <div>

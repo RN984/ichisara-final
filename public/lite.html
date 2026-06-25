@@ -382,7 +382,7 @@
               if (!changes.length) return; // 当日の変更なし → ローカル判定のまま
               // 当日の営業日変更：営業しているか／していないか だけを反映（本文は出さない）
               var isClosed = changes.some(function (r) {
-                return r["本文"] && r["本文"].indexOf("休み") !== -1;
+                return r["本文"] && r["本文"].indexOf("休") !== -1;
               });
               var isOpen = !isClosed && changes.some(function (r) {
                 return r["本文"] && r["本文"].indexOf("営業") !== -1;

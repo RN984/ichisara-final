@@ -2,14 +2,14 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import './Menu.css';
 
-import humberger2 from '../assets/Gallery/humberger2.webp';
-import roll from '../assets/Gallery/dojimaroll.webp';
-import curry from '../assets/Gallery/curry.webp';
-import pan from '../assets/Gallery/pan.webp';
+import hamburger from '../assets/gallery/hamburger.webp';
+import roll from '../assets/gallery/dojimaroll.webp';
+import curry from '../assets/gallery/curry.webp';
+import pan from '../assets/gallery/pan.webp';
 
 const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVXugq9tLbxRYzYwPw';
 
-const fallbackImages = { 'ランチ': humberger2, 'カフェ': roll, 'ディナー': curry, 'その他': pan };
+const fallbackImages = { 'ランチ': hamburger, 'カフェ': roll, 'ディナー': curry, 'その他': pan };
 
 // シート由来の公開URLをそのまま使用（APIキー不要）。https のみ許可。
 const httpsUrl = u => (u && /^https:\/\//.test(u) ? u : null);
@@ -42,7 +42,7 @@ export default function Menu() {
 
   const imgSrc = httpsUrl(activeTab?.['サムネイル URL'])
     ?? fallbackImages[activeTab?.['種別']]
-    ?? humberger2;
+    ?? hamburger;
   const pdfUrl = httpsUrl(activeTab?.['PDF URL']);
 
   return (

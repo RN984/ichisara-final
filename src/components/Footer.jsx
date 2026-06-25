@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import heroImg from '../assets/hero.webp';
+import heroImg from '../assets/brand/hero.webp';
 import './Footer.css';
 
 export default function Footer() {
