@@ -14,6 +14,18 @@ const SHEET_ID = import.meta.env.VITE_SHEET_ID ?? '1PmoyxBgJjLUjbgjEKyUrpJ3xEdVX
 
 function TodayCard({ data }) {
   const latest = allLunchesFromData(data);
+  const imageUrl = latest && latest['画像 URL'];
+
+  // 画像がある日はフライヤーを枠いっぱいに表示（リボン・見出し・フッターは出さない）
+  if (imageUrl) {
+    return (
+      <article className="today-card today-card--image">
+        <figure className="today-figure">
+          <img src={imageUrl} alt={latest['本文'] || '本日の気まぐれランチ'} loading="lazy" />
+        </figure>
+      </article>
+    );
+  }
 
   return (
     <article className="today-card">

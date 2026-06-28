@@ -88,6 +88,18 @@
 .today-eyebrow { font-family: "Cormorant Garamond", serif; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ochre); margin: 14px 0 22px; padding-right: 64px; }
 .today-eyebrow span { white-space: nowrap; }
 .today-dish { font-size: clamp(28px, 3vw, 40px); line-height: 1.42; letter-spacing: 0.03em; color: var(--ink); margin: 0 0 28px; padding-right: 64px; }
+/* 気まぐれランチ画像：サイズ固定なし。枠は中身に合わせて伸縮 */
+.today-figure {
+  margin: 0; padding: 0;
+}
+.today-figure img {
+  display: block; width: 100%; height: auto;
+}
+/* 画像がある日：文字版と同じ太さのマット枠に、画像を内側の線いっぱいまで収める
+   （padding = ::after の inset:12px に合わせ、画像が内側の装飾線に接する） */
+.today-card--image {
+  padding: 12px;
+}
 .today-foot { display: flex; flex-direction: column; gap: 6px; padding-top: 22px; border-top: 1px solid var(--rule-soft); }
 .today-price { font-family: "Shippori Mincho", serif; font-size: 15px; color: var(--ink-soft); }
 .today-price em { font-style: normal; font-family: "Cormorant Garamond", serif; font-size: 19px; color: var(--green); margin-left: 4px; }
@@ -165,6 +177,7 @@
   .gallery-preview { grid-template-columns: repeat(2, 1fr); }
   .chef-teaser { grid-template-columns: 1fr; }
   .today-card { padding: 36px 28px 30px; }
+  .today-card--image { padding: 12px; }
 }
 
 @media (max-width: 560px) {
