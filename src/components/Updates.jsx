@@ -48,7 +48,10 @@ export default function Updates() {
   if (error) return null;
 
   // 新列名: 種別, 日付, 本文, URL
-  const rows = Array.isArray(data) ? data.filter(r => r['削除'] !== 'TRUE') : [];
+  // 本文が空の行（スプシの空行など）は枠だけ残るので除外する
+  const rows = Array.isArray(data)
+    ? data.filter(r => r['削除'] !== 'TRUE' && r['本文'] && r['本文'].trim())
+    : [];
 
   const grouped = {
     'シェフの気まぐれランチ': rows.filter(r => r['種別'] === 'シェフの気まぐれランチ'),
