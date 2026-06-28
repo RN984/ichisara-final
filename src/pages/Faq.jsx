@@ -45,10 +45,10 @@ function buildSections(cats, faqs) {
   if (!Array.isArray(cats) || !Array.isArray(faqs)) return null;
 
   const liveCats = cats
-    .filter(c => c['削除'] !== 'TRUE' && c['カテゴリ'])
+    .filter(c => c['ID'] && c['カテゴリ']) // ID(A列)が空＝スプシの空行は除外
     .sort((a, b) => (Number(a['並び替え']) || 0) - (Number(b['並び替え']) || 0));
 
-  const liveFaqs = faqs.filter(f => f['削除'] !== 'TRUE');
+  const liveFaqs = faqs.filter(f => f['ID']); // ID(A列)が空＝スプシの空行は除外
 
   const sections = liveCats
     .map((c, i) => {

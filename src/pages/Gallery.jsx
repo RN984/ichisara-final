@@ -46,7 +46,7 @@ export default function Gallery() {
 
   const items = Array.isArray(data)
     ? data
-        .filter(r => r['削除'] !== 'TRUE')
+        .filter(r => r['ID']) // ID(A列)が空＝スプシの空行は除外
         .sort((a, b) => Number(a['並び替え'] || 999) - Number(b['並び替え'] || 999))
         .map((r, i) => ({
           src: driveThumb(r['画像 URL']),

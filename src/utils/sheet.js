@@ -12,7 +12,7 @@ export function cleanDate(dateStr) {
 export function allLunchesFromData(data) {
   if (!Array.isArray(data)) return null;
   const lunches = data
-    .filter(r => r['種別'] === 'シェフの気まぐれランチ' && r['削除'] !== 'TRUE' && cleanDate(r['日付']))
+    .filter(r => r['ID'] && r['種別'] === 'シェフの気まぐれランチ' && cleanDate(r['日付']))
     .sort((a, b) => new Date(cleanDate(b['日付'])) - new Date(cleanDate(a['日付'])));
   return lunches[0] ?? null;
 }
