@@ -30,13 +30,14 @@ export default function Menu() {
     if (url) window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const tabs = Array.isArray(menuTable) ? menuTable : [];
+  // ID(A列)が空の行＝スプシの空行は除外（空タブ防止）
+  const tabs = Array.isArray(menuTable) ? menuTable.filter(t => t['ID']) : [];
   const activeId = tab || (tabs[0]?.ID ?? '');
   const activeTab = tabs.find(t => t.ID === activeId);
 
   const items = Array.isArray(menuItems)
     ? menuItems
-        .filter(r => r['削除'] !== 'TRUE' && r['種別'] === activeId)
+        .filter(r => r['ID'] && r['種別'] === activeId)
         .sort((a, b) => Number(a['並び替え']) - Number(b['並び替え']))
     : [];
 

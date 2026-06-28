@@ -9,8 +9,9 @@ export default function InstaFeed() {
   );
 
   const loading = data === undefined;
+  // ID(A列)が空の行＝スプシの空行は除外する
   const posts = Array.isArray(data)
-    ? data.filter(r => r['削除'] !== 'TRUE')
+    ? data.filter(r => r['ID'])
     : [];
 
   return (
